@@ -1,5 +1,8 @@
 package Registration;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 /**
  * A class which contains all of the information necessary for registering to
  * vote in South Carolina.
@@ -9,8 +12,11 @@ package Registration;
 class RegistrationForm {
 
     private String firstName;
-    private String middleInitial;
+    private String middleName;
     private String lastName;
+
+    private Date birthDate;
+    private String phoneNumber;
 
     private String ssn;
     private String legalID;
@@ -26,7 +32,7 @@ class RegistrationForm {
      * information.
      *
      * @param firstName the voter's first name
-     * @param middleInitial the voter's middle initial
+     * @param middleName the voter's middle name
      * @param lastName  the voter's last name
      * @param ssn   the voter's social security number
      * @param legalID   the voter's legal ID number
@@ -36,13 +42,17 @@ class RegistrationForm {
      * @param state the voter's state of residence
      * @param zip   the voter's postal code
      */
-    public RegistrationForm(String firstName, String middleInitial,
-                            String lastName, String ssn, String legalID,
-                            String streetAddress, String city, String county,
-                            String state, String zip) {
+    public RegistrationForm(String firstName, String middleName,
+                            String lastName, String phoneNumber, int birthDay,
+                            int birthMonth, int birthYear, String ssn,
+                            String legalID, String streetAddress, String city,
+                            String county, String state, String zip) {
         this.firstName = firstName;
-        this.middleInitial = middleInitial;
+        this.middleName = middleName;
         this.lastName = lastName;
+
+        this.phoneNumber = phoneNumber;
+        this.birthDate = new GregorianCalendar(birthYear, birthMonth - 1, birthDay).getTime();
 
         this.ssn = ssn;
         this.legalID = legalID;
@@ -64,12 +74,12 @@ class RegistrationForm {
     }
 
     /**
-     * Sets the voter's middle initial to the specified value.
+     * Sets the voter's middle name to the specified value.
      *
-     * @param middleInitial the voter's middle initial
+     * @param middleName the voter's middle name
      */
-    public void setMiddleInitial(String middleInitial) {
-        this.middleInitial = middleInitial;
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
     /**
@@ -79,6 +89,36 @@ class RegistrationForm {
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    /**
+     * Sets the voter's birthdate to the specified Date object.
+     *
+     * @param birthDate the voter's birthdate
+     */
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    /**
+     * Sets the voter's birthdate to a Date object made with the provided
+     * information.
+     *
+     * @param birthYear the voter's birth year
+     * @param birthMonth    the voter's birth month
+     * @param birthDay  the voter's birth day
+     */
+    public void setBirthDate(int birthYear, int birthMonth, int birthDay) {
+        this.birthDate = new GregorianCalendar(birthYear, birthMonth - 1, birthDay).getTime();
+    }
+
+    /**
+     * Sets the voter's phone number to the specified value.
+     *
+     * @param phoneNumber   the voter's phone number
+     */
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     /**
