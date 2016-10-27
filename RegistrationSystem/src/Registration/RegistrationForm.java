@@ -27,9 +27,29 @@ class RegistrationForm {
     private String state;
     private String zip;
 
+    public RegistrationForm() {
+        this.firstName = null;
+        this.middleName = "";
+        this.lastName = null;
+
+        this.birthDate = null;
+        this.phoneNumber = null;
+
+        this.ssn = null;
+        this.legalID = null;
+
+        this.streetAddress = null;
+        this.city = null;
+        this.county = null;
+        this.state = null;
+        this.zip = null;
+    }
+
     /**
      * Constructs a completed <tt>Registration.RegistrationForm</tt> from the provided
-     * information.
+     * information. <p>
+     *
+     * The voter's middle name can be null.
      *
      * @param firstName the voter's first name
      * @param middleName the voter's middle name
@@ -48,7 +68,12 @@ class RegistrationForm {
                             String legalID, String streetAddress, String city,
                             String county, String state, String zip) {
         this.firstName = firstName;
-        this.middleName = middleName;
+        if (middleName == null) {
+            this.middleName = "";
+        }
+        else {
+            this.middleName = middleName;
+        }
         this.lastName = lastName;
 
         this.phoneNumber = phoneNumber;
@@ -65,12 +90,30 @@ class RegistrationForm {
     }
 
     /**
+     * Gets the first name stored in the form.
+     *
+     * @return  the form's first name
+     */
+    String getFirstName() {
+        return firstName;
+    }
+
+    /**
      * Sets the voter's first name to the specified value.
      *
      * @param firstName the voter's first name
      */
-    public void setFirstName(String firstName) {
+    void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    /**
+     * Gets the middle name stored in the form.
+     *
+     * @return  the form's middle name
+     */
+    String getMiddleName() {
+        return middleName;
     }
 
     /**
@@ -78,8 +121,17 @@ class RegistrationForm {
      *
      * @param middleName the voter's middle name
      */
-    public void setMiddleName(String middleName) {
+    void setMiddleName(String middleName) {
         this.middleName = middleName;
+    }
+
+    /**
+     * Gets the last name stored in the form.
+     *
+     * @return  the form's last name
+     */
+    String getLastName() {
+        return lastName;
     }
 
     /**
@@ -87,8 +139,17 @@ class RegistrationForm {
      *
      * @param lastName  the voter's last name
      */
-    public void setLastName(String lastName) {
+    void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    /**
+     * Gets the birthdate stored in the form.
+     *
+     * @return  the form's birthdate
+     */
+    Date getBirthDate() {
+        return birthDate;
     }
 
     /**
@@ -96,7 +157,7 @@ class RegistrationForm {
      *
      * @param birthDate the voter's birthdate
      */
-    public void setBirthDate(Date birthDate) {
+    void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -108,8 +169,17 @@ class RegistrationForm {
      * @param birthMonth    the voter's birth month
      * @param birthDay  the voter's birth day
      */
-    public void setBirthDate(int birthYear, int birthMonth, int birthDay) {
+    void setBirthDate(int birthYear, int birthMonth, int birthDay) {
         this.birthDate = new GregorianCalendar(birthYear, birthMonth - 1, birthDay).getTime();
+    }
+
+    /**
+     * Gets the phone number stored in the form.
+     *
+     * @return  the form's phone number
+     */
+    String getPhoneNumber() {
+        return phoneNumber;
     }
 
     /**
@@ -117,8 +187,17 @@ class RegistrationForm {
      *
      * @param phoneNumber   the voter's phone number
      */
-    public void setPhoneNumber(String phoneNumber) {
+    void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    /**
+     * Gets the ssn stored in the form.
+     *
+     * @return  the form's ssn
+     */
+    String getSsn() {
+        return ssn;
     }
 
     /**
@@ -126,8 +205,17 @@ class RegistrationForm {
      *
      * @param ssn   the voter's social security number
      */
-    public void setSsn(String ssn) {
+    void setSsn(String ssn) {
         this.ssn = ssn;
+    }
+
+    /**
+     * Gets the legal ID stored in the form.
+     *
+     * @return  the form's legal ID
+     */
+    String getLegalID() {
+        return legalID;
     }
 
     /**
@@ -135,8 +223,17 @@ class RegistrationForm {
      *
      * @param legalID   the voter's legal ID number
      */
-    public void setLegalID(String legalID) {
+    void setLegalID(String legalID) {
         this.legalID = legalID;
+    }
+
+    /**
+     * Gets the street address stored in the form.
+     *
+     * @return  the form's street address
+     */
+    String getStreetAddress() {
+        return streetAddress;
     }
 
     /**
@@ -144,8 +241,17 @@ class RegistrationForm {
      *
      * @param streetAddress the voter's street address
      */
-    public void setStreetAddress(String streetAddress) {
+    void setStreetAddress(String streetAddress) {
         this.streetAddress = streetAddress;
+    }
+
+    /**
+     * Gets the city stored in the form.
+     *
+     * @return  the form's city
+     */
+    String getCity() {
+        return city;
     }
 
     /**
@@ -153,16 +259,35 @@ class RegistrationForm {
      *
      * @param city  the voter's city of residence
      */
-    public void setCity(String city) {
+    void setCity(String city) {
         this.city = city;
     }
 
     /**
+     * Gets the county stored in the form.
+     *
+     * @return  the form's county
+     */
+    String getCounty() {
+        return county;
+    }
+
+    /**
      * Sets the voter's county of residence to the specified value.
+     *
      * @param county    the voter's county of residence
      */
-    public void setCounty(String county) {
+    void setCounty(String county) {
         this.county = county;
+    }
+
+    /**
+     * Gets the state stored in the form.
+     *
+     * @return  the form's state
+     */
+    String getState() {
+        return state;
     }
 
     /**
@@ -170,8 +295,17 @@ class RegistrationForm {
      *
      * @param state the voter's state of residence
      */
-    public void setState(String state) {
+    void setState(String state) {
         this.state = state;
+    }
+
+    /**
+     * Gets the postal code stored in the form.
+     *
+     * @return  the form's zip code
+     */
+    String getZip() {
+        return zip;
     }
 
     /**
@@ -179,7 +313,7 @@ class RegistrationForm {
      *
      * @param zip   the voter's postal code
      */
-    public void setZip(String zip) {
+    void setZip(String zip) {
         this.zip = zip;
     }
 }
