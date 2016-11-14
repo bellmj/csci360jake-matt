@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="400.0" styleClass="darkList" stylesheets="@../Resources/IssueTrackingLite.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="System.UI.Controller">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="159.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="460.0" minHeight="10.0" prefHeight="391.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <ImageView fitHeight="96.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+      </ImageView>
+      <Pane prefHeight="118.0" prefWidth="400.0">
+         <children>
+            <ImageView fx:id="image" fitHeight="96.0" fitWidth="256.0" layoutX="72.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Resources/360Voting%5Bshrunk%5D.png" />
+               </image></ImageView>
+         </children>
+      </Pane>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+         <children>
+            <Button fx:id="electionSetupButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="41.0" prefWidth="200.0" text="Voting Machine Setup" textAlignment="CENTER">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding></Button>
+            <Label text="Define an election, and set up this machine to accept votes." textAlignment="CENTER" wrapText="true">
+               <padding>
+                  <Insets bottom="25.0" left="25.0" right="25.0" top="15.0" />
+               </padding></Label>
+            <Button fx:id="verifyRegistrationButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="41.0" prefWidth="200.0" text="Verify Voter Registration">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding></Button>
+            <Label text="Check that a propspective voter is able to vote." textAlignment="CENTER" wrapText="true">
+               <padding>
+                  <Insets bottom="25.0" left="25.0" right="25.0" top="15.0" />
+               </padding></Label>
+            <Button fx:id="registerButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="41.0" prefWidth="200.0" text="Registration Wizard">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding></Button>
+            <Label text="Register a new voter." textAlignment="CENTER" wrapText="true">
+               <padding>
+                  <Insets bottom="25.0" left="25.0" right="25.0" top="15.0" />
+               </padding></Label>
+         </children>
+      </VBox>
+   </children>
+</GridPane>
