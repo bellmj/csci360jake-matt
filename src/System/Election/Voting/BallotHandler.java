@@ -4,6 +4,7 @@ import System.Election.Candidate;
 import System.Election.Position;
 import System.Election.Proposition;
 import System.DBHandler;
+import System.DataHandler;
 
 /**
  * A class which handles operations done on and with Ballots in the voting
@@ -17,11 +18,11 @@ import System.DBHandler;
  * @see DBHandler
  */
 public class BallotHandler {
-
+    private DataHandler<Ballot> dataHandler;
     private Ballot ballot;
 
-    public BallotHandler() {
-        //TODO Custom constructor
+    public BallotHandler(DataHandler<Ballot> dataHandler) {
+        this.dataHandler = dataHandler;
     }
 
     /**
@@ -59,11 +60,10 @@ public class BallotHandler {
      */
     public void saveBallot() {
         if (this.ballot != null) {
-            // TODO Somehow get the ballot to DBHandler
+            dataHandler.add(this.ballot);
             this.ballot = null;
         }
     }
-
     /**
      * The voter cancels all selections, and does not cast their Ballot, so the Ballot is
      *

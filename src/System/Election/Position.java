@@ -26,6 +26,12 @@ public class Position {
         this.candidates = new ArrayList<Candidate>();
     }
 
+    public Position(String title, ArrayList<Candidate> candidates, Candidate winner) {
+        this.title = title;
+        this.candidates = candidates;
+        this.winner = winner;
+    }
+
     /**
      * Returns false if no winner has been declared yet.
      *
@@ -51,5 +57,14 @@ public class Position {
      */
     void addCandidate(Candidate candidate) {
         this.candidates.add(candidate);
+    }
+
+    @Override
+    public String toString() {
+        String candidateString = "";
+        for(Candidate c:this.candidates){
+            candidateString += "\t" + c;
+        }
+        return  title + candidateString;
     }
 }

@@ -26,6 +26,12 @@ public class Proposition {
         this.votesFor = 0;
         this.votesAgainst = 0;
     }
+    public Proposition(String name, String description,long votesFor,long votesAgainst) {
+        this.name = name;
+        this.description = description;
+        this.votesFor = votesFor;
+        this.votesAgainst = votesAgainst;
+    }
 
     /**
      * Adds a vote for or against the Proposition. If support is true, votesFor

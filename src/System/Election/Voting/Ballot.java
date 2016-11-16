@@ -29,12 +29,18 @@ public class Ballot {
         this.voterHashID = voterHashID;
     }
 
+    public Ballot(HashMap<Position, Candidate> selections, HashMap<Proposition, Boolean> propositions, String voterHashID) {
+        this.selections = selections;
+        this.propositions = propositions;
+        this.voterHashID = voterHashID;
+    }
+
     /**
      * Returns the hashed voter registration number associated with the Ballot.
      *
      * @return  String - the voter's hashed registration number
      */
-    String getVoterHashID() {
+    public String getVoterHashID() {
         return this.voterHashID;
     }
 
@@ -44,7 +50,7 @@ public class Ballot {
      *
      * @return  HashMap - the voter's candidate selections
      */
-    HashMap<Position, Candidate> getSelections() {
+    public HashMap<Position, Candidate> getSelections() {
         return this.selections;
     }
 
@@ -53,7 +59,7 @@ public class Ballot {
      *
      * @return  HashMap - the voter's proposition responses
      */
-    HashMap<Proposition, Boolean> getPropositions() {
+    public HashMap<Proposition, Boolean> getPropositions() {
         return this.propositions;
     }
 

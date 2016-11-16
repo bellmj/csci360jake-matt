@@ -26,6 +26,12 @@ public class Candidate {
         this.votes = 0;
     }
 
+    public Candidate(long votes, String name, String party) {
+        this.votes = votes;
+        this.name = name;
+        this.party = party;
+    }
+
     /**
      * Returns the name of the Candidate.
      *
@@ -58,6 +64,10 @@ public class Candidate {
      */
     void addVote() {
         this.votes++;
+    }
+
+    public String toString(){
+        return name;
     }
 
 }
