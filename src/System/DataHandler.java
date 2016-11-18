@@ -7,6 +7,6 @@ import java.util.List;
  */
 public interface DataHandler <T>{
     void add(T t);
-    List<String> getAll();
+    List<T> getAll();
     T get(String id);
 }

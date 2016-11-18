@@ -9,7 +9,7 @@ import java.util.GregorianCalendar;
  *
  * @see RegistrationHandler
  */
-class RegistrationForm {
+public class RegistrationForm {
 
     private String firstName;
     private String middleName;
@@ -94,7 +94,7 @@ class RegistrationForm {
      *
      * @return  the form's first name
      */
-    String getFirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
@@ -103,7 +103,7 @@ class RegistrationForm {
      *
      * @param firstName the voter's first name
      */
-    void setFirstName(String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
@@ -112,7 +112,7 @@ class RegistrationForm {
      *
      * @return  the form's middle name
      */
-    String getMiddleName() {
+    public String getMiddleName() {
         return middleName;
     }
 
@@ -121,7 +121,7 @@ class RegistrationForm {
      *
      * @param middleName the voter's middle name
      */
-    void setMiddleName(String middleName) {
+    public void setMiddleName(String middleName) {
         this.middleName = middleName;
     }
 
@@ -130,7 +130,7 @@ class RegistrationForm {
      *
      * @return  the form's last name
      */
-    String getLastName() {
+    public String getLastName() {
         return lastName;
     }
 
@@ -139,7 +139,7 @@ class RegistrationForm {
      *
      * @param lastName  the voter's last name
      */
-    void setLastName(String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
@@ -148,7 +148,7 @@ class RegistrationForm {
      *
      * @return  the form's birthdate
      */
-    Date getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
@@ -157,7 +157,7 @@ class RegistrationForm {
      *
      * @param birthDate the voter's birthdate
      */
-    void setBirthDate(Date birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -169,7 +169,7 @@ class RegistrationForm {
      * @param birthMonth    the voter's birth month
      * @param birthDay  the voter's birth day
      */
-    void setBirthDate(int birthYear, int birthMonth, int birthDay) {
+    public void setBirthDate(int birthYear, int birthMonth, int birthDay) {
         this.birthDate = new GregorianCalendar(birthYear, birthMonth - 1, birthDay).getTime();
     }
 
@@ -178,7 +178,7 @@ class RegistrationForm {
      *
      * @return  the form's phone number
      */
-    String getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
@@ -250,7 +250,7 @@ class RegistrationForm {
      *
      * @return  the form's city
      */
-    String getCity() {
+    public String getCity() {
         return city;
     }
 
@@ -268,7 +268,7 @@ class RegistrationForm {
      *
      * @return  the form's county
      */
-    String getCounty() {
+    public String getCounty() {
         return county;
     }
 
@@ -286,7 +286,7 @@ class RegistrationForm {
      *
      * @return  the form's state
      */
-    String getState() {
+    public String getState() {
         return state;
     }
 
@@ -304,7 +304,7 @@ class RegistrationForm {
      *
      * @return  the form's zip code
      */
-    String getZip() {
+    public String getZip() {
         return zip;
     }
 

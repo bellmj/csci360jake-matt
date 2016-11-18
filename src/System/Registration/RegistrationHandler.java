@@ -36,7 +36,7 @@ public class RegistrationHandler {
     public void register(RegistrationForm form) throws IllegalArgumentException {
         String entry = "";
 
-        try {
+
             // Enter name information
             if (form.getFirstName() == null ||
                     form.getLastName() == null) {
@@ -85,10 +85,6 @@ public class RegistrationHandler {
             writer.append(entry);
             System.out.println("Success");
 
-        } catch (IllegalArgumentException e) {
-            // TODO Tell user that the form is incomplete.
-            System.out.println("Incomplete registration form.");
-        }
     }
 
 //    public boolean canVote(String legalID) {

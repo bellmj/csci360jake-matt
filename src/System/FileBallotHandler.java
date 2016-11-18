@@ -11,6 +11,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Created by matt on 11/15/16.
@@ -21,8 +23,8 @@ public class FileBallotHandler implements DataHandler<Ballot> {
     FileWriter fw;
     BufferedWriter bw;
     PrintWriter out;
-
     private final String NAME_OF_FILE = ".datastore";
+
     public FileBallotHandler() {
         try {
             fw = new FileWriter(NAME_OF_FILE, true);
@@ -46,9 +48,9 @@ public class FileBallotHandler implements DataHandler<Ballot> {
     }
 
     @Override
-    public List<String> getAll() {
+    public List<Ballot> getAll() {
         try {
-            return Files.readAllLines(Paths.get(NAME_OF_FILE));
+            List<String> strList = Files.readAllLines(Paths.get(NAME_OF_FILE));
         } catch (IOException e) {
             e.printStackTrace();
         }
