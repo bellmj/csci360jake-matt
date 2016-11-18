@@ -249,7 +249,7 @@ public class TestMain {
         zip = scanner.nextLine();
 
         RegistrationForm form = new RegistrationForm(firstName, middleName, lastName,
-                phoneNumber, birthDate, birthMonth, birthYear, ssn, legalID, streetAddress,
+                phoneNumber, birthDate, birthMonth, birthYear, legalID, streetAddress,
                 city, county, state, zip);
 
         registrationHandler.register(form);

@@ -1,5 +1,6 @@
 package System.Registration;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -15,10 +16,9 @@ public class RegistrationForm {
     private String middleName;
     private String lastName;
 
-    private Date birthDate;
+    private GregorianCalendar birthDate;
     private String phoneNumber;
 
-    private String ssn;
     private String legalID;
 
     private String streetAddress;
@@ -35,7 +35,6 @@ public class RegistrationForm {
         this.birthDate = null;
         this.phoneNumber = null;
 
-        this.ssn = null;
         this.legalID = null;
 
         this.streetAddress = null;
@@ -54,7 +53,6 @@ public class RegistrationForm {
      * @param firstName the voter's first name
      * @param middleName the voter's middle name
      * @param lastName  the voter's last name
-     * @param ssn   the voter's social security number
      * @param legalID   the voter's legal ID number
      * @param streetAddress the voter's street address
      * @param city  the voter's city of residence
@@ -64,7 +62,7 @@ public class RegistrationForm {
      */
     public RegistrationForm(String firstName, String middleName,
                             String lastName, String phoneNumber, int birthDay,
-                            int birthMonth, int birthYear, String ssn,
+                            int birthMonth, int birthYear,
                             String legalID, String streetAddress, String city,
                             String county, String state, String zip) {
         this.firstName = firstName;
@@ -77,9 +75,8 @@ public class RegistrationForm {
         this.lastName = lastName;
 
         this.phoneNumber = phoneNumber;
-        this.birthDate = new GregorianCalendar(birthYear, birthMonth - 1, birthDay).getTime();
+        this.birthDate = new GregorianCalendar(birthYear, birthMonth - 1, birthDay);
 
-        this.ssn = ssn;
         this.legalID = legalID;
 
         this.streetAddress = streetAddress;
@@ -148,7 +145,7 @@ public class RegistrationForm {
      *
      * @return  the form's birthdate
      */
-    public Date getBirthDate() {
+    public GregorianCalendar getBirthDate() {
         return birthDate;
     }
 
@@ -157,7 +154,7 @@ public class RegistrationForm {
      *
      * @param birthDate the voter's birthdate
      */
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(GregorianCalendar birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -170,7 +167,7 @@ public class RegistrationForm {
      * @param birthDay  the voter's birth day
      */
     public void setBirthDate(int birthYear, int birthMonth, int birthDay) {
-        this.birthDate = new GregorianCalendar(birthYear, birthMonth - 1, birthDay).getTime();
+        this.birthDate = new GregorianCalendar(birthYear, birthMonth - 1, birthDay);
     }
 
     /**
@@ -189,24 +186,6 @@ public class RegistrationForm {
      */
     void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    /**
-     * Gets the ssn stored in the form.
-     *
-     * @return  the form's ssn
-     */
-    String getSsn() {
-        return ssn;
-    }
-
-    /**
-     * Sets the voter's social security number to the specified value.
-     *
-     * @param ssn   the voter's social security number
-     */
-    void setSsn(String ssn) {
-        this.ssn = ssn;
     }
 
     /**
@@ -315,5 +294,22 @@ public class RegistrationForm {
      */
     void setZip(String zip) {
         this.zip = zip;
+    }
+
+    @Override
+    public String toString() {
+        return "RegistrationForm{" +
+                "firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthDate=" + (birthDate.get(Calendar.MONTH)+1) + "/"+ birthDate.get(Calendar.DAY_OF_MONTH)+ "/" + birthDate.get(Calendar.YEAR) +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", legalID='" + legalID + '\'' +
+                ", streetAddress='" + streetAddress + '\'' +
+                ", city='" + city + '\'' +
+                ", county='" + county + '\'' +
+                ", state='" + state + '\'' +
+                ", zip='" + zip + '\'' +
+                '}';
     }
 }

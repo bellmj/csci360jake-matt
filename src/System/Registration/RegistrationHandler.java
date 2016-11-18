@@ -37,53 +37,48 @@ public class RegistrationHandler {
         String entry = "";
 
 
-            // Enter name information
-            if (form.getFirstName() == null ||
-                    form.getLastName() == null) {
-                throw new IllegalArgumentException();
-            }
-            else {
-                entry += form.getLastName() + "\t" + form.getFirstName() +
-                        "\t" + form.getMiddleName() + "\t";
-            }
+        // Enter name information
+        if (form.getFirstName() == null ||
+                form.getLastName() == null) {
+            throw new IllegalArgumentException();
+        } else {
+            entry += form.getLastName() + "\t" + form.getFirstName() +
+                    "\t" + form.getMiddleName() + "\t";
+        }
 
-            // Enter birthdate/phone number
-            if (form.getBirthDate() == null ||
-                    form.getPhoneNumber() == null) {
-                throw new IllegalArgumentException();
-            }
-            else {
-                entry += form.getBirthDate() + "\t" + form.getPhoneNumber() +
-                        "\t";
-            }
+        // Enter birthdate/phone number
+        if (form.getBirthDate() == null ||
+                form.getPhoneNumber() == null) {
+            throw new IllegalArgumentException();
+        } else {
+            entry += form.getBirthDate() + "\t" + form.getPhoneNumber() +
+                    "\t";
+        }
 
-            // Enter ID numbers
-            if (form.getSsn() == null ||
-                    form.getLegalID() == null) {
-                throw new IllegalArgumentException();
-            }
-            else {
-                entry += form.getSsn() + "\t" + form.getLegalID() + "\t";
-            }
+        // Enter ID numbers
+        if (form.getLegalID() == null) {
+            throw new IllegalArgumentException();
+        } else {
+            entry += form.getLegalID() + "\t";
+        }
 
-            // Enter address
-            if (form.getStreetAddress() == null ||
-                    form.getCity() == null ||
-                    form.getCounty() == null ||
-                    form.getState() == null ||
-                    form.getZip() == null) {
-                throw new IllegalArgumentException();
-            }
-            else {
-                entry += form.getStreetAddress() + "\t" + form.getCity() +
-                        "\t" + form.getCounty() + "\t" + form.getState() +
-                        "\t" + form.getZip();
-            }
+        // Enter address
+        if (form.getStreetAddress() == null ||
+                form.getCity() == null ||
+                form.getCounty() == null ||
+                form.getState() == null ||
+                form.getZip() == null) {
+            throw new IllegalArgumentException();
+        } else {
+            entry += form.getStreetAddress() + "\t" + form.getCity() +
+                    "\t" + form.getCounty() + "\t" + form.getState() +
+                    "\t" + form.getZip();
+        }
 
-            entry += "\n";
-            entry = random.nextInt(1000) + "\t" + entry;
-            writer.append(entry);
-            System.out.println("Success");
+        entry += "\n";
+        entry = random.nextInt(1000) + "\t" + entry;
+        writer.append(entry);
+        System.out.println("Success");
 
     }
 

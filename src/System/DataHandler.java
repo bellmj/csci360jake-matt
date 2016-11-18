@@ -1,5 +1,6 @@
 package System;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -8,5 +9,5 @@ import java.util.List;
 public interface DataHandler <T>{
     void add(T t);
     List<T> getAll();
-    T get(String id);
+    T get(String id) throws IOException;
 }
