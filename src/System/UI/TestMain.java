@@ -35,14 +35,8 @@ public class TestMain {
 
         dbHandler = new FileBallotHandler();
         registrationHandler = new RegistrationHandler();
-<<<<<<< HEAD
-//        ballotHandler = new BallotHandler();
-//        electionHandler = new ElectionHandler();
-//        dbHandler = new DBHandler();
-=======
         ballotHandler = new BallotHandler(dbHandler);
         electionHandler = new ElectionHandler();
->>>>>>> dd7a40ede5ec49edf749d24bca516a3aa7f0a7f1
 
         System.out.print("\nWelcome!\n");
         boolean done = false;
@@ -259,19 +253,13 @@ public class TestMain {
 
                     switch (method) {
                         case 0:
-                            System.out.println("Before add");
                             ballotHandler.addProposition(p, null);
-                            System.out.println("Added proposition");
                             break;
                         case 1:
-                            System.out.println("Before add");
                             ballotHandler.addProposition(p, true);
-                            System.out.println("Added proposition");
                             break;
                         case 2:
-                            System.out.println("Before add");
                             ballotHandler.addProposition(p, false);
-                            System.out.println("Added proposition");
                     }
                 }
 
@@ -310,7 +298,6 @@ public class TestMain {
             System.out.println("Your ballot has been cast. Thank you for performing your civic duty!\n\n");
         }
         return done;
->>>>>>> dd7a40ede5ec49edf749d24bca516a3aa7f0a7f1
     }
 
     private static void checkRegistration() {

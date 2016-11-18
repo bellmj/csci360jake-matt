@@ -53,9 +53,7 @@ public class BallotHandler {
      * @param supports  boolean - true if supports, false if opposes, null if abstains
      */
     public void addProposition(Proposition proposition, Boolean supports) {
-        System.out.println("Before call");
         this.ballot.changeProposition(proposition, supports);
-        System.out.println("After call");
     }
 
     public HashMap<Position, Candidate> getCandidateSelections() {

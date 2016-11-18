@@ -80,8 +80,6 @@ public class Ballot {
      * @param supports  boolean - true if supports, false if opposes, null if abstains
      */
     void changeProposition(Proposition proposition, boolean supports) {
-        System.out.println("Before change");
         this.propositions.put(proposition, supports);
-        System.out.println("After change");
     }
 }
