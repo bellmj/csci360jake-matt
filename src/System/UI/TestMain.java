@@ -255,17 +255,23 @@ public class TestMain {
                     System.out.print("Selection: ");
 
                     method = scanner.nextInt();
-                    scanner.nextInt();
+                    scanner.nextLine();
 
                     switch (method) {
                         case 0:
+                            System.out.println("Before add");
                             ballotHandler.addProposition(p, null);
+                            System.out.println("Added proposition");
                             break;
                         case 1:
+                            System.out.println("Before add");
                             ballotHandler.addProposition(p, true);
+                            System.out.println("Added proposition");
                             break;
                         case 2:
+                            System.out.println("Before add");
                             ballotHandler.addProposition(p, false);
+                            System.out.println("Added proposition");
                     }
                 }
 
@@ -281,16 +287,20 @@ public class TestMain {
 
                 for (Map.Entry<Proposition, Boolean> s : ballotPropositions.entrySet()) {
                     System.out.println("\n" + s.getKey().getName() + ": " +
-                            (s.getValue() == null ? "Abstain" : s.getValue().toString()));
+                            (s.getValue() == null ? "Abstain" : (s.getValue() ? "For" : "Against")));
                 }
 
                 System.out.println("Are your selections above correct? (Y/N): ");
 
                 switch (scanner.nextLine().trim().toLowerCase()) {
-                    case "y":
+                    case "n":
                         ballotHandler.clearSelections();
                         break;
-                    case "n":
+                    case "y":
+                        ballotHandler.saveBallot();
+                        verified = true;
+                        break;
+                    default:
                         ballotHandler.saveBallot();
                         verified = true;
                         break;
