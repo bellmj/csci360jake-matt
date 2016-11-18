@@ -9,7 +9,7 @@ import java.util.GregorianCalendar;
  *
  * @see RegistrationHandler
  */
-class RegistrationForm {
+public class RegistrationForm {
 
     private String firstName;
     private String middleName;

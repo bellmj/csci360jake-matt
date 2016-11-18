@@ -1,11 +1,11 @@
 package System.Election;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A class which contians the information for a position up for election, as
- * well as all of the candidates for that position. A Candidate can be declared
- * the winner of a Position once vote counting has completed.
+ * well as all of the candidates for that position.
  *
  * @see Candidate
  * @see ElectionHandler
@@ -14,40 +14,42 @@ public class Position {
 
     private String title;
     private ArrayList<Candidate> candidates;
-    private Candidate winner;
 
     /**
      * Creates a new Position with the specified title.
      *
      * @param title the name of the position up for election
      */
-    Position(String title) {
+    public Position(String title) {
         this.title = title;
         this.candidates = new ArrayList<Candidate>();
     }
 
-    public Position(String title, ArrayList<Candidate> candidates, Candidate winner) {
+    public Position(String title, ArrayList<Candidate> candidates) {
         this.title = title;
         this.candidates = candidates;
-        this.winner = winner;
     }
 
     /**
-     * Returns false if no winner has been declared yet.
+     * Returns the title of the available position.
      *
-     * @return  true if there is a winner, false if null
+     * @return  the title of the position
      */
-    boolean hasWinner() {
-        return winner != null;
+    public String getTitle() {
+        return this.title;
     }
 
     /**
-     * Declares a winner for this position.
+     * Returns a copy of the list of candidates up for this position
      *
-     * @param winner    the Candidate who won
+     * @return  a list of Candidates
      */
-    void declareWinner(Candidate winner) {
-        this.winner = winner;
+    public List<Candidate> getCandidates() {
+        List<Candidate> rtn = new ArrayList();
+        for (Candidate c : this.candidates) {
+            rtn.add(new Candidate(c.getVotes(), c.getName(), c.getParty()));
+        }
+        return rtn;
     }
 
     /**
