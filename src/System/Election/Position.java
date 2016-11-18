@@ -13,7 +13,7 @@ import java.util.List;
 public class Position {
 
     private String title;
-    private ArrayList<Candidate> candidates;
+    private List<Candidate> candidates;
 
     /**
      * Creates a new Position with the specified title.
@@ -25,7 +25,7 @@ public class Position {
         this.candidates = new ArrayList<Candidate>();
     }
 
-    public Position(String title, ArrayList<Candidate> candidates) {
+    public Position(String title, List<Candidate> candidates) {
         this.title = title;
         this.candidates = candidates;
     }

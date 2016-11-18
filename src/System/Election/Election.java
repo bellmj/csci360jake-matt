@@ -29,7 +29,9 @@ public class Election {
 
     List<Position> getPositions() {
         List<Position> rtn = new ArrayList<>();
-        rtn.addAll(this.positions.values());
+        for (Position p : this.positions.values()) {
+            rtn.add(new Position(p.getTitle(), p.getCandidates()));
+        }
         return rtn;
     }
 
@@ -39,7 +41,9 @@ public class Election {
 
     List<Proposition> getPropositions() {
         List<Proposition> rtn = new ArrayList<>();
-        rtn.addAll(this.propositions.values());
+        for (Proposition p : this.propositions.values()) {
+            rtn.add(new Proposition(p.getName(), p.getDescription()));
+        }
         return rtn;
     }
 

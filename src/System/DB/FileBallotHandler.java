@@ -1,4 +1,4 @@
-package System;
+package System.DB;
 
 import System.Election.Candidate;
 import System.Election.Position;
