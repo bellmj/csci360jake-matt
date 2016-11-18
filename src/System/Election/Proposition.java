@@ -56,7 +56,7 @@ public class Proposition {
      *
      * @return  a long representing the support received by the Proposition
      */
-    long getSupport() {
+    public long getSupport() {
         return votesFor / votesAgainst;
     }
 
@@ -65,7 +65,7 @@ public class Proposition {
      *
      * @return  the name of the Proposition
      */
-    String getName() {
+    public String getName() {
         return this.name;
     }
 
@@ -74,7 +74,7 @@ public class Proposition {
      *
      * @return  the Proposition's description.
      */
-    String getDescription() {
+    public String getDescription() {
         return this.description;
     }
 
