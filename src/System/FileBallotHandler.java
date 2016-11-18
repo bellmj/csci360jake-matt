@@ -68,7 +68,7 @@ public class FileBallotHandler implements DataHandler<Ballot> {
         ArrayList<Candidate> candidateArrayList = new ArrayList<>();
         candidateArrayList.add(new Candidate(0l,"Gary Johnson","Libertarian"));
         selections = new HashMap<>();
-        selections.put(new Position("King of the World",candidateArrayList,candidateArrayList.get(0)),candidateArrayList.get(0));
+        selections.put(new Position("King of the World",candidateArrayList),candidateArrayList.get(0));
         HashMap<Proposition, Boolean> propositions;
         propositions = new HashMap<>();
         propositions.put(new Proposition("Legalize good Herb","We be legalizing good herb",0,0),true);

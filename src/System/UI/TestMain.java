@@ -33,9 +33,9 @@ public class TestMain {
                 ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
 
         registrationHandler = new RegistrationHandler();
-        ballotHandler = new BallotHandler();
-        electionHandler = new ElectionHandler();
-        dbHandler = new DBHandler();
+//        ballotHandler = new BallotHandler();
+//        electionHandler = new ElectionHandler();
+//        dbHandler = new DBHandler();
 
         System.out.print("\nWelcome!\n");
         boolean done = false;
@@ -159,7 +159,7 @@ public class TestMain {
     }
 
     private static boolean vote() {
-        
+        return false;
     }
 
     private static void checkRegistration() {

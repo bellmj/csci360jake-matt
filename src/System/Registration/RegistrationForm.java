@@ -214,7 +214,7 @@ public class RegistrationForm {
      *
      * @return  the form's legal ID
      */
-    String getLegalID() {
+    public String getLegalID() {
         return legalID;
     }
 
@@ -232,7 +232,7 @@ public class RegistrationForm {
      *
      * @return  the form's street address
      */
-    String getStreetAddress() {
+    public String getStreetAddress() {
         return streetAddress;
     }
 
