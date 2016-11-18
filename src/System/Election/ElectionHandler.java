@@ -35,6 +35,17 @@ public class ElectionHandler {
         return this.election.addCandidateToPosition(new Candidate(candidateName, candidateParty), position);
     }
 
+    public Candidate addWriteInCandidateToPosition(String candidateName, String candidateParty, Position position) {
+        Candidate candidate = new Candidate(candidateName, candidateParty);
+        addCandidateToPosition(candidate, position);
+        return candidate;
+    }
+    public Candidate addWriteInCandidateToPosition(String candidateName, String candidateParty, String positionTitle) {
+        Candidate candidate = new Candidate(candidateName, candidateParty);
+        addCandidateToPosition(candidate, positionTitle);
+        return candidate;
+    }
+
     public List<Position> getPositions() {
         return this.election.getPositions();
     }
