@@ -22,7 +22,7 @@ public class FileBallotHandler implements DataHandler<Ballot> {
     BufferedWriter bw;
     PrintWriter out;
 
-    private final String NAME_OF_FILE = "datastore";
+    private final String NAME_OF_FILE = ".datastore";
     public FileBallotHandler() {
         try {
             fw = new FileWriter(NAME_OF_FILE, true);

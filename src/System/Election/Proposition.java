@@ -77,4 +77,12 @@ public class Proposition {
     public String getDescription() {
         return this.description;
     }
+
+    @Override
+    /**
+     * @return a string with the name of this proposition a description all delimited by semicolons
+     */
+    public String toString() {
+        return name + ";" + description +";";
+    }
 }

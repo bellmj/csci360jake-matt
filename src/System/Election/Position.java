@@ -65,7 +65,7 @@ public class Position {
     public String toString() {
         String candidateString = "";
         for(Candidate c:this.candidates){
-            candidateString += "\t" + c;
+            candidateString += ";" + c;
         }
         return  title + candidateString;
     }
