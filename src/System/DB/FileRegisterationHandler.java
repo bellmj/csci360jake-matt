@@ -1,4 +1,6 @@
 package System.DB;
+
+import System.DB.DataHandler;
 import System.Registration.RegistrationForm;
 
 import java.io.BufferedWriter;

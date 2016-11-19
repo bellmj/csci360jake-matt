@@ -249,7 +249,7 @@ public class TestMain {
                     System.out.print("Selection: ");
 
                     method = scanner.nextInt();
-                    scanner.nextInt();
+                    scanner.nextLine();
 
                     switch (method) {
                         case 0:
@@ -275,16 +275,20 @@ public class TestMain {
 
                 for (Map.Entry<Proposition, Boolean> s : ballotPropositions.entrySet()) {
                     System.out.println("\n" + s.getKey().getName() + ": " +
-                            (s.getValue() == null ? "Abstain" : s.getValue().toString()));
+                            (s.getValue() == null ? "Abstain" : (s.getValue() ? "For" : "Against")));
                 }
 
                 System.out.println("Are your selections above correct? (Y/N): ");
 
                 switch (scanner.nextLine().trim().toLowerCase()) {
-                    case "y":
+                    case "n":
                         ballotHandler.clearSelections();
                         break;
-                    case "n":
+                    case "y":
+                        ballotHandler.saveBallot();
+                        verified = true;
+                        break;
+                    default:
                         ballotHandler.saveBallot();
                         verified = true;
                         break;
