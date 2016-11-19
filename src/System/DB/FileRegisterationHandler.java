@@ -1,4 +1,5 @@
 package System.DB;
+
 import System.Registration.RegistrationForm;
 
 import java.io.BufferedWriter;
