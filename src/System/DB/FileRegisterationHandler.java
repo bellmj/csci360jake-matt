@@ -1,6 +1,4 @@
-package System;
-import System.*;
-import System.DB.DataHandler;
+package System.DB;
 import System.Registration.RegistrationForm;
 
 import java.io.BufferedWriter;
@@ -9,8 +7,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.time.Instant;
 import java.util.*;
 
 
@@ -23,13 +19,14 @@ public class FileRegisterationHandler implements DataHandler<RegistrationForm> {
     BufferedWriter bw;
     PrintWriter out;
     Random rand = new Random();
-    private final String NAME_OF_FILE = ((Integer)Math.abs(rand.nextInt())).toString();
+    private final String NAME_OF_FILE = ".registration";
     private final String DELIMITER = "END_OF_USER_INFO";
 
     public FileRegisterationHandler() {
         try {
             fw = new FileWriter(NAME_OF_FILE, true);
         } catch (IOException e) {
+
             e.printStackTrace();
         }
         bw = new BufferedWriter(fw);
@@ -38,6 +35,7 @@ public class FileRegisterationHandler implements DataHandler<RegistrationForm> {
 
     @Override
     public void add(RegistrationForm registrationForm) {
+        System.out.println("stuff");
         out.println(DELIMITER);
         out.println(registrationForm.getLegalID());
         out.println(registrationForm.getFirstName());

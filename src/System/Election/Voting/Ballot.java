@@ -79,7 +79,7 @@ public class Ballot {
      * @param proposition   Proposition - the proposition to change support for
      * @param supports  boolean - true if supports, false if opposes, null if abstains
      */
-    void changeProposition(Proposition proposition, boolean supports) {
+    void changeProposition(Proposition proposition, Boolean supports) {
         this.propositions.put(proposition, supports);
     }
 }

@@ -1,5 +1,6 @@
 package System.UI;
 
+import System.DB.FileRegisterationHandler;
 import System.Election.Candidate;
 import System.Election.ElectionHandler;
 import System.Election.Position;
@@ -17,6 +18,7 @@ import java.util.Scanner;
 public class TestMain {
 
     public static Scanner scanner;
+    public static FileRegisterationHandler registrationDBHandler;
     public static RegistrationHandler registrationHandler;
     public static BallotHandler ballotHandler;
     public static ElectionHandler electionHandler;
@@ -34,7 +36,8 @@ public class TestMain {
                 ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
 
         dbHandler = new FileBallotHandler();
-        registrationHandler = new RegistrationHandler();
+        registrationDBHandler = new FileRegisterationHandler();
+        registrationHandler = new RegistrationHandler(registrationDBHandler);
         ballotHandler = new BallotHandler(dbHandler);
         electionHandler = new ElectionHandler();
 
@@ -305,15 +308,7 @@ public class TestMain {
         System.out.print("\nEnter State ID number: ");
         String idNumber = scanner.nextLine();
 
-        boolean canVote;
-        /*
-        TODO
-        Go to DBHandler and search database for registration entry. If present,
-        voter can proceed, if absent, voter can't proceed.
-         */
-        canVote = true;
-
-        if (canVote) {
+        if (registrationDBHandler.get(idNumber) != null) {
             System.out.println("The voter is registered and can proceed to vote.\n");
         } else {
             System.out.println("The voter is not registered to vote. They must " +

@@ -1,5 +1,8 @@
 package System.Registration;
 
+import System.DB.DataHandler;
+import System.DB.FileRegisterationHandler;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,19 +17,10 @@ import java.util.Random;
  */
 public class RegistrationHandler {
 
-    private Random random;
-    private File registrationDatabase;
-    private PrintWriter writer;
+    private DataHandler<RegistrationForm> dataHandler;
 
-    public RegistrationHandler() {
-        this.random = new Random();
-        try {
-            this.registrationDatabase = new File("RegistrationDatabase.txt");
-            this.writer = new PrintWriter(registrationDatabase, "UTF-8");
-        } catch (IOException e) {
-            System.out.println("IO Error");
-            e.printStackTrace();
-        }
+    public RegistrationHandler(DataHandler<RegistrationForm> dataHandler) {
+        this.dataHandler = dataHandler;
     }
 
 //    private boolean informationIsValid(RegistrationForm form) {
@@ -34,52 +28,7 @@ public class RegistrationHandler {
 //    }
 
     public void register(RegistrationForm form) throws IllegalArgumentException {
-        String entry = "";
-
-
-        // Enter name information
-        if (form.getFirstName() == null ||
-                form.getLastName() == null) {
-            throw new IllegalArgumentException();
-        } else {
-            entry += form.getLastName() + "\t" + form.getFirstName() +
-                    "\t" + form.getMiddleName() + "\t";
-        }
-
-        // Enter birthdate/phone number
-        if (form.getBirthDate() == null ||
-                form.getPhoneNumber() == null) {
-            throw new IllegalArgumentException();
-        } else {
-            entry += form.getBirthDate() + "\t" + form.getPhoneNumber() +
-                    "\t";
-        }
-
-        // Enter ID numbers
-        if (form.getLegalID() == null) {
-            throw new IllegalArgumentException();
-        } else {
-            entry += form.getLegalID() + "\t";
-        }
-
-        // Enter address
-        if (form.getStreetAddress() == null ||
-                form.getCity() == null ||
-                form.getCounty() == null ||
-                form.getState() == null ||
-                form.getZip() == null) {
-            throw new IllegalArgumentException();
-        } else {
-            entry += form.getStreetAddress() + "\t" + form.getCity() +
-                    "\t" + form.getCounty() + "\t" + form.getState() +
-                    "\t" + form.getZip();
-        }
-
-        entry += "\n";
-        entry = random.nextInt(1000) + "\t" + entry;
-        writer.append(entry);
-        System.out.println("Success");
-
+        this.dataHandler.add(form);
     }
 
 //    public boolean canVote(String legalID) {
