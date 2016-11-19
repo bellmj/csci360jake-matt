@@ -7,6 +7,7 @@ import System.Election.Voting.Ballot;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import java.util.Map.Entry;
 public class FileBallotHandler implements DataHandler<Ballot> {
     private final String SELECTION_DELIMITEER = "END_OF_SELECTIONS";
     private final String PROPOSITION_DELIMITER = "END_OF_PROPOSITIONS";
+    private final String START_OF_ENTRY = "START_OF_ENTRY";
     FileWriter fw;
     BufferedWriter bw;
     PrintWriter out;
@@ -39,10 +41,11 @@ public class FileBallotHandler implements DataHandler<Ballot> {
 
     @Override
     public void add(Ballot ballot) {
+        out.println( START_OF_ENTRY);
         out.println(ballot.getVoterHashID());
-        ballot.getSelections().forEach((k,v) -> out.println("" + k + " " + v));
+        ballot.getSelections().forEach((k,v) -> out.println("" + k + "~" + v));
         out.println(SELECTION_DELIMITEER);
-        ballot.getPropositions().forEach((k,v) -> out.println("" + k + " " + v));
+        ballot.getPropositions().forEach((k,v) -> out.println("" + k + "\t" + v));
         out.println(PROPOSITION_DELIMITER);
         out.flush();
     }
@@ -50,12 +53,26 @@ public class FileBallotHandler implements DataHandler<Ballot> {
     @Override
     public List<Ballot> getAll() {
         try {
-            List<String> strList = Files.readAllLines(Paths.get(NAME_OF_FILE));
+            List<String> lines = Files.readAllLines(Paths.get(NAME_OF_FILE));
+            System.out.println(lines);
+            for(int i = 0; i<lines.size();i++){
+                lines.set(i, lines.get(i).trim());
+            }
+            for(int i =0;i<lines.size();i++){
+                if(lines.get(i).equals( START_OF_ENTRY)){
+                    String voterID = lines.get(i+1);
+                    i++;
+                    while(!lines.get(i).equals(SELECTION_DELIMITEER)){
+                        //todo get selections
+                        i++;
+                    }
+                }
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
-
+    return null;
     }
 
     @Override
@@ -67,6 +84,8 @@ public class FileBallotHandler implements DataHandler<Ballot> {
         String voterHashID = "adw43fladjs3";
         ArrayList<Candidate> candidateArrayList = new ArrayList<>();
         candidateArrayList.add(new Candidate(0l,"Gary Johnson","Libertarian"));
+        candidateArrayList.add(new Candidate(0l,"Jill stien","Libertarian"));
+        candidateArrayList.add(new Candidate(0l,"Donald drumpf","Libertarian"));
         selections = new HashMap<>();
         selections.put(new Position("King of the World",candidateArrayList),candidateArrayList.get(0));
         HashMap<Proposition, Boolean> propositions;
