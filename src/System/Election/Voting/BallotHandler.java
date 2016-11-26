@@ -39,6 +39,8 @@ public class BallotHandler {
     /**
      * Stores a voter's Candidate selection to their Ballot.
      *
+     * @pre position <> null
+     *
      * @param position  the Position for which the Candidate was selected
      * @param candidate the Candidate that was selected
      */
@@ -48,6 +50,8 @@ public class BallotHandler {
 
     /**
      * Stores a voter's decision on a public opinion survey.
+     *
+     * @pre proposition <> null
      *
      * @param proposition   the Proposition up for survey
      * @param supports  boolean - true if supports, false if opposes, null if abstains
@@ -66,7 +70,8 @@ public class BallotHandler {
 
     //TODO Decide whether the BallotHandler should send the ballot to DBHandler directly or not
     /**
-     *
+     *  @pre self.ballot <> null
+     *  @post self.ballot = null
      */
     public void saveBallot() {
         if (this.ballot != null) {

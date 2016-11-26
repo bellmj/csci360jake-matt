@@ -81,7 +81,7 @@ public class TestMain {
         }
 
         while (votingMachine) {
-            votingMachine = vote();
+            votingMachine = !vote();
         }
 
         scanner.close();

@@ -2,10 +2,7 @@ package System.DB;
 
 import System.Registration.RegistrationForm;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -36,7 +33,6 @@ public class FileRegisterationHandler implements DataHandler<RegistrationForm> {
 
     @Override
     public void add(RegistrationForm registrationForm) {
-        System.out.println("stuff");
         out.println(DELIMITER);
         out.println(registrationForm.getLegalID());
         out.println(registrationForm.getFirstName());
@@ -91,7 +87,7 @@ public class FileRegisterationHandler implements DataHandler<RegistrationForm> {
                     String middleName = strList.get(i+2).trim();
                     String lastName = strList.get(i+3).trim();
                     String dateString = strList.get(i+4);
-                    System.out.println(dateString);
+//                    System.out.println(dateString);
                     Calendar birthDay = new GregorianCalendar();
                     birthDay.setTimeInMillis(Long.parseLong(dateString));
                     String phoneNumber = strList.get(i+5).trim();
