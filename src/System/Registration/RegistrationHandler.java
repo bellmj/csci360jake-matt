@@ -25,8 +25,13 @@ public class RegistrationHandler {
         this.dataHandler.add(form);
     }
 
-//    public boolean canVote(String legalID) {
-//
-//    }
+    public boolean voterIsRegistered(String legalID) {
+        try {
+            return this.dataHandler.get(legalID) != null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }

@@ -4,7 +4,6 @@ import System.Registration.RegistrationForm;
 import System.Registration.RegistrationHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -86,18 +85,16 @@ public class RegistrationController implements Initializable {
 
         this.getChoices();
 
-        this.cancelButton.setOnMouseClicked(event -> {
-            ((Stage) this.cancelButton.getScene().getWindow()).close();
-        });
+        this.cancelButton.setOnMouseClicked(event -> ((Stage) this.cancelButton.getScene().getWindow()).close());
 
         this.doneButton.setOnMouseClicked(event -> {
             if (this.formIsComplete()) {
                 this.registrationHandler.register(this.getRegistrationForm());
+                Alert voterRegistered = new Alert(Alert.AlertType.INFORMATION, "Voter registered.", ButtonType.OK);
+                voterRegistered.showAndWait();
                 ((Stage) this.cancelButton.getScene().getWindow()).close();
             }
         });
-
-
     }
 
     public void setRegistrationHandler(RegistrationHandler registrationHandler) {

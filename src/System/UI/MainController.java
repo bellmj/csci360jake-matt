@@ -62,15 +62,33 @@ public class MainController implements Initializable {
                 stage.setScene(new Scene(root, 1000, 365));
                 stage.setResizable(false);
                 stage.initModality(Modality.WINDOW_MODAL);
-                stage.initOwner(StageHelper.getStages().get(0));
+                stage.initOwner(registerButton.getScene().getWindow());
                 stage.show();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
+
         verifyRegistrationButton.setOnMouseClicked(event -> {
-            //todo start verify registration
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CheckRegistration.fxml"));
+                Parent root = fxmlLoader.load();
+                CheckRegistrationController checkRegistrationController = fxmlLoader.getController();
+                checkRegistrationController.setRegistrationHandler(this.registrationHandler);
+                checkRegistrationController.reset();
+
+                Stage stage = new Stage();
+                stage.setTitle("Check Registration");
+                stage.setScene(new Scene(root, 700, 275));
+                stage.setResizable(false);
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initOwner(verifyRegistrationButton.getScene().getWindow());
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
+
         electionSetupButton.setOnMouseClicked(event -> {
             Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION,
                     "Once the program is set up as a voting machine, you " +
