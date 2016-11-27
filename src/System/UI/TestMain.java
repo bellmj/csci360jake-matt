@@ -1,6 +1,6 @@
 package System.UI;
 
-import System.DB.FileRegisterationHandler;
+import System.DB.FileRegistrationHandler;
 import System.Election.Candidate;
 import System.Election.ElectionHandler;
 import System.Election.Position;
@@ -18,7 +18,7 @@ import java.util.Scanner;
 public class TestMain {
 
     public static Scanner scanner;
-    public static FileRegisterationHandler registrationDBHandler;
+    public static FileRegistrationHandler registrationDBHandler;
     public static RegistrationHandler registrationHandler;
     public static BallotHandler ballotHandler;
     public static ElectionHandler electionHandler;
@@ -36,7 +36,7 @@ public class TestMain {
                 ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
 
         dbHandler = new FileBallotHandler();
-        registrationDBHandler = new FileRegisterationHandler();
+        registrationDBHandler = new FileRegistrationHandler();
         registrationHandler = new RegistrationHandler(registrationDBHandler);
         ballotHandler = new BallotHandler(dbHandler);
         electionHandler = new ElectionHandler();

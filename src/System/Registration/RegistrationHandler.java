@@ -1,12 +1,6 @@
 package System.Registration;
 
 import System.DB.DataHandler;
-import System.DB.FileRegisterationHandler;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Random;
 
 /**
  * A class which handles the registration of new voters and the information

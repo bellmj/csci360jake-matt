@@ -7,8 +7,7 @@ import java.util.GregorianCalendar;
 /**
  * A class which contains all of the information necessary for registering to
  * vote in South Carolina.
- *
- * @invariant phoneNumber.length() = 10
+ * * @invariant phoneNumber.length() = 10
  * @invariant firstName <> ""
  * @invariant lastName <> ""
  * @invariant birthDate <> ""

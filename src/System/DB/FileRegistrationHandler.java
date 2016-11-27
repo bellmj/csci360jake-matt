@@ -11,7 +11,7 @@ import java.util.*;
 /**
  * Created by matt on 11/18/16.
  */
-public class FileRegisterationHandler implements DataHandler<RegistrationForm> {
+public class FileRegistrationHandler implements DataHandler<RegistrationForm> {
 
     FileWriter fw;
     BufferedWriter bw;
@@ -20,7 +20,7 @@ public class FileRegisterationHandler implements DataHandler<RegistrationForm> {
     private final String NAME_OF_FILE = ".registration";
     private final String DELIMITER = "END_OF_USER_INFO";
 
-    public FileRegisterationHandler() {
+    public FileRegistrationHandler() {
         try {
             fw = new FileWriter(NAME_OF_FILE, true);
         } catch (IOException e) {
@@ -112,7 +112,7 @@ public class FileRegisterationHandler implements DataHandler<RegistrationForm> {
         RegistrationForm rf1 = new RegistrationForm("matt", "J", "Bell", "8434690500", 8, 2, 1996, "5678", "2056 comingtee ln", "Mount Pleasant", "Charelston", "SC", "29464");
         RegistrationForm rf2 = new RegistrationForm("matt", "J", "Bell", "8434690500", 8, 2, 1996, "4321", "2056 comingtee ln", "Mount Pleasant", "Charelston", "SC", "29464");
         RegistrationForm rf3 = new RegistrationForm("matt", "J", "Bell", "8434690500", 8, 2, 1996, "8765", "2056 comingtee ln", "Mount Pleasant", "Charelston", "SC", "29464");
-        FileRegisterationHandler rHandler = new FileRegisterationHandler();
+        FileRegistrationHandler rHandler = new FileRegistrationHandler();
         rHandler.add(rf);
         rHandler.add(rf1);
         rHandler.add(rf2);
