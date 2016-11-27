@@ -1,12 +1,6 @@
 package System.Registration;
 
 import System.DB.DataHandler;
-import System.DB.FileRegisterationHandler;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Random;
 
 /**
  * A class which handles the registration of new voters and the information
@@ -31,8 +25,13 @@ public class RegistrationHandler {
         this.dataHandler.add(form);
     }
 
-//    public boolean canVote(String legalID) {
-//
-//    }
+    public boolean voterIsRegistered(String legalID) {
+        try {
+            return this.dataHandler.get(legalID) != null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }
