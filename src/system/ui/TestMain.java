@@ -1,14 +1,14 @@
-package System.UI;
+package system.ui;
 
-import System.DB.FileRegistrationHandler;
-import System.Election.Candidate;
-import System.Election.ElectionHandler;
-import System.Election.Position;
-import System.Election.Proposition;
-import System.Election.Voting.BallotHandler;
-import System.Registration.RegistrationForm;
-import System.Registration.RegistrationHandler;
-import System.DB.FileBallotHandler;
+import system.db.FileRegistrationHandler;
+import system.election.Candidate;
+import system.election.ElectionHandler;
+import system.election.Position;
+import system.election.Proposition;
+import system.election.voting.BallotHandler;
+import system.registration.RegistrationForm;
+import system.registration.RegistrationHandler;
+import system.db.FileBallotHandler;
 
 import java.util.HashMap;
 import java.util.List;
@@ -49,8 +49,8 @@ public class TestMain {
         scanner = new Scanner(System.in);
 
         while (!done) {
-            System.out.print("1. Set Up Voting Machine\n" +
-                    "2. Check Voter Registration\n" +
+            System.out.print("1. Set Up voting Machine\n" +
+                    "2. Check Voter registration\n" +
                     "3. Register New Voter\n" +
                     "4. Exit Program\n" +
                     "Please select an option from above: ");
@@ -109,7 +109,7 @@ public class TestMain {
             System.out.print("1. Add Position\n" +
                     "2. Add Candidate to Position\n" +
                     "3. Add Proposition\n" +
-                    "4. Confirm Election\n" +
+                    "4. Confirm election\n" +
                     "Please select an option from above:");
 
             method = scanner.nextInt();

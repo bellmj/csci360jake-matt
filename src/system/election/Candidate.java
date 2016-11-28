@@ -1,4 +1,4 @@
-package System.Election;
+package system.election;
 
 /**
  * A class which contains information on a Candidate, including their name,

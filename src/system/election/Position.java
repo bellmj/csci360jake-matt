@@ -1,4 +1,4 @@
-package System.Election;
+package system.election;
 
 import java.util.ArrayList;
 import java.util.List;

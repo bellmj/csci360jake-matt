@@ -1,6 +1,6 @@
-package System.UI;
+package system.ui;
 
-import System.Registration.RegistrationHandler;
+import system.registration.RegistrationHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -133,12 +133,12 @@ public class CheckRegistrationController implements Initializable {
 
         if (result) {
             colorField.setStyle("-fx-background-color: green");
-            resultImage.setImage(new Image("/System/Resources/checkmark.png"));
+            resultImage.setImage(new Image("/system/resources/checkmark.png"));
             resultLabel.setText("Registered.");
             resultDescriptionLabel.setText("The voter may proceed to a polling machine.");
         } else {
             colorField.setStyle("-fx-background-color: red");
-            resultImage.setImage(new Image("/System/Resources/cross.png"));
+            resultImage.setImage(new Image("/system/resources/cross.png"));
             resultLabel.setText("Not registered.");
             resultDescriptionLabel.setText("The voter will need to register before proceeding.");
         }

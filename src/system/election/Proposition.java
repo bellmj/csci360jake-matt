@@ -1,4 +1,4 @@
-package System.Election;
+package system.election;
 
 /**
  * A class which holds information for a public opinion survey, for which a

@@ -1,6 +1,5 @@
-package System.Election;
+package system.election;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class ElectionHandler {

@@ -1,10 +1,10 @@
-package System.Election.Voting;
+package system.election.voting;
 
-import System.Election.Candidate;
-import System.Election.Position;
-import System.Election.Proposition;
-import System.DB.DBHandler;
-import System.DB.DataHandler;
+import system.election.Candidate;
+import system.election.Position;
+import system.election.Proposition;
+import system.db.DBHandler;
+import system.db.DataHandler;
 
 import java.util.HashMap;
 
@@ -13,7 +13,7 @@ import java.util.HashMap;
  * process. One instance of this class should be created when a machine
  * running this software is set up as a polling machine. As a voter is voting,
  * this class will record their selections in a <tt>Ballot</tt>. When the voter
- * has finished, this class will pass the Ballot on to the <tt>System.DB.DBHandler</tt>
+ * has finished, this class will pass the Ballot on to the <tt>system.db.DBHandler</tt>
  * so it can be stored in the database.
  *
  * @see Ballot

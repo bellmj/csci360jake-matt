@@ -1,7 +1,6 @@
-package System.Registration;
+package system.registration;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -57,7 +56,7 @@ public class RegistrationForm {
     }
 
     /**
-     * Constructs a completed <tt>System.Registration.RegistrationForm</tt> from the provided
+     * Constructs a completed <tt>system.registration.RegistrationForm</tt> from the provided
      * information. <p>
      *
      * The voter's middle name can be null.

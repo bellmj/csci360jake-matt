@@ -1,8 +1,8 @@
-package System.Election.Voting;
+package system.election.voting;
 
-import System.Election.Candidate;
-import System.Election.Position;
-import System.Election.Proposition;
+import system.election.Candidate;
+import system.election.Position;
+import system.election.Proposition;
 
 import java.util.HashMap;
 

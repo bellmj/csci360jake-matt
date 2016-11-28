@@ -1,6 +1,6 @@
-package System.DB;
+package system.db;
 
-import System.Registration.RegistrationForm;
+import system.registration.RegistrationForm;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -72,7 +72,7 @@ public class FileRegistrationHandler implements DataHandler<RegistrationForm> {
 
     @Override
     /**
-     * gets a Registration from from the users social security number
+     * gets a registration from from the users social security number
      */
     public RegistrationForm get(String social) {
 
@@ -87,7 +87,7 @@ public class FileRegistrationHandler implements DataHandler<RegistrationForm> {
                     String middleName = strList.get(i+2).trim();
                     String lastName = strList.get(i+3).trim();
                     String dateString = strList.get(i+4);
-//                    System.out.println(dateString);
+//                    system.out.println(dateString);
                     Calendar birthDay = new GregorianCalendar();
                     birthDay.setTimeInMillis(Long.parseLong(dateString));
                     String phoneNumber = strList.get(i+5).trim();

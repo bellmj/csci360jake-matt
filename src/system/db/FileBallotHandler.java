@@ -1,19 +1,16 @@
-package System.DB;
+package system.db;
 
-import System.Election.Candidate;
-import System.Election.Position;
-import System.Election.Proposition;
-import System.Election.Voting.Ballot;
+import system.election.Candidate;
+import system.election.Position;
+import system.election.Proposition;
+import system.election.voting.Ballot;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * Created by matt on 11/15/16.

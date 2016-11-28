@@ -1,11 +1,10 @@
-package System.UI;
+package system.ui;
 
-import System.DB.FileBallotHandler;
-import System.DB.FileRegistrationHandler;
-import System.Election.ElectionHandler;
-import System.Election.Voting.BallotHandler;
-import System.Registration.RegistrationHandler;
-import com.sun.javafx.stage.StageHelper;
+import system.db.FileBallotHandler;
+import system.db.FileRegistrationHandler;
+import system.election.ElectionHandler;
+import system.election.voting.BallotHandler;
+import system.registration.RegistrationHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -78,7 +77,7 @@ public class OpenScreenController implements Initializable {
                 checkRegistrationController.reset();
 
                 Stage stage = new Stage();
-                stage.setTitle("Check Registration");
+                stage.setTitle("Check registration");
                 stage.setScene(new Scene(root, 700, 275));
                 stage.setResizable(false);
                 stage.initModality(Modality.WINDOW_MODAL);

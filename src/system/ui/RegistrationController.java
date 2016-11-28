@@ -1,7 +1,7 @@
-package System.UI;
+package system.ui;
 
-import System.Registration.RegistrationForm;
-import System.Registration.RegistrationHandler;
+import system.registration.RegistrationForm;
+import system.registration.RegistrationHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;

@@ -1,10 +1,10 @@
-package System.Registration;
+package system.registration;
 
-import System.DB.DataHandler;
+import system.db.DataHandler;
 
 /**
  * A class which handles the registration of new voters and the information
- * of existing voters. A single <tt>System.Registration.RegistrationHandler</tt> is created at the
+ * of existing voters. A single <tt>system.registration.RegistrationHandler</tt> is created at the
  * initialization of the voting system.
  *
  * @see RegistrationForm

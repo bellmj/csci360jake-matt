@@ -1,4 +1,4 @@
-package System.DB;
+package system.db;
 
 import java.io.IOException;
 import java.util.List;
