@@ -10,9 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -20,6 +18,21 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * The central controller which leads to the three main functionalities of
+ * the program.
+ * <p>
+ *     From this scene, the user can press one of three <tt>Button</tt>s to
+ *     register a new voter, check the registration status of a prospective
+ *     voter, or set up a polling machine to accept votes. All windows except
+ *     for those following setup as a polling machine are children of this
+ *     controller.
+ * </p>
+ *
+ * @see RegistrationController
+ * @see CheckRegistrationController
+ * @see ElectionSetupController
+ */
 public class OpenScreenController implements Initializable {
 
     private ElectionHandler electionHandler;
@@ -38,6 +51,19 @@ public class OpenScreenController implements Initializable {
     @FXML
     private Button registerButton;
 
+
+    /**
+     * Called to initialize a controller after its root element has been
+     * completely processed.
+     *
+     * @param fxmlFileLocation
+     * The location used to resolve relative paths for the root object, or
+     * <tt>null</tt> if the location is not known.
+     *
+     * @param resources
+     * The resources used to localize the root object, or <tt>null</tt> if
+     * the root object was not localized.
+     */
     @Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
         assert image != null : "fx:id=\"image\" was not injected: check your FXML file 'OpenScreen.fxml'.";
@@ -89,16 +115,22 @@ public class OpenScreenController implements Initializable {
         });
 
         electionSetupButton.setOnMouseClicked(event -> {
-            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION,
-                    "Once the program is set up as a voting machine, you " +
-                            "will be unable to return to the menu unless " +
-                            "you restart the software. Are you sure you " +
-                            "want to continue?", ButtonType.CANCEL, ButtonType.YES);
-            confirmation.showAndWait().ifPresent(response -> {
-                if (response == ButtonType.YES) {
-                    // Begin voting setup.
-                }
-            });
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ElectionSetup.fxml"));
+                Parent root = fxmlLoader.load();
+                ElectionSetupController electionSetupController = fxmlLoader.getController();
+                electionSetupController.setElectionHandler(this.electionHandler);
+
+                Stage stage = new Stage();
+                stage.setTitle("Election Setup");
+                stage.setScene(new Scene(root, 900, 700));
+                stage.setResizable(false);
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initOwner(electionSetupButton.getScene().getWindow());
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
     }
 
