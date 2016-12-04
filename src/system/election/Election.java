@@ -26,6 +26,14 @@ public class Election {
         return rtnval;
     }
 
+    boolean addCandidateToPosition(Candidate candidate, String positionTitle) {
+        boolean rtnval = this.positions.containsKey(positionTitle);
+        if (rtnval) {
+            this.positions.get(positionTitle).addCandidate(candidate);
+        }
+        return rtnval;
+    }
+
     List<Position> getPositions() {
         List<Position> rtn = new ArrayList<>();
         for (Position p : this.positions.values()) {

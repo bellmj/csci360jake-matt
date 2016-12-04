@@ -14,7 +14,14 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 /**
- * Created by Jake's PC on 11/26/2016.
+ * A screen used to register a new voter. There are multiple fields for
+ * entering the information required to register a voter. If all of the
+ * fields are filled in correctly, the information will be complied into a
+ * <tt>RegistrationForm</tt> and saved by the <tt>RegistrationHandler</tt>.
+ *
+ * @see system.registration.RegistrationForm
+ * @see RegistrationController
+ * @see RegistrationHandler
  */
 public class RegistrationController implements Initializable {
 
@@ -65,6 +72,18 @@ public class RegistrationController implements Initializable {
     @FXML
     private Button doneButton;
 
+    /**
+     * Called to initialize a controller after its root element has been
+     * completely processed.
+     *
+     * @param fxmlFileLocation
+     * The location used to resolve relative paths for the root object, or
+     * <tt>null</tt> if the location is not known.
+     *
+     * @param resources
+     * The resources used to localize the root object, or <tt>null</tt> if
+     * the root object was not localized.
+     */
     @Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
         assert firstNameTextField != null : "fx:id=\"firstNameTextField\" was not injected: check your FXML file 'RegistrationForm.fxml'.";
@@ -97,10 +116,20 @@ public class RegistrationController implements Initializable {
         });
     }
 
+    /**
+     * Sets the <tt>RegistrationHandler</tt> for this controller. This should
+     * be done before the controller is shown.
+     *
+     * @param registrationHandler   the RegistrationHandler to use
+     */
     public void setRegistrationHandler(RegistrationHandler registrationHandler) {
         this.registrationHandler = registrationHandler;
     }
 
+    /**
+     * Sets up the <tt>ChoiceBox</tt>es for selecting a voter's state,
+     * county, and city.
+     */
     private void getChoices() {
         this.stateChoiceBox.getItems().add("SC");
         this.stateChoiceBox.setValue("SC");
@@ -115,6 +144,11 @@ public class RegistrationController implements Initializable {
         this.cityChoiceBox.setDisable(true);
     }
 
+    /**
+     * Checks whether all of the required fields have valid information in them.
+     *
+     * @return  true if form is valid, false if not
+     */
     private boolean formIsComplete() {
         ArrayList<String> errors = new ArrayList<>();
         String ssn;
@@ -156,7 +190,7 @@ public class RegistrationController implements Initializable {
         }
 
         ssn = removeSymbolsFromString(ssnTextField.getText());
-        if (ssn == "") {
+        if (ssn.equals("")) {
             errors.add("Social Security #: Required.");
         } else {
             if (!this.stringHasOnlyDigits(ssn)) {
@@ -166,7 +200,7 @@ public class RegistrationController implements Initializable {
             }
         }
 
-        if (legalIDTextField.getText() == "") {
+        if (legalIDTextField.getText().equals("")) {
             errors.add("Driver's License #: Required.");
         } if (!stringHasOnlyAlphanumerics(legalIDTextField.getText())) {
             errors.add("Driver's License #: Can only contain letters A - Z, or numbers 0 - 9.");
@@ -179,6 +213,13 @@ public class RegistrationController implements Initializable {
         return true;
     }
 
+    /**
+     * Takes the information from the <tt>Scene</tt>'s various fields and
+     * puts it into a <tt>RegistrationForm</tt> to be registered by the
+     * <tt>RegistrationHandler</tt>.
+     *
+     * @return  the completed RegistrationForm
+     */
     private RegistrationForm getRegistrationForm() {
         return new RegistrationForm(
                 firstNameTextField.getText(),
@@ -197,6 +238,13 @@ public class RegistrationController implements Initializable {
                 );
     }
 
+    /**
+     * Shows an <tt>Alert</tt> containing the errors present in the form, if
+     * the user has tried to register. Called by formIsComplete() once errors
+     * are identified.
+     *
+     * @param errors  a list of messages describing errors in the form
+     */
     private void showErrors(List<String> errors) {
         String errorString = "The form contains the following errors:\n\n";
         for (String error : errors) {
@@ -206,6 +254,12 @@ public class RegistrationController implements Initializable {
         alert.showAndWait();
     }
 
+    /**
+     * Checks that a <tt>String</tt> contains only letters or digits.
+     *
+     * @param string    the String to evaluate
+     * @return  true if string contains only alphanumerics, false if not
+     */
     private boolean stringHasOnlyAlphanumerics(String string) {
         for (char c : string.toCharArray()) {
             if (!Character.isLetterOrDigit(c)) {
@@ -215,6 +269,12 @@ public class RegistrationController implements Initializable {
         return true;
     }
 
+    /**
+     * Checks that a <tt>String</tt> contains only digits.
+     *
+     * @param string    the String to evaluate
+     * @return  true if string contains only digits, false if not
+     */
     private boolean stringHasOnlyDigits(String string) {
         for (char c : string.toCharArray()) {
             if (!Character.isDigit(c)) {
@@ -224,6 +284,13 @@ public class RegistrationController implements Initializable {
         return true;
     }
 
+    /**
+     * Removes any characters from a <tt>String</tt> which are not letters or
+     * digits.
+     *
+     * @param string    the String to filter
+     * @return  the resulting String
+     */
     private String removeSymbolsFromString(String string) {
         String rtnval = "";
         for (char c : string.toCharArray()) {
@@ -234,16 +301,14 @@ public class RegistrationController implements Initializable {
         return rtnval;
     }
 
+    /**
+     * Checks whether a specified <tt>String</tt> has a specified length.
+     *
+     * @param string    the String to evaulate
+     * @param length    the int length to check for
+     * @return  true if string is of length length, false if not
+     */
     private boolean stringHasLength(String string, int length) {
         return string.length() == length;
-    }
-
-    private String getSsnString(String ssn) {
-        ssn = this.removeSymbolsFromString(ssn);
-        if (this.stringHasOnlyDigits(ssn) && this.stringHasLength(ssn, 9)) {
-            return ssn;
-        } else {
-            return null;
-        }
     }
 }

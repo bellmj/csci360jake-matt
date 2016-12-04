@@ -42,10 +42,7 @@
 }
 
 .button {
-    -fx-background-color:
-        linear-gradient(derive(grey, 120%), derive(grey, 90%)),
-        radial-gradient(center 50% -40%, radius 180%, derive(grey, 95%) 55%, derive(grey, 75%) 55%
-        );
+    -fx-background-color: linear-gradient(to bottom, derive(grey, 80%), derive(grey, 20%));
     -fx-background-radius: 4, 3;
     -fx-background-insets: 0, 1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.55) , 5, 0.0 , 0 , 1 );
@@ -61,15 +58,33 @@
     -fx-padding: 6 0 0 13;
     -fx-background-color: derive(grey, -60%);
     -fx-text-fill: lightgrey;
+    -fx-font-size: 20px;
+}
+
+.darkList .list-cell:even {
+    -fx-background-color: derive(grey, -58%);
 }
 
 .darkList .list-cell:focused {
-    -fx-text-fill: white;
+    -fx-background-color: lightgrey;
+    -fx-text-fill: derive(grey, -60%);
 }
 
 .table-view {
     -fx-border-width: 0;
     -fx-border-color: red;
+}
+
+.tab-pane {
+    -fx-background-color: derive(grey, -60%);
+}
+
+.tab-pane *.tab-header-background {
+    -fx-background-color: transparent;
+}
+
+.tab {
+    -fx-background-color: linear-gradient(to bottom, derive(grey, 80%), derive(grey, 20%));
 }
 
 .text-area, .text-field {
@@ -85,6 +100,104 @@
     -fx-padding: 3 6 3 6;
     -fx-background-color: derive(grey, 100%);
     -fx-text-fill: black;
+}
+
+.titled-pane {
+    -fx-background-color: derive(grey, -60%);
+}
+
+.titled-pane > .title {
+    -fx-background-color: linear-gradient(to bottom, derive(grey, 80%), derive(grey, 20%));
+}
+
+.titled-pane *.content {
+    -fx-box-border-color: transparent;
+    -fx-padding: 0px;
+    -fx-background-insets: 0, 0 0 0 0;
+}
+
+.scroll-pane {
+    -fx-background-color: derive(grey, -60%);
+    -fx-border-color: derive(grey, 20%);
+    -fx-padding: 0px;
+}
+
+.scroll-bar{
+    -fx-background-color: derive(grey, -60%);
+    -fx-background-radius: 2em;
+}
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+    -fx-border-color:transparent;
+    -fx-background-radius: 2em;
+}
+.scroll-bar:vertical .track-background,
+.scroll-bar:horizontal .track-background {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 2em;
+}
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: derive(grey, -20%);
+    -fx-background-insets: 4 0 4 0;
+    -fx-background-radius: 2em;
+}
+.scroll-bar:vertical .thumb {
+    -fx-background-color: derive(grey, -20%);
+    -fx-background-insets: 0 4 0 4;
+    -fx-background-radius: 2em;
+}
+.scroll-bar:horizontal .thumb:hover,
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: grey;
+}
+.scroll-bar:horizontal .thumb:pressed,
+.scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: grey;
+}
+.scroll-bar:vertical .increment-button, .scroll-bar:vertical .decrement-button {
+    -fx-background-color:transparent;
+    -fx-background-radius: 2em;
+    -fx-padding: 5;
+}
+.scroll-bar:horizontal .increment-button, .scroll-bar:horizontal .decrement-button {
+    -fx-background-color:transparent;
+    -fx-background-radius: 2em;
+    -fx-padding: 5;
+}
+.scroll-bar:horizontal .increment-arrow {
+    -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
+    -fx-background-color: derive(grey, -20%);
+    -fx-padding: 0.25em;
+    -fx-rotate: -90;
+}
+.scroll-bar:vertical .increment-arrow {
+    -fx-background-color: derive(grey, -20%);
+    -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
+    -fx-padding: 0.25em;
+    -fx-rotate: 0;
+}
+.scroll-bar:horizontal .decrement-arrow {
+    -fx-background-color: derive(grey, -20%);
+    -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
+    -fx-padding: 0.25em;
+    -fx-rotate: 90;
+}
+.scroll-bar:vertical .decrement-arrow {
+    -fx-background-color: derive(grey, -20%);
+    -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
+    -fx-padding: 0.25em;
+    -fx-rotate: -180;
+}
+.scroll-bar:vertical:focused,
+.scroll-bar:horizontal:focused {
+    -fx-background-color: transparent,grey,grey;
+}
+
+.list-view {
+    -fx-background-color: derive(grey, -60%);
+    -fx-alternative-row-fill-visible: derive(grey, -20%);
 }
 
 .label {
