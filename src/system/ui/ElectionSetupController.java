@@ -3,19 +3,37 @@ package system.ui;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import system.election.ElectionHandler;
+import system.election.voting.BallotHandler;
 
 import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controls the setup of an <tt>Election</tt>. The user will be able to
+ * define <tt>Position</tt>s up for election, <tt>Candidate</tt>s running for
+ * those positions, and public opinions surveys.
+ * <p>
+ *     For convenience, the user can load and save .elec files which contain
+ *     data for each ListView. This makes it easier to disperse election
+ *     options from the top down, as the federal positions can be added, then
+ *     sent to each state, where they would put in state-level positions, and
+ *     so on.
+ * </p>
+ */
 public class ElectionSetupController implements Initializable {
 
     @FXML
@@ -61,6 +79,7 @@ public class ElectionSetupController implements Initializable {
     private Button doneButton;
 
     private ElectionHandler electionHandler;
+    private BallotHandler ballotHandler;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -74,25 +93,41 @@ public class ElectionSetupController implements Initializable {
      * The resources used to localize the root object, or <tt>null</tt> if
      * the root object was not localized.
      */
+    @Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
-        assert tabPane != null : "fx:id=\"tabPane\" was not injected: check your FXML file 'ElectionSetup.fxml'.";
-        assert positionListView != null : "fx:id=\"positionListView\" was not injected: check your FXML file 'ElectionSetup.fxml'.";
-        assert propositionListView != null : "fx:id=\"propositionListView\" was not injected: check your FXML file 'ElectionSetup.fxml'.";
-        assert addPosButton != null : "fx:id=\"addPosButton\" was not injected: check your FXML file 'ElectionSetup.fxml'.";
-        assert addCanButton != null : "fx:id=\"addCanButton\" was not injected: check your FXML file 'ElectionSetup.fxml'.";
-        assert addPropButton != null : "fx:id=\"addCanButton\" was not injected: check your FXML file 'ElectionSetup.fxml'.";
-        assert editPosCanButton != null : "fx:id=\"editPosCanButton\" was not injected: check your FXML file 'ElectionSetup.fxml'.";
-        assert editPropButton != null : "fx:id=\"editPropButton\" was not injected: check your FXML file 'ElectionSetup.fxml'.";
-        assert deletePosCanButton != null : "fx:id=\"deletePosCanButton\" was not injected: check your FXML file 'ElectionSetup.fxml'.";
-        assert deletePropButton != null : "fx:id=\"deletePropButton\" was not injected: check your FXML file 'ElectionSetup.fxml'.";
-        assert loadButton != null : "fx:id=\"loadButton\" was not injected: check your FXML file 'ElectionSetup.fxml'.";
-        assert saveButton != null : "fx:id=\"saveButton\" was not injected: check your FXML file 'ElectionSetup.fxml'.";
-        assert cancelButton != null : "fx:id=\"cancelButton\" was not injected: check your FXML file 'ElectionSetup.fxml'.";
-        assert doneButton != null : "fx:id=\"doneButton\" was not injected: check your FXML file 'ElectionSetup.fxml'.";
+        assert tabPane != null : "fx:id=\"tabPane\" was not injected: check your" +
+                " FXML file 'ElectionSetup.fxml'.";
+        assert positionListView != null : "fx:id=\"positionListView\" was not " +
+                "injected: check your FXML file 'ElectionSetup.fxml'.";
+        assert propositionListView != null : "fx:id=\"propositionListView\" was " +
+                "not injected: check your FXML file 'ElectionSetup.fxml'.";
+        assert addPosButton != null : "fx:id=\"addPosButton\" was not injected: " +
+                "check your FXML file 'ElectionSetup.fxml'.";
+        assert addCanButton != null : "fx:id=\"addCanButton\" was not injected: " +
+                "check your FXML file 'ElectionSetup.fxml'.";
+        assert addPropButton != null : "fx:id=\"addCanButton\" was not injected: " +
+                "check your FXML file 'ElectionSetup.fxml'.";
+        assert editPosCanButton != null : "fx:id=\"editPosCanButton\" was not " +
+                "injected: check your FXML file 'ElectionSetup.fxml'.";
+        assert editPropButton != null : "fx:id=\"editPropButton\" was not " +
+                "injected: check your FXML file 'ElectionSetup.fxml'.";
+        assert deletePosCanButton != null : "fx:id=\"deletePosCanButton\" was not " +
+                "injected: check your FXML file 'ElectionSetup.fxml'.";
+        assert deletePropButton != null : "fx:id=\"deletePropButton\" was not " +
+                "injected: check your FXML file 'ElectionSetup.fxml'.";
+        assert loadButton != null : "fx:id=\"loadButton\" was not injected: check " +
+                "your FXML file 'ElectionSetup.fxml'.";
+        assert saveButton != null : "fx:id=\"saveButton\" was not injected: check " +
+                "your FXML file 'ElectionSetup.fxml'.";
+        assert cancelButton != null : "fx:id=\"cancelButton\" was not injected: " +
+                "check your FXML file 'ElectionSetup.fxml'.";
+        assert doneButton != null : "fx:id=\"doneButton\" was not injected: check " +
+                "your FXML file 'ElectionSetup.fxml'.";
 
         positionListView.setEditable(false);
         positionListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        positionListView.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<String>() {
+        positionListView.getSelectionModel().getSelectedItems().addListener(
+                new ListChangeListener<String>() {
             @Override
             public void onChanged(Change<? extends String> c) {
                 setAvailablePosCanButtons();
@@ -101,7 +136,8 @@ public class ElectionSetupController implements Initializable {
 
         propositionListView.setEditable(false);
         propositionListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        propositionListView.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<String>() {
+        propositionListView.getSelectionModel().getSelectedItems().addListener(
+                new ListChangeListener<String>() {
             @Override
             public void onChanged(Change<? extends String> c) {
                 setAvailablePropButtons();
@@ -114,35 +150,33 @@ public class ElectionSetupController implements Initializable {
         editPosCanButton.setDisable(true);
         editPropButton.setDisable(true);
 
+        // Configure Button actions
         addPosButton.setOnAction(action -> addPosition());
-
         addCanButton.setOnAction(action -> addCandidate());
-
         addPropButton.setOnAction(action -> addProposition());
-
         editPosCanButton.setOnAction(action -> {
-            if (positionListView.getSelectionModel().getSelectedItem().substring(0, 1).equals("\t")) {
+            if (positionListView.getSelectionModel().getSelectedItem()
+                    .substring(0, 1).equals("\t")) {
                 editCandidate();
             } else {
                 editPosition();
             }
         });
-
         editPropButton.setOnAction(action -> editProposition());
-
         deletePosCanButton.setOnAction(action -> {
-            if (positionListView.getSelectionModel().getSelectedItem().substring(0, 1).equals("\t")) {
+            if (positionListView.getSelectionModel().getSelectedItem()
+                    .substring(0, 1).equals("\t")) {
                 deleteCandidate();
             } else {
                 deletePosition();
             }
         });
-
         deletePropButton.setOnAction(action -> deleteProposition());
-
         loadButton.setOnAction(action -> {
             if (!electionIsEmpty()) {
-                Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION, "Overwrite this election?", ButtonType.YES, ButtonType.CANCEL);
+                Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION,
+                        "Overwrite this election?",
+                        ButtonType.YES, ButtonType.CANCEL);
                 confirmation.showAndWait().ifPresent(response -> {
                     if (response == ButtonType.YES) {
                         loadElectionFromFile();
@@ -152,15 +186,13 @@ public class ElectionSetupController implements Initializable {
                 loadElectionFromFile();
             }
         });
-
         saveButton.setOnAction(action -> {
             if (!electionIsEmpty()) {
                 saveElectionToFile();
             }
         });
-
-        cancelButton.setOnAction(action -> ((Stage) this.cancelButton.getScene().getWindow()).close());
-
+        cancelButton.setOnAction(action -> ((Stage) this.cancelButton.getScene()
+                .getWindow()).close());
         doneButton.setOnAction(action -> {
             Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION,
                     "Once the program is set up as a voting machine, you " +
@@ -171,7 +203,29 @@ public class ElectionSetupController implements Initializable {
                 if (response == ButtonType.YES) {
                     try {
                         saveElection();
-                        // TODO Switch to fullscreen voting
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass()
+                                .getResource("VotingHome.fxml"));
+                        Parent root = fxmlLoader.load();
+                        VotingController votingController = fxmlLoader
+                                .getController();
+                        votingController.setBallotHandler(ballotHandler);
+                        votingController.setElectionHandler(electionHandler);
+
+                        Stage stage = new Stage();
+                        stage.setTitle("Polling Machine");
+                        stage.setScene(new Scene(root));
+                        stage.setFullScreen(true);
+                        stage.setResizable(false);
+                        stage.setFullScreenExitHint("");
+                        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+                        stage.initModality(Modality.WINDOW_MODAL);
+                        Stage thisStage = ((Stage) this.doneButton.getScene()
+                                .getWindow());
+                        ((Stage) thisStage.getOwner()).close();
+                        thisStage.close();
+                        stage.show();
+
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -180,14 +234,37 @@ public class ElectionSetupController implements Initializable {
         });
     }
 
+    /**
+     * Sets the <tt>ElectionHandler</tt> for this controller. This should
+     * be done before the controller is shown.
+     *
+     * @param electionHandler   the ElectionHandler to use
+     */
     public void setElectionHandler(ElectionHandler electionHandler) {
         this.electionHandler = electionHandler;
     }
 
+    /**
+     * Sets the <tt>BallotHandler</tt> for this controller. This should
+     * be done before the controller is shown.
+     *
+     * @param ballotHandler   the BallotHandler to use
+     */
+    public void setBallotHandler(BallotHandler ballotHandler) {
+        this.ballotHandler = ballotHandler;
+    }
+
+    /**
+     * Converts the data input from the user into an <tt>Election</tt>.
+     */
     private void saveElection() {
         electionHandler.createElectionFromString(electionToString());
     }
-    
+
+    /**
+     * Updates the <tt>Button</tt>s in the Positions and Candidates view,
+     * determining which should be disabled.
+     */
     private void setAvailablePosCanButtons() {
         if (positionListView.getSelectionModel().getSelectedItem() != null) {
             editPosCanButton.setDisable(false);
@@ -200,6 +277,10 @@ public class ElectionSetupController implements Initializable {
         }
     }
 
+    /**
+     * Updates the <tt>Button</tt>s in the Public Opinion Surveys view,
+     * determining which should be disabled.
+     */
     private void setAvailablePropButtons() {
         if (positionListView.getSelectionModel().getSelectedItem() != null)  {
             editPropButton.setDisable(false);
@@ -210,6 +291,9 @@ public class ElectionSetupController implements Initializable {
         }
     }
 
+    /**
+     * Shows a <tt>Dialog</tt> for adding a <tt>Position</tt>.
+     */
     private void addPosition() {
         Dialog<String> addDialog = new Dialog<>();
         addDialog.setTitle("Add Position");
@@ -229,7 +313,8 @@ public class ElectionSetupController implements Initializable {
         gridPane.add(titleTextField, 1, 0);
         vBox.getChildren().addAll(gridPane, emptyLabel);
 
-        addDialog.getDialogPane().lookupButton(addButtonType).addEventFilter(ActionEvent.ACTION, event -> {
+        addDialog.getDialogPane().lookupButton(addButtonType).addEventFilter(
+                ActionEvent.ACTION, event -> {
             if (titleTextField.getText().equals("")) {
                 emptyLabel.setVisible(true);
                 event.consume();
@@ -246,15 +331,20 @@ public class ElectionSetupController implements Initializable {
 
         addDialog.getDialogPane().setContent(vBox);
 
-        addDialog.showAndWait().ifPresent(response -> positionListView.getItems().add(response));
+        addDialog.showAndWait().ifPresent(response ->
+                positionListView.getItems().add(response));
     }
 
+    /**
+     * Shows a <tt>Dialog</tt> for adding a <tt>Candidate</tt>.
+     */
     private void addCandidate() {
         int index = positionListView.getSelectionModel().getSelectedIndex();
 
         do {
             index++;
-        } while (index < positionListView.getItems().size() && positionListView.getItems().get(index).charAt(0) == '\t');
+        } while (index < positionListView.getItems().size() &&
+                positionListView.getItems().get(index).charAt(0) == '\t');
 
         int newIndex = index;
 
@@ -281,8 +371,10 @@ public class ElectionSetupController implements Initializable {
         gridPane.add(partyTextField, 1, 1);
         vBox.getChildren().addAll(gridPane, emptyLabel);
 
-        addDialog.getDialogPane().lookupButton(addButtonType).addEventFilter(ActionEvent.ACTION, event -> {
-            if (nameTextField.getText().equals("") || partyTextField.getText().equals("")) {
+        addDialog.getDialogPane().lookupButton(addButtonType).addEventFilter(
+                ActionEvent.ACTION, event -> {
+            if (nameTextField.getText().equals("") ||
+                    partyTextField.getText().equals("")) {
                 emptyLabel.setVisible(true);
                 event.consume();
             }
@@ -290,7 +382,8 @@ public class ElectionSetupController implements Initializable {
 
         addDialog.setResultConverter(buttonType -> {
             if (buttonType == addButtonType) {
-                return new Pair<>(nameTextField.getText(), partyTextField.getText());
+                return new Pair<>(nameTextField.getText(),
+                        partyTextField.getText());
             } else {
                 return null;
             }
@@ -298,11 +391,16 @@ public class ElectionSetupController implements Initializable {
 
         addDialog.getDialogPane().setContent(vBox);
         addDialog.showAndWait().ifPresent(response -> {
-            positionListView.getItems().add(newIndex, "\t" + response.getKey());
-            positionListView.getItems().add(newIndex + 1, "\t\tParty: " + response.getValue());
+            positionListView.getItems().add(newIndex, "\t" +
+                    response.getKey());
+            positionListView.getItems().add(newIndex + 1, "\t\tParty: " +
+                    response.getValue());
         });
     }
 
+    /**
+     * Shows a <tt>Dialog</tt> for adding a public opinion survey.
+     */
     private void addProposition() {
         Dialog<Pair<String, String>> addDialog = new Dialog<>();
         addDialog.setTitle("Add Proposition");
@@ -328,8 +426,10 @@ public class ElectionSetupController implements Initializable {
         gridPane.add(descriptionTextArea, 1, 1);
         vBox.getChildren().addAll(gridPane, emptyLabel);
 
-        addDialog.getDialogPane().lookupButton(addButtonType).addEventFilter(ActionEvent.ACTION, event -> {
-            if (titleTextField.getText().equals("") || descriptionTextArea.getText().equals("")) {
+        addDialog.getDialogPane().lookupButton(addButtonType).addEventFilter(
+                ActionEvent.ACTION, event -> {
+            if (titleTextField.getText().equals("") ||
+                    descriptionTextArea.getText().equals("")) {
                 emptyLabel.setVisible(true);
                 event.consume();
             }
@@ -337,7 +437,8 @@ public class ElectionSetupController implements Initializable {
 
         addDialog.setResultConverter(buttonType -> {
             if (buttonType == addButtonType) {
-                return new Pair<>(titleTextField.getText(), descriptionTextArea.getText().replace("\n", ""));
+                return new Pair<>(titleTextField.getText(),
+                        descriptionTextArea.getText().replace("\n", ""));
             } else {
                 return null;
             }
@@ -350,13 +451,17 @@ public class ElectionSetupController implements Initializable {
         });
     }
 
+    /**
+     * Deletes the selected position from the <tt>ListView</tt>.
+     */
     private void deletePosition() {
         int index1 = positionListView.getSelectionModel().getSelectedIndex();
         int index2 = index1;
 
         do {
             index2++;
-        } while (index2 < positionListView.getItems().size() && positionListView.getItems().get(index2).charAt(0) == '\t');
+        } while (index2 < positionListView.getItems().size() &&
+                positionListView.getItems().get(index2).charAt(0) == '\t');
 
         do {
             index2--;
@@ -364,24 +469,35 @@ public class ElectionSetupController implements Initializable {
         } while (index2 > index1);
     }
 
+    /**
+     * Deletes the selected candidate from the <tt>ListView</tt>.
+     */
     private void deleteCandidate() {
         int index = positionListView.getSelectionModel().getSelectedIndex();
-        if (positionListView.getSelectionModel().getSelectedItem().substring(0, 2).equals("\t\t")) {
+        if (positionListView.getSelectionModel().getSelectedItem()
+                .substring(0, 2).equals("\t\t")) {
             index--;
         }
         positionListView.getItems().remove(index);
         positionListView.getItems().remove(index);
     }
 
+    /**
+     * Deletes the selected public opinion survey from the <tt>ListView</tt>.
+     */
     private void deleteProposition() {
         int index = propositionListView.getSelectionModel().getSelectedIndex();
-        if (propositionListView.getSelectionModel().getSelectedItem().substring(0, 1).equals("\t")) {
+        if (propositionListView.getSelectionModel().getSelectedItem()
+                .substring(0, 1).equals("\t")) {
             index--;
         }
         propositionListView.getItems().remove(index);
         propositionListView.getItems().remove(index);
     }
 
+    /**
+     * Shows a <tt>Dialog</tt> for editing a <tt>Position</tt>.
+     */
     private void editPosition() {
         String currentValue = positionListView.getSelectionModel().getSelectedItem();
         int index = positionListView.getSelectionModel().getSelectedIndex();
@@ -404,7 +520,8 @@ public class ElectionSetupController implements Initializable {
         gridPane.add(titleTextField, 1, 0);
         vBox.getChildren().addAll(gridPane, emptyLabel);
 
-        editDialog.getDialogPane().lookupButton(editButtonType).addEventFilter(ActionEvent.ACTION, event -> {
+        editDialog.getDialogPane().lookupButton(editButtonType).addEventFilter(
+                ActionEvent.ACTION, event -> {
             if (titleTextField.getText().equals("")) {
                 emptyLabel.setVisible(true);
                 event.consume();
@@ -420,9 +537,13 @@ public class ElectionSetupController implements Initializable {
         });
 
         editDialog.getDialogPane().setContent(vBox);
-        editDialog.showAndWait().ifPresent(response -> positionListView.getItems().set(index, response));
+        editDialog.showAndWait().ifPresent(response ->
+                positionListView.getItems().set(index, response));
     }
 
+    /**
+     * Shows a <tt>Dialog</tt> for editing a <tt>Candidate</tt>.
+     */
     private void editCandidate() {
         String currentNameValue = positionListView.getSelectionModel().getSelectedItem();
         String currentPartyValue;
@@ -459,8 +580,10 @@ public class ElectionSetupController implements Initializable {
         gridPane.add(partyTextField, 1, 1);
         vBox.getChildren().addAll(gridPane, emptyLabel);
 
-        editDialog.getDialogPane().lookupButton(editButtonType).addEventFilter(ActionEvent.ACTION, event -> {
-            if (nameTextField.getText().equals("") || partyTextField.getText().equals("")) {
+        editDialog.getDialogPane().lookupButton(editButtonType).addEventFilter(
+                ActionEvent.ACTION, event -> {
+            if (nameTextField.getText().equals("") ||
+                    partyTextField.getText().equals("")) {
                 emptyLabel.setVisible(true);
                 event.consume();
             }
@@ -468,7 +591,8 @@ public class ElectionSetupController implements Initializable {
 
         editDialog.setResultConverter(buttonType -> {
             if (buttonType == editButtonType) {
-                return new Pair<>(nameTextField.getText(), partyTextField.getText());
+                return new Pair<>(nameTextField.getText(),
+                        partyTextField.getText());
             } else {
                 return null;
             }
@@ -477,10 +601,14 @@ public class ElectionSetupController implements Initializable {
         editDialog.getDialogPane().setContent(vBox);
         editDialog.showAndWait().ifPresent(response -> {
             positionListView.getItems().set(index, "\t" + response.getKey());
-            positionListView.getItems().set(index + 1, "\t\tParty: " + response.getValue());
+            positionListView.getItems().set(index + 1, "\t\tParty: " +
+                    response.getValue());
         });
     }
 
+    /**
+     * Shows a <tt>Dialog</tt> for editing a public opinion survey.
+     */
     private void editProposition() {
         String currentTitleValue = propositionListView.getSelectionModel().getSelectedItem();
         String currentDescriptionValue;
@@ -517,7 +645,8 @@ public class ElectionSetupController implements Initializable {
         gridPane.add(descriptionTextArea, 1, 1);
         vBox.getChildren().addAll(gridPane, emptyLabel);
 
-        editDialog.getDialogPane().lookupButton(editButtonType).addEventFilter(ActionEvent.ACTION, event -> {
+        editDialog.getDialogPane().lookupButton(editButtonType).addEventFilter(
+                ActionEvent.ACTION, event -> {
             if (titleTextField.getText().equals("")) {
                 emptyLabel.setVisible(true);
                 event.consume();
@@ -526,7 +655,8 @@ public class ElectionSetupController implements Initializable {
 
         editDialog.setResultConverter(buttonType -> {
             if (buttonType == editButtonType) {
-                return new Pair<>(titleTextField.getText(), descriptionTextArea.getText().replace("\n", ""));
+                return new Pair<>(titleTextField.getText(),
+                        descriptionTextArea.getText().replace("\n", ""));
             } else {
                 return null;
             }
@@ -534,10 +664,18 @@ public class ElectionSetupController implements Initializable {
         editDialog.getDialogPane().setContent(vBox);
         editDialog.showAndWait().ifPresent(response -> {
             propositionListView.getItems().set(index, response.getKey());
-            propositionListView.getItems().set(index + 1, "\t" + response.getValue());
+            propositionListView.getItems().set(index + 1, "\t" +
+                    response.getValue());
         });
     }
 
+    /**
+     * Converts the information in the <tt>ListView</tt>s into a
+     * <tt>String</tt>, which can be put into an <tt>Election</tt> by an
+     * <tt>ElectionHandler</tt>.
+     *
+     * @return  the resulting String
+     */
     private String electionToString() {
 
         String electionString = "";
@@ -546,7 +684,8 @@ public class ElectionSetupController implements Initializable {
             for (int i = 0; i < positionListView.getItems().size() - 1; i++) {
                 electionString += positionListView.getItems().get(i) + "\n";
             }
-            electionString += positionListView.getItems().get(positionListView.getItems().size() - 1);
+            electionString += positionListView.getItems()
+                    .get(positionListView.getItems().size() - 1);
         } else {
             electionString += "-1";
         }
@@ -557,7 +696,8 @@ public class ElectionSetupController implements Initializable {
             for (int j = 0; j < propositionListView.getItems().size() - 1; j++) {
                 electionString += propositionListView.getItems().get(j) + "\n";
             }
-            electionString += propositionListView.getItems().get(propositionListView.getItems().size() - 1);
+            electionString += propositionListView.getItems()
+                    .get(propositionListView.getItems().size() - 1);
         } else {
             electionString += "-1";
         }
@@ -565,10 +705,18 @@ public class ElectionSetupController implements Initializable {
         return electionString;
     }
 
+    /**
+     * Serializes the <tt>String</tt> representation of the election data to
+     * an .elec file.
+     *
+     * @return  whether serialization was successful
+     */
     private boolean saveElectionToFile() {
         try {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("Election File (*.elec)", "*.elec"));
+            fileChooser.getExtensionFilters().setAll(
+                    new FileChooser.ExtensionFilter("Election File (*.elec)", "*.elec")
+            );
             fileChooser.setTitle("Save Election File");
             File file = fileChooser.showSaveDialog(saveButton.getScene().getWindow());
 
@@ -588,15 +736,26 @@ public class ElectionSetupController implements Initializable {
         }
     }
 
-    private void loadElectionFromFile() {
+    /**
+     * Deserializes a <tt>String</tt> representing election data from an
+     * .elec file.
+     *
+     * @return  whether deserialization was successful
+     */
+    private boolean loadElectionFromFile() {
         try {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("Election File (*.elec)", "*.elec"));
+            fileChooser.getExtensionFilters().setAll(
+                    new FileChooser.ExtensionFilter("Election File (*.elec)", "*.elec")
+            );
             fileChooser.setTitle("Open Election File");
             File file = fileChooser.showOpenDialog(loadButton.getScene().getWindow());
 
-            if (!file.getPath().substring(file.getPath().lastIndexOf(".")).equals(".elec")) {
-                Alert invalidFileAlert = new Alert(Alert.AlertType.ERROR, "Must be \".elec\" file.", ButtonType.OK);
+            if (!file.getPath().substring(file.getPath().lastIndexOf("."))
+                    .equals(".elec")) {
+                Alert invalidFileAlert = new Alert(Alert.AlertType.ERROR,
+                        "Must be \".elec\" file.",
+                        ButtonType.OK);
                 invalidFileAlert.showAndWait();
                 throw new IOException();
             }
@@ -611,11 +770,20 @@ public class ElectionSetupController implements Initializable {
 
             in.close();
             ois.close();
+
+            return true;
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
+    /**
+     * Loads a <tt>String</tt> representation of election data into each
+     * <tt>ListView</tt>.
+     *
+     * @param electionString    the String to load in
+     */
     private void putElectionStringInController(String electionString) {
         String[] listViews = electionString.split("::");
 
@@ -629,12 +797,16 @@ public class ElectionSetupController implements Initializable {
 
                 for (int j = i + 1; j <= posCanLines.length; j++) {
 
-                    if (j >= posCanLines.length || !posCanLines[j].substring(0, 1).equals("\t")) {
+                    if (j >= posCanLines.length ||
+                            !posCanLines[j].substring(0, 1).equals("\t")) {
                         i = j - 1;
                         break;
                     }
 
-                    positionListView.getItems().addAll(posCanLines[j], posCanLines[j + 1]);
+                    positionListView.getItems().addAll(
+                            posCanLines[j],
+                            posCanLines[j + 1]
+                    );
                     j++;
                 }
             }
@@ -645,12 +817,20 @@ public class ElectionSetupController implements Initializable {
             String[] propLines = listViews[1].split("\n");
 
             for (int i = 0; i < propLines.length; i++) {
-                propositionListView.getItems().addAll(propLines[i], propLines[i + 1]);
+                propositionListView.getItems().addAll(
+                        propLines[i],
+                        propLines[i + 1]
+                );
                 i++;
             }
         }
     }
 
+    /**
+     * Checks whether any election data is entered.
+     *
+     * @return  true if no data is entered
+     */
     private boolean electionIsEmpty() {
         return positionListView.getItems().isEmpty() &&
                 propositionListView.getItems().isEmpty();

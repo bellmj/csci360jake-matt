@@ -120,6 +120,7 @@ public class OpenScreenController implements Initializable {
                 Parent root = fxmlLoader.load();
                 ElectionSetupController electionSetupController = fxmlLoader.getController();
                 electionSetupController.setElectionHandler(this.electionHandler);
+                electionSetupController.setBallotHandler(this.ballotHandler);
 
                 Stage stage = new Stage();
                 stage.setTitle("Election Setup");
