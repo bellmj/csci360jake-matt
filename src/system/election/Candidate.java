@@ -49,6 +49,9 @@ public class Candidate {
     public String getParty() {
         return this.party;
     }
+    void setVotes(long x){
+
+    }
 
     /**
      * Returns the number of votes that the candidate has received.

@@ -60,11 +60,11 @@ public class BallotHandler {
         this.ballot.changeProposition(proposition, supports);
     }
 
-    public HashMap<Position, Candidate> getCandidateSelections() {
+    public HashMap<String, Candidate> getCandidateSelections() {
         return this.ballot.getSelections();
     }
 
-    public HashMap<Proposition, Boolean> getPropositionSelections() {
+    public HashMap<String, Boolean> getPropositionSelections() {
         return this.ballot.getPropositions();
     }
 

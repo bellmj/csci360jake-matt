@@ -1,8 +1,6 @@
 package system.election;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Election {
 
@@ -12,6 +10,28 @@ public class Election {
     Election() {
         this.positions = new HashMap<>();
         this.propositions = new HashMap<>();
+    }
+    void addVote(String position,Candidate candidate) throws IllegalArgumentException{
+        System.out.println(position + " " +candidate.getName());
+        if(!position.contains(position))
+            throw new IllegalArgumentException("position not contained in election");
+        Position position1 = positions.get(position);
+        if(position1==null){
+            position1 = new Position(position);
+        }
+        Map<String,Candidate> actualCandidates = position1.getActualCandidates();
+        if(!actualCandidates.containsKey(candidate.getName())){
+           candidate.setVotes(0l);
+           actualCandidates.put(candidate.getName(),candidate);
+        }else {
+            actualCandidates.get(candidate.getName()).addVote();
+        }
+    }
+    void addPropositionVote(String proposition,Boolean vote) throws IllegalArgumentException{
+        if(!propositions.containsKey(proposition)) {
+            throw new IllegalArgumentException("proposition not contained in election");
+        }
+        propositions.get(proposition).addVote(vote);
     }
 
     void addPosition(Position position) {
@@ -34,24 +54,16 @@ public class Election {
         return rtnval;
     }
 
-    List<Position> getPositions() {
-        List<Position> rtn = new ArrayList<>();
-        for (Position p : this.positions.values()) {
-            rtn.add(new Position(p.getTitle(), p.getCandidates()));
-        }
-        return rtn;
+    HashMap<String,Position> getPositions() {
+        return positions;
     }
 
     void addProposition(Proposition proposition) {
         this.propositions.put(proposition.getName(), proposition);
     }
 
-    List<Proposition> getPropositions() {
-        List<Proposition> rtn = new ArrayList<>();
-        for (Proposition p : this.propositions.values()) {
-            rtn.add(new Proposition(p.getName(), p.getDescription()));
-        }
-        return rtn;
+    HashMap<String,Proposition> getPropositions() {
+        return propositions;
     }
 
 }
