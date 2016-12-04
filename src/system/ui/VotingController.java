@@ -3,7 +3,7 @@ package system.ui;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import system.election.ElectionHandler;
@@ -21,9 +21,6 @@ import java.util.ResourceBundle;
  * @see ElectionHandler
  */
 public class VotingController implements Initializable {
-
-    @FXML
-    private ImageView imageView;
 
     @FXML
     private Button voteButton;
@@ -51,8 +48,6 @@ public class VotingController implements Initializable {
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
 
         // VotingHome.fxml
-        assert imageView != null : "fx:id=\"imageView\" was not injected: " +
-                "check your FXML file 'VotingHome.fxml'.";
         assert voteButton != null : "fx:id=\"voteButton\" was not injected: " +
                 "check your FXML file 'VotingHome.fxml'.";
         assert exitButton != null : "fx:id=\"exitButton\" was not injected: " +
@@ -60,7 +55,18 @@ public class VotingController implements Initializable {
 
 
         voteButton.setOnAction(action -> {
-            //TODO Commence voting.
+            Dialog<String> hashStringDailog = new Dialog<String>();
+            ButtonType doneButtonType = new ButtonType("Done", ButtonBar
+                    .ButtonData.OK_DONE);
+            hashStringDailog.getDialogPane().getButtonTypes().addAll
+                    (doneButtonType, ButtonType.CANCEL);
+
+            Label forPollworkerLabel = new Label("FOR POLLWORKER");
+            forPollworkerLabel.setStyle("-fx-font-size: 22;");
+            forPollworkerLabel.setStyle("-fx-padding: 20px");
+            Label IDLabel = new Label("Voter's hashed ID#: ");
+            TextField IDTextField = new TextField();
+
         });
         exitButton.setOnAction(action -> Platform.exit());
 
