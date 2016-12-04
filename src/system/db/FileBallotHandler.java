@@ -27,7 +27,7 @@ public class FileBallotHandler implements DataHandler<Ballot> {
 
     public FileBallotHandler() {
         try {
-            fw = new FileWriter(NAME_OF_FILE, true);
+            fw = new FileWriter(NAME_OF_FILE,true);
         } catch (IOException e) {
             e.printStackTrace();
         }

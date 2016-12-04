@@ -146,12 +146,12 @@ public class ElectionHandler {
      * Prints a text representation of the <tt>Election</tt> to the console.
      */
     public void printElection() {
-        for (Map.Entry<String,Position> entry : getPositions().entrySet()) {
+        for (Map.Entry<String,Position> entry : election.getPositions().entrySet()) {
             Position position = entry.getValue();
             System.out.println("Position: " + position.getTitle());
             for (Candidate candidate : position.getCandidates()) {
                 System.out.println("\tCandidate: " + candidate.getName() + " " + candidate.getVotes());
-                System.out.println("\t\tParty: " + candidate.getParty());
+
             }
         }
 
