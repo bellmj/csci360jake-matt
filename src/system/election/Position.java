@@ -1,7 +1,9 @@
 package system.election;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A class which contians the information for a position up for election, as
@@ -13,7 +15,7 @@ import java.util.List;
 public class Position {
 
     private String title;
-    private List<Candidate> candidates;
+    private Map<String,Candidate> candidates;
 
     /**
      * Creates a new Position with the specified title.
@@ -22,10 +24,10 @@ public class Position {
      */
     public Position(String title) {
         this.title = title;
-        this.candidates = new ArrayList<Candidate>();
+        this.candidates = new HashMap<String,Candidate>();
     }
 
-    public Position(String title, List<Candidate> candidates) {
+    public Position(String title, HashMap<String,Candidate> candidates) {
         this.title = title;
         this.candidates = candidates;
     }
@@ -46,10 +48,13 @@ public class Position {
      */
     public List<Candidate> getCandidates() {
         List<Candidate> rtn = new ArrayList();
-        for (Candidate c : this.candidates) {
-            rtn.add(new Candidate(c.getVotes(), c.getName(), c.getParty()));
+        for (Map.Entry<String,Candidate> c : this.candidates.entrySet()) {
+            rtn.add(new Candidate(c.getValue().getVotes(), c.getValue().getName(), c.getValue().getParty()));
         }
         return rtn;
+    }
+    Map<String,Candidate> getActualCandidates(){
+        return candidates;
     }
 
     /**
@@ -58,14 +63,14 @@ public class Position {
      * @param candidate a Candidate up for this Position
      */
     void addCandidate(Candidate candidate) {
-        this.candidates.add(candidate);
+        this.candidates.put(candidate.getName(),candidate);
     }
 
     @Override
     public String toString() {
         String candidateString = "";
-        for(Candidate c:this.candidates){
-            candidateString += ";" + c;
+        for(Map.Entry<String,Candidate> c:this.candidates.entrySet()){
+            candidateString += ";" + c.getValue();
         }
         return  title + candidateString;
     }

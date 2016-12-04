@@ -1,6 +1,12 @@
 package system.election;
 
+import javafx.geometry.Pos;
+import system.election.voting.Ballot;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A class which handles the creation of an <tt>Election</tt>, which stores
@@ -11,12 +17,7 @@ public class ElectionHandler {
 
     private Election election;
 
-    /**
-     * Creates an empty <tt>Election</tt>, assigning it to the class
-     * variable election. This method should be called before other methods
-     * which affect an existing Election.
-     */
-    public void createNewElection() {
+    public ElectionHandler() {
         this.election = new Election();
     }
 
@@ -29,8 +30,7 @@ public class ElectionHandler {
      * @param electionString
      */
     public void createElectionFromString(String electionString) {
-        createNewElection();
-
+        election = new Election();
         String[] listViews = electionString.split("::");
 
         if (!listViews[0].equals("-1")) {
@@ -98,6 +98,18 @@ public class ElectionHandler {
         return this.election.addCandidateToPosition(
                 new Candidate(candidateName, candidateParty), positionTitle);
     }
+    final char[] adminPass = {'1','2','3','4'};
+    public void assignVotesForBallots(char[] password,List<Ballot> ballots){
+//        System.out.println(ballots.get(0).getSelections());
+
+            for(Ballot bal : ballots){
+                for(Map.Entry<String,Candidate> entry:bal.getSelections().entrySet()) {
+                    election.addVote(entry.getKey(), entry.getValue());
+                }
+                for(Map.Entry<String,Boolean> entry:bal.getPropositions().entrySet())
+                    election.addPropositionVote(entry.getKey(), entry.getValue());
+            }
+    }
 
     /**
      * Adds a public opinion survey (<tt>Proposition</tt>) with the specified
@@ -116,7 +128,7 @@ public class ElectionHandler {
      *
      * @return  the list of existing positions
      */
-    public List<Position> getPositions() {
+    HashMap<String,Position> getPositions() {
         return this.election.getPositions();
     }
 
@@ -126,7 +138,7 @@ public class ElectionHandler {
      *
      * @return  the list of existing propositions
      */
-    public List<Proposition> getPropositions() {
+    HashMap<String,Proposition> getPropositions() {
         return this.election.getPropositions();
     }
 
@@ -134,16 +146,18 @@ public class ElectionHandler {
      * Prints a text representation of the <tt>Election</tt> to the console.
      */
     public void printElection() {
-        for (Position position : getPositions()) {
+        for (Map.Entry<String,Position> entry : getPositions().entrySet()) {
+            Position position = entry.getValue();
             System.out.println("Position: " + position.getTitle());
             for (Candidate candidate : position.getCandidates()) {
-                System.out.println("\tCandidate: " + candidate.getName());
+                System.out.println("\tCandidate: " + candidate.getName() + " " + candidate.getVotes());
                 System.out.println("\t\tParty: " + candidate.getParty());
             }
         }
 
-        for (Proposition proposition : getPropositions()) {
-            System.out.println("Proposition: " + proposition.getName());
+        for (Map.Entry<String,Proposition> entry : getPropositions().entrySet()) {
+            Proposition proposition = entry.getValue();
+            System.out.println("Proposition: " + proposition.getName() + " " + proposition.getSupport());
             System.out.println("\tDescription: " + proposition.getDescription());
         }
     }

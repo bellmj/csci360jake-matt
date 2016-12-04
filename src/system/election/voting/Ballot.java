@@ -16,20 +16,20 @@ import java.util.HashMap;
  */
 public class Ballot {
 
-    private HashMap<Position, Candidate> selections;
-    private HashMap<Proposition, Boolean> propositions;
+    private HashMap<String, Candidate> selections;
+    private HashMap<String, Boolean> propositions;
     private String voterHashID;
 
     /**
      * Constructs a new Ballot for the specified voterHashID.
      */
     Ballot(String voterHashID) {
-        this.selections = new HashMap<Position, Candidate>();
-        this.propositions = new HashMap<Proposition, Boolean>();
+        this.selections = new HashMap<String, Candidate>();
+        this.propositions = new HashMap<String, Boolean>();
         this.voterHashID = voterHashID;
     }
 
-    public Ballot(HashMap<Position, Candidate> selections, HashMap<Proposition, Boolean> propositions, String voterHashID) {
+    public Ballot(HashMap<String, Candidate> selections, HashMap<String, Boolean> propositions, String voterHashID) {
         this.selections = selections;
         this.propositions = propositions;
         this.voterHashID = voterHashID;
@@ -50,7 +50,7 @@ public class Ballot {
      *
      * @return  HashMap - the voter's candidate selections
      */
-    public HashMap<Position, Candidate> getSelections() {
+    public HashMap<String, Candidate> getSelections() {
         return this.selections;
     }
 
@@ -59,7 +59,7 @@ public class Ballot {
      *
      * @return  HashMap - the voter's proposition responses
      */
-    public HashMap<Proposition, Boolean> getPropositions() {
+    public HashMap<String, Boolean> getPropositions() {
         return this.propositions;
     }
 
@@ -70,7 +70,7 @@ public class Ballot {
      * @param candidate Candidate - the value to change the selection to
      */
     void changeCandidate(Position position, Candidate candidate) {
-        this.selections.put(position, candidate);
+        this.selections.put(position.getTitle(), candidate);
     }
 
     /**
@@ -80,6 +80,6 @@ public class Ballot {
      * @param supports  boolean - true if supports, false if opposes, null if abstains
      */
     void changeProposition(Proposition proposition, Boolean supports) {
-        this.propositions.put(proposition, supports);
+        this.propositions.put(proposition.getName(), supports);
     }
 }

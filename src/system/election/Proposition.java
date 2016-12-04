@@ -1,5 +1,8 @@
 package system.election;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 /**
  * A class which holds information for a public opinion survey, for which a
  * voter can express their support or opposition. For the purposes of this
@@ -56,9 +59,17 @@ public class Proposition {
      *
      * @return  a long representing the support received by the Proposition
      */
-    public long getSupport() {
-        return votesFor / votesAgainst;
-    }
+    public BigDecimal getSupport() {
+        if(votesAgainst==0l && votesFor > 0l){
+            return new BigDecimal(100l);
+        }else if(votesAgainst == 0l && votesFor== 0l){
+            return new BigDecimal(50l);
+        }
+        System.out.println(votesFor + " " + votesAgainst);
+        BigDecimal decimalVoteFor = new BigDecimal(votesFor);
+        BigDecimal decimalVotesAgainst = new BigDecimal(votesAgainst);
+        return new BigDecimal(100l).multiply(decimalVoteFor.divide(new BigDecimal(votesFor+votesAgainst),9, RoundingMode.HALF_UP));
+}
 
     /**
      * Returns the name of the Proposition.
@@ -67,6 +78,12 @@ public class Proposition {
      */
     public String getName() {
         return this.name;
+    }
+    void addVote(Boolean bool){
+        if(bool)
+            votesFor+=1l;
+        else
+            votesAgainst+=1l;
     }
 
     /**

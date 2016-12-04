@@ -1,6 +1,7 @@
 package system.db;
 
 import system.election.Candidate;
+import system.election.ElectionHandler;
 import system.election.Position;
 import system.election.Proposition;
 import system.election.voting.Ballot;
@@ -42,34 +43,51 @@ public class FileBallotHandler implements DataHandler<Ballot> {
         out.println(ballot.getVoterHashID());
         ballot.getSelections().forEach((k,v) -> out.println("" + k + "~" + v));
         out.println(SELECTION_DELIMITEER);
-        ballot.getPropositions().forEach((k,v) -> out.println("" + k + "\t" + v));
+        ballot.getPropositions().forEach((k,v) -> out.println("" + k + "~" + v));
         out.println(PROPOSITION_DELIMITER);
         out.flush();
     }
 
     @Override
     public List<Ballot> getAll() {
+        List<Ballot> returnList = new ArrayList<>();
         try {
             List<String> lines = Files.readAllLines(Paths.get(NAME_OF_FILE));
-            System.out.println(lines);
             for(int i = 0; i<lines.size();i++){
                 lines.set(i, lines.get(i).trim());
             }
             for(int i =0;i<lines.size();i++){
+                HashMap<String,Candidate> selectionHashMap = new HashMap<>();
+                HashMap<String,Boolean> propositonHashMap = new HashMap<>();
+                String voterID = "";
                 if(lines.get(i).equals( START_OF_ENTRY)){
-                    String voterID = lines.get(i+1);
-                    i++;
+                    voterID = lines.get(i+1);
+
+
+                    i+=2;
                     while(!lines.get(i).equals(SELECTION_DELIMITEER)){
-                        //todo get selections
+                        String[] voterSelection = lines.get(i).split("~");
+                        Candidate selection = new Candidate(0l,voterSelection[1],"N/A");
+                        selectionHashMap.put(voterSelection[0],selection);
                         i++;
                     }
+                    i++;
+                    while(!lines.get(i).equals(PROPOSITION_DELIMITER)){
+                        String[] propositionSelection = lines.get(i).split("~");
+                        Boolean bool = Boolean.parseBoolean(propositionSelection[1]);
+                        propositonHashMap.put(propositionSelection[0],bool);
+                        i++;
+
+                    }
                 }
+                Ballot ballot = new Ballot(selectionHashMap,propositonHashMap,voterID);
+                returnList.add(ballot);
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-    return null;
+    return returnList;
     }
 
     @Override
@@ -77,21 +95,28 @@ public class FileBallotHandler implements DataHandler<Ballot> {
         return null;
     }
     public static void main(String[] args){
-        HashMap<Position, Candidate> selections;
+        ElectionHandler electionHandler = new ElectionHandler();
+        electionHandler.addCandidateToPosition("Gary Johnson","Libertarian","King of the World");
+        electionHandler.addCandidateToPosition("Jill Stien","Libertarian","King of the World");
+        electionHandler.addCandidateToPosition("Donald Drumpf","Libertarian","King of the World");
+        electionHandler.addProposition("Legalize good Herb","we be leagalixging good herb");
+        HashMap<String, Candidate> selections;
         String voterHashID = "adw43fladjs3";
         ArrayList<Candidate> candidateArrayList = new ArrayList<>();
         candidateArrayList.add(new Candidate(0l,"Gary Johnson","Libertarian"));
         candidateArrayList.add(new Candidate(0l,"Jill stien","Libertarian"));
         candidateArrayList.add(new Candidate(0l,"Donald drumpf","Libertarian"));
         selections = new HashMap<>();
-        selections.put(new Position("King of the World",candidateArrayList),candidateArrayList.get(0));
-        HashMap<Proposition, Boolean> propositions;
+        selections.put("King of the World",candidateArrayList.get(2));
+        HashMap<String, Boolean> propositions;
         propositions = new HashMap<>();
-        propositions.put(new Proposition("Legalize good Herb","We be legalizing good herb",0,0),true);
+        propositions.put("Legalize good Herb",true);
         Ballot ballot = new Ballot(selections,propositions,voterHashID);
         FileBallotHandler hander = new FileBallotHandler();
         hander.add(ballot);
-        System.out.println(hander.getAll());
+        char[] pass = {'1','2','3','4'};
+        electionHandler.assignVotesForBallots(pass,hander.getAll());
+        electionHandler.printElection();
     }
 
 }
