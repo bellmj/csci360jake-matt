@@ -53,8 +53,8 @@ public class Position {
         }
         return rtn;
     }
-    Map<String,Candidate> getActualCandidates(){
-        return candidates;
+    HashMap<String, Candidate> getActualCandidates(){
+        return new HashMap<>(candidates);
     }
 
     /**

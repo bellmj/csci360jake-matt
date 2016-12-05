@@ -112,10 +112,10 @@ public class FileBallotHandler implements DataHandler<Ballot> {
         propositions = new HashMap<>();
         propositions.put("Legalize good Herb",true);
         Ballot ballot = new Ballot(selections,propositions,voterHashID);
-        FileBallotHandler hander = new FileBallotHandler();
-        hander.add(ballot);
+        FileBallotHandler handler = new FileBallotHandler();
+        handler.add(ballot);
         char[] pass = {'1','2','3','4'};
-        electionHandler.assignVotesForBallots(pass,hander.getAll());
+        electionHandler.assignVotesForBallots(pass,handler.getAll());
         electionHandler.printElection();
     }
 

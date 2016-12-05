@@ -1,15 +1,18 @@
 package system.resources;
 
+import javafx.fxml.Initializable;
+import system.ui.OpenScreenController;
+
 import java.lang.Object;
 
 public class VotingCycle {
 
-    private final Node<Object> head;
+    private final Node<Initializable> head;
     private int index;
     private int size;
 
     public VotingCycle() {
-        this.head = new Node<>("");
+        this.head = new Node<>(new OpenScreenController());
         this.index = 0;
         this.size = 0;
     }

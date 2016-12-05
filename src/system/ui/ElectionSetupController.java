@@ -10,16 +10,20 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import system.election.ElectionHandler;
+import system.election.Position;
+import system.election.Proposition;
 import system.election.voting.BallotHandler;
 
 import java.io.*;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -194,43 +198,62 @@ public class ElectionSetupController implements Initializable {
         cancelButton.setOnAction(action -> ((Stage) this.cancelButton.getScene()
                 .getWindow()).close());
         doneButton.setOnAction(action -> {
-            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION,
-                    "Once the program is set up as a voting machine, you " +
-                            "will be unable to return to the menu unless " +
-                            "you restart the software. Are you sure you " +
-                            "want to continue?", ButtonType.CANCEL, ButtonType.YES);
-            confirmation.showAndWait().ifPresent(response -> {
-                if (response == ButtonType.YES) {
-                    try {
-                        saveElection();
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass()
-                                .getResource("VotingHome.fxml"));
-                        Parent root = fxmlLoader.load();
-                        VotingController votingController = fxmlLoader
-                                .getController();
-                        votingController.setBallotHandler(ballotHandler);
-                        votingController.setElectionHandler(electionHandler);
+            if (!electionIsEmpty()) {
+                Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION,
+                        "Once the program is set up as a voting machine, you " +
+                                "will be unable to return to the menu unless " +
+                                "you restart the software. Are you sure you " +
+                                "want to continue?", ButtonType.CANCEL, ButtonType.YES);
+                confirmation.showAndWait().ifPresent(response -> {
+                    if (response == ButtonType.YES) {
+                        try {
+                            saveElection();
+                            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("VotingHome.fxml"));
+                            Pane root = fxmlLoader.load();
+                            VotingController votingController = fxmlLoader.getController();
 
-                        Stage stage = new Stage();
-                        stage.setTitle("Polling Machine");
-                        stage.setScene(new Scene(root));
-                        stage.setFullScreen(true);
-                        stage.setResizable(false);
-                        stage.setFullScreenExitHint("");
-                        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-                        stage.initModality(Modality.WINDOW_MODAL);
-                        Stage thisStage = ((Stage) this.doneButton.getScene()
-                                .getWindow());
-                        ((Stage) thisStage.getOwner()).close();
-                        thisStage.close();
-                        stage.show();
+                            // Set up handlers.
+                            votingController.setBallotHandler(ballotHandler);
+                            votingController.setElectionHandler(electionHandler);
 
+                            votingController.setIndex(0);
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                            // Pass in Positions to use for voting.
+                            List<Position> positions = electionHandler
+                                    .getPositionsUnmodifiable();
+                            Position[] positionArray = new Position[positions
+                                    .size()];
+                            positions.toArray(positionArray);
+                            votingController.setPositions(positionArray);
+
+                            // Pass in Candidates to use for voting.
+                            List<Proposition> propositions = electionHandler
+                                    .getPropositionsUnmodifiable();
+                            Proposition[] propositionArray = new
+                                    Proposition[propositions.size()];
+                            propositions.toArray(propositionArray);
+                            votingController.setPropositions(propositionArray);
+
+                            Stage stage = new Stage();
+                            stage.setTitle("Polling Machine");
+                            stage.setScene(new Scene(root));
+                            stage.setFullScreen(true);
+                            stage.setResizable(false);
+                            stage.setFullScreenExitHint("");
+                            stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+                            stage.initModality(Modality.WINDOW_MODAL);
+                            Stage thisStage = ((Stage) this.doneButton.getScene()
+                                    .getWindow());
+                            ((Stage) thisStage.getOwner()).close();
+                            thisStage.close();
+                            stage.show();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
-            });
+                });
+            }
         });
     }
 
@@ -751,7 +774,12 @@ public class ElectionSetupController implements Initializable {
             fileChooser.setTitle("Open Election File");
             File file = fileChooser.showOpenDialog(loadButton.getScene().getWindow());
 
-            if (!file.getPath().substring(file.getPath().lastIndexOf("."))
+            if (file == null || !file.exists()) {
+                throw new FileNotFoundException();
+            }
+            if (!file.getPath().substring(file.getPath()
+                    .lastIndexOf("" +
+                    "."))
                     .equals(".elec")) {
                 Alert invalidFileAlert = new Alert(Alert.AlertType.ERROR,
                         "Must be \".elec\" file.",

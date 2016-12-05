@@ -24,12 +24,13 @@ public class Ballot {
      * Constructs a new Ballot for the specified voterHashID.
      */
     Ballot(String voterHashID) {
-        this.selections = new HashMap<String, Candidate>();
-        this.propositions = new HashMap<String, Boolean>();
+        this.selections = new HashMap<>();
+        this.propositions = new HashMap<>();
         this.voterHashID = voterHashID;
     }
 
-    public Ballot(HashMap<String, Candidate> selections, HashMap<String, Boolean> propositions, String voterHashID) {
+    public Ballot(HashMap<String, Candidate> selections, HashMap<String,
+            Boolean> propositions, String voterHashID) {
         this.selections = selections;
         this.propositions = propositions;
         this.voterHashID = voterHashID;

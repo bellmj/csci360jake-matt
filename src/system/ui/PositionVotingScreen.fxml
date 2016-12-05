@@ -6,10 +6,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane prefHeight="1080.0" prefWidth="1920.0" styleClass="darkList" stylesheets="@IssueTrackingLite.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="system.ui.VotingController">
+<AnchorPane styleClass="darkList" stylesheets="@IssueTrackingLite.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="system.ui.VotingController">
    <children>
-      <VBox alignment="CENTER" layoutX="760.0" layoutY="240.0" prefHeight="600.0" prefWidth="400.0">
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label fx:id="positionTitleLabel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="400.0" text="Title of the thing to be voted on.">
                <font>
@@ -19,19 +18,19 @@
                   <Insets bottom="15.0" />
                </padding>
             </Label>
-            <ScrollPane fitToHeight="true" fitToWidth="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefViewportHeight="500.0" prefViewportWidth="400.0" prefWidth="400.0">
+            <ScrollPane fitToHeight="true" fitToWidth="true" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefViewportHeight="500.0" prefViewportWidth="400.0" prefWidth="400.0">
                <content>
                   <ListView fx:id="positionListView" maxWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" />
                </content>
             </ScrollPane>
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="60.0">
                <children>
-                  <Button fx:id="positionPreviousButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="31.0" prefWidth="80.0" text="Previous" />
-                  <Button fx:id="positionCancelButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="31.0" prefWidth="80.0" text="Cancel" />
-                  <Button fx:id="positionNextButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="31.0" prefWidth="80.0" text="Next" />
+                  <Button fx:id="positionPreviousButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#previousButtonAction" prefHeight="31.0" prefWidth="80.0" text="Previous" />
+                  <Button fx:id="positionCancelButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#cancelButtonAction" prefHeight="31.0" prefWidth="80.0" text="Cancel" />
+                  <Button fx:id="positionNextButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#nextButtonAction" prefHeight="31.0" prefWidth="80.0" text="Next" />
                </children>
             </HBox>
          </children>
       </VBox>
    </children>
-</Pane>
+</AnchorPane>

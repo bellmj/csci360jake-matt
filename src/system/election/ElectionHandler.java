@@ -1,12 +1,10 @@
 package system.election;
 
-import javafx.geometry.Pos;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import system.election.voting.Ballot;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * A class which handles the creation of an <tt>Election</tt>, which stores
@@ -67,7 +65,7 @@ public class ElectionHandler {
             }
         }
 
-        printElection();
+//        printElection();
 
     }
 
@@ -103,7 +101,9 @@ public class ElectionHandler {
 //        System.out.println(ballots.get(0).getSelections());
 
             for(Ballot bal : ballots){
-                for(Map.Entry<String,Candidate> entry:bal.getSelections().entrySet()) {
+                for(Map.Entry<String,Candidate> entry:bal.getSelections()
+                        .entrySet
+                        ()) {
                     election.addVote(entry.getKey(), entry.getValue());
                 }
                 for(Map.Entry<String,Boolean> entry:bal.getPropositions().entrySet())
@@ -123,21 +123,40 @@ public class ElectionHandler {
     }
 
     /**
-     * Returns a <tt>List</tt> of the <tt>Position</tt>s currently in an
-     * Election.
+     * Returns an <tt>ObservableList</tt> of the <tt>Position</tt>s currently
+     * in an Election.
      *
      * @return  the list of existing positions
      */
-    HashMap<String,Position> getPositions() {
+    public ObservableList<Position> getPositionsUnmodifiable() {
+        ObservableList<Position> rtnval = FXCollections
+                .observableArrayList();
+        for (Position position : getPositions().values()) {
+            rtnval.add(new Position(position.getTitle(), position.getActualCandidates()));
+        }
+        return rtnval;
+    }
+
+    HashMap<String, Position> getPositions() {
         return this.election.getPositions();
     }
 
     /**
-     * Returns a <tt>List</tt> of the <tt>Proposition</tt>s currently in an
-     * Election.
+     * Returns a <tt>ObservableList</tt> of the <tt>Proposition</tt>s currently
+     * in an Election.
      *
      * @return  the list of existing propositions
      */
+    public ObservableList<Proposition> getPropositionsUnmodifiable() {
+        ObservableList<Proposition> rtnval = FXCollections
+                .observableArrayList();
+        for (Proposition proposition : getPropositions().values()) {
+            rtnval.add(new Proposition(proposition.getName(), proposition
+                    .getDescription()));
+        }
+        return rtnval;
+    }
+
     HashMap<String,Proposition> getPropositions() {
         return this.election.getPropositions();
     }

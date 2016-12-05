@@ -24,7 +24,7 @@
          <children>
             <ImageView fx:id="image" fitHeight="96.0" fitWidth="256.0" layoutX="72.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../resources/360Voting%5Bshrunk%5D.png" />
+                  <Image url="@../resources/360Voting_shrunk.png" />
                </image></ImageView>
          </children>
       </Pane>

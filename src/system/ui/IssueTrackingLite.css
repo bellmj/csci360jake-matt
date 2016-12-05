@@ -50,6 +50,10 @@
     -fx-padding: 3 11 3 11;
 }
 
+.check-box .text {
+    -fx-text-fill: grey;
+}
+
 .darkList {
     -fx-background-color: derive(grey, -60%);
 }
@@ -68,6 +72,10 @@
 .darkList .list-cell:focused {
     -fx-background-color: lightgrey;
     -fx-text-fill: derive(grey, -60%);
+}
+
+.radio-button {
+    -fx-text-fill: grey;
 }
 
 .table-view {
