@@ -22,7 +22,7 @@ public class Election {
         Map<String,Candidate> actualCandidates = position1.getActualCandidates();
         if(!actualCandidates.containsKey(candidate.getName())){
             position1.addCandidate(candidate);
-           candidate.setVotes(0l);
+           candidate.setVotes(1l);
            actualCandidates.put(candidate.getName(),candidate);
         }else {
             actualCandidates.get(candidate.getName()).addVote();
