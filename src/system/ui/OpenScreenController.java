@@ -1,8 +1,6 @@
 package system.ui;
 
 import javafx.scene.layout.Pane;
-import system.db.FileBallotHandler;
-import system.db.FileRegistrationHandler;
 import system.election.ElectionHandler;
 import system.election.voting.BallotHandler;
 import system.registration.RegistrationHandler;
@@ -78,7 +76,7 @@ public class OpenScreenController implements Initializable {
 
         registerButton.setOnMouseClicked(event -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RegistrationForm.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/RegistrationForm.fxml"));
                 Parent root = fxmlLoader.load();
                 RegistrationController registrationController = fxmlLoader.getController();
                 registrationController.setRegistrationHandler(this.registrationHandler);
@@ -97,7 +95,7 @@ public class OpenScreenController implements Initializable {
 
         verifyRegistrationButton.setOnMouseClicked(event -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CheckRegistration.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/CheckRegistration.fxml"));
                 Parent root = fxmlLoader.load();
                 CheckRegistrationController checkRegistrationController = fxmlLoader.getController();
                 checkRegistrationController.setRegistrationHandler(this.registrationHandler);
@@ -117,7 +115,7 @@ public class OpenScreenController implements Initializable {
 
         electionSetupButton.setOnMouseClicked(event -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ElectionSetup.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/ElectionSetup.fxml"));
                 Parent root = fxmlLoader.load();
                 ElectionSetupController electionSetupController = fxmlLoader.getController();
                 electionSetupController.setElectionHandler(this.electionHandler);
@@ -138,7 +136,7 @@ public class OpenScreenController implements Initializable {
         toAdminOptionsButton.setOnMouseClicked(event -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource
-                        ("AdminScreen.fxml"));
+                        ("fxml/AdminScreen.fxml"));
                 Pane root = fxmlLoader.load();
                 AdminScreenController adminScreenController = fxmlLoader
                         .getController();

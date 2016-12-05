@@ -1,5 +1,6 @@
 package system.election.voting;
 
+import system.db.FileBallotHandler;
 import system.election.Candidate;
 import system.election.Position;
 import system.election.Proposition;
@@ -7,6 +8,7 @@ import system.db.DBHandler;
 import system.db.DataHandler;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * A class which handles operations done on and with Ballots in the voting
@@ -91,6 +93,15 @@ public class BallotHandler {
      */
     public void cancelBallot(Ballot ballot) {
         this.ballot = null;
+    }
+
+    private final char[] adminPassword = {'1', '2', '3', '4'};
+    public List<Ballot> getAllBallots(char[] adminPassword) {
+        return dataHandler.getAll();
+    }
+
+    public void eraseBallots() {
+        ((FileBallotHandler) dataHandler).eraseBallots();
     }
 
 }

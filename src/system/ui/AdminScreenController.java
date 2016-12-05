@@ -1,20 +1,28 @@
 package system.ui;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import system.election.Candidate;
 import system.election.ElectionHandler;
+import system.election.voting.Ballot;
 import system.election.voting.BallotHandler;
 import system.registration.RegistrationHandler;
 
+import java.io.*;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -55,24 +63,190 @@ public class AdminScreenController implements Initializable {
         assert previousButton != null : "fx:id=\"previousButton\" was not " +
                 "injected: check your FXML file 'AdminScreen.fxml'.";
 
+        viewResultsButton.setDisable(true);
+
         countButton.setOnAction(action -> {
-            //TODO Perform count
-            //TODO Show alert indicating completion
+            Dialog<String> passwordDialog = new Dialog<>();
+            passwordDialog.setTitle("Add Position");
+            ButtonType doneButtonType = new ButtonType("Done", ButtonBar
+                    .ButtonData.OK_DONE);
+            passwordDialog.getDialogPane().getButtonTypes().addAll(doneButtonType, ButtonType.CANCEL);
+
+            VBox vBox = new VBox();
+            GridPane gridPane = new GridPane();
+            Label emptyLabel = new Label("Cannot be empty.");
+            emptyLabel.setStyle("-fx-text-fill: red");
+            emptyLabel.setVisible(false);
+
+            Label passwordLabel = new Label("Re-Enter Password: ");
+            PasswordField passwordField = new PasswordField();
+
+            gridPane.add(passwordLabel, 0, 0);
+            gridPane.add(passwordField, 1, 0);
+            vBox.getChildren().addAll(gridPane, emptyLabel);
+
+            passwordDialog.getDialogPane().lookupButton(doneButtonType).addEventFilter(
+                    ActionEvent.ACTION, event -> {
+                        if (passwordField.getText().equals("")) {
+                            emptyLabel.setVisible(true);
+                            event.consume();
+                        }
+                    });
+
+            passwordDialog.setResultConverter(buttonType -> {
+                if (buttonType == doneButtonType) {
+                    return passwordField.getText();
+                } else {
+                    return null;
+                }
+            });
+
+            passwordDialog.getDialogPane().setContent(vBox);
+
+            passwordDialog.showAndWait().ifPresent(response -> {
+                final char[] password = response.toCharArray();
+                try {
+                    FileChooser fileChooser = new FileChooser();
+                    fileChooser.getExtensionFilters().setAll(
+                            new FileChooser.ExtensionFilter("Election File (*.elec)", "*.elec")
+                    );
+                    fileChooser.setTitle("Open Election File");
+                    File file = fileChooser.showOpenDialog((Stage) countButton
+                            .getScene().getWindow());
+
+                    if (file == null || !file.exists()) {
+                        throw new FileNotFoundException();
+                    }
+                    if (!file.getPath().substring(file.getPath().lastIndexOf("."))
+                            .equals(".elec")) {
+                        Alert invalidFileAlert = new Alert(Alert.AlertType.ERROR,
+                                "Must be \".elec\" file.",
+                                ButtonType.OK);
+                        invalidFileAlert.showAndWait();
+                        throw new IOException();
+                    }
+
+                    FileInputStream in = new FileInputStream(file);
+                    ObjectInputStream ois = new ObjectInputStream(in);
+
+                    String electionString = (String) ois.readObject();
+
+                    in.close();
+                    ois.close();
+
+                    electionHandler.createElectionFromString(electionString);
+
+                    electionHandler.assignVotesForBallots(password, ballotHandler
+                            .getAllBallots(password));
+
+                    Alert finished = new Alert(Alert.AlertType.INFORMATION,
+                            "Counting complete.", ButtonType.OK);
+                    finished.initModality(Modality.WINDOW_MODAL);
+                    finished.initOwner(countButton.getScene().getWindow());
+                    viewResultsButton.setDisable(false);
+                    finished.showAndWait();
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            });
         });
 
         recountButton.setOnAction(action -> {
-            //TODO Print ballots to the console.
-            //TODO Show alert with information.
+            Dialog<String> passwordDialog = new Dialog<>();
+            passwordDialog.setTitle("Add Position");
+            ButtonType doneButtonType = new ButtonType("Done", ButtonBar
+                    .ButtonData.OK_DONE);
+            passwordDialog.getDialogPane().getButtonTypes().addAll(doneButtonType, ButtonType.CANCEL);
+
+            VBox vBox = new VBox();
+            GridPane gridPane = new GridPane();
+            Label emptyLabel = new Label("Cannot be empty.");
+            emptyLabel.setStyle("-fx-text-fill: red");
+            emptyLabel.setVisible(false);
+
+            Label passwordLabel = new Label("Re-Enter Password: ");
+            PasswordField passwordField = new PasswordField();
+
+            gridPane.add(passwordLabel, 0, 0);
+            gridPane.add(passwordField, 1, 0);
+            vBox.getChildren().addAll(gridPane, emptyLabel);
+
+            passwordDialog.getDialogPane().lookupButton(doneButtonType).addEventFilter(
+                    ActionEvent.ACTION, event -> {
+                        if (passwordField.getText().equals("")) {
+                            emptyLabel.setVisible(true);
+                            event.consume();
+                        }
+                    });
+
+            passwordDialog.setResultConverter(buttonType -> {
+                if (buttonType == doneButtonType) {
+                    return passwordField.getText();
+                } else {
+                    return null;
+                }
+            });
+
+            passwordDialog.getDialogPane().setContent(vBox);
+
+            passwordDialog.showAndWait().ifPresent(response -> {
+                final char[] password = response.toCharArray();
+                List<Ballot> ballots = ballotHandler.getAllBallots(password);
+                String selected;
+                for (Ballot ballot : ballots) {
+                    for (Map.Entry<String, Candidate> selection : ballot
+                            .getSelections().entrySet()) {
+                        if (selection.getValue() != null) {
+                            selected = selection.getValue().getName();
+                        } else {
+                            selected = "Abstain";
+                        }
+                        System.out.println(selection.getKey() + ": " + selected);
+                    }
+                    for (Map.Entry<String, Boolean> proposition : ballot
+                            .getPropositions().entrySet()) {
+                        if (proposition.getValue() != null) {
+                            if (proposition.getValue()) {
+                                selected = "FOR";
+                            } else {
+                                selected = "AGAINST";
+                            }
+                        } else {
+                            selected = "Abstain";
+                        }
+                        System.out.println(proposition.getKey() + ": " +
+                                selected);
+                    }
+                }
+            });
         });
 
         viewResultsButton.setOnAction(action -> {
-            //TODO Display popup with stylized report.
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource
+                        ("fxml/Report.fxml"));
+                Pane root = fxmlLoader.load();
+                ReportController reportController = fxmlLoader
+                        .getController();
+
+                reportController.setElectionHandler(electionHandler);
+
+                Stage stage = new Stage();
+                stage.setTitle("Election Report");
+                stage.setScene(new Scene(root, 400, 550));
+                stage.setResizable(false);
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initOwner(viewResultsButton.getScene().getWindow());
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
         previousButton.setOnAction(action -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource
-                        ("OpenScreen.fxml"));
+                        ("fxml/OpenScreen.fxml"));
                 Pane root = fxmlLoader.load();
                 OpenScreenController openScreenController = fxmlLoader.getController();
 

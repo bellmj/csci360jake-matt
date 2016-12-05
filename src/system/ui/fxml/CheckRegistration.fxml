@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="700.0" stylesheets="@IssueTrackingLite.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="system.ui.CheckRegistrationController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="700.0" stylesheets="@../IssueTrackingLite.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="system.ui.CheckRegistrationController">
    <children>
       <Pane fx:id="IDNumberLayer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="700.0" styleClass="darkList">
          <children>
@@ -44,7 +44,7 @@
       </Pane>
       <Pane fx:id="checkRegistrationLayer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="700.0" styleClass="darkList">
          <children>
-            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="700.0" styleClass="darkList" stylesheets="@IssueTrackingLite.css">
+            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="700.0" styleClass="darkList" stylesheets="@../IssueTrackingLite.css">
                <children>
                   <StackPane prefHeight="400.0" prefWidth="275.0">
                      <children>

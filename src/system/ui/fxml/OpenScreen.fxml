@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="400.0" styleClass="darkList" stylesheets="@IssueTrackingLite.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="system.ui.OpenScreenController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="400.0" styleClass="darkList" stylesheets="@../IssueTrackingLite.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="system.ui.OpenScreenController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -19,7 +19,7 @@
          <children>
             <ImageView fx:id="image" fitHeight="96.0" fitWidth="256.0" layoutX="72.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../resources/360Voting_shrunk.png" />
+                  <Image url="@../../resources/360Voting_shrunk.png" />
                </image></ImageView>
          </children>
       </Pane>

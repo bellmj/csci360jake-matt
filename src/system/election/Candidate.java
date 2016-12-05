@@ -58,7 +58,7 @@ public class Candidate {
      *
      * @return  long number of votes the candidate has received
      */
-    long getVotes() {
+    public long getVotes() {
         return votes;
     }
 

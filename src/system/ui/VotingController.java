@@ -27,7 +27,6 @@ import system.election.Position;
 import system.election.Proposition;
 import system.election.voting.BallotHandler;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -216,7 +215,7 @@ public class VotingController implements Initializable {
     private void loadHomeScreen(Stage stage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource
-                    ("VotingHome.fxml"));
+                    ("fxml/VotingHome.fxml"));
             Pane root = fxmlLoader.load();
             VotingController votingController = fxmlLoader.getController();
             votingController.setIndex(0);
@@ -237,7 +236,7 @@ public class VotingController implements Initializable {
     private void loadPositionScreen(Stage stage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource
-                    ("PositionVotingScreen.fxml"));
+                    ("fxml/PositionVotingScreen.fxml"));
             Pane root = fxmlLoader.load();
             VotingController votingController = fxmlLoader.getController();
 
@@ -381,7 +380,7 @@ public class VotingController implements Initializable {
     private void loadPropositionScreen(Stage stage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource
-                    ("PropositionVotingScreen.fxml"));
+                    ("fxml/PropositionVotingScreen.fxml"));
             Parent root = fxmlLoader.load();
             VotingController votingController = fxmlLoader.getController();
 
@@ -440,7 +439,7 @@ public class VotingController implements Initializable {
     private void loadSummaryScreen(Stage stage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource
-                    ("VotingSummary.fxml"));
+                    ("fxml/VotingSummary.fxml"));
             Parent root = fxmlLoader.load();
             VotingController votingController = fxmlLoader.getController();
 
@@ -460,7 +459,7 @@ public class VotingController implements Initializable {
     }
 
     private void readInBallotSummary() {
-        summaryListView.setMouseTransparent(true);
+        summaryListView.setFocusTraversable(false);
 
         for (Map.Entry<String, Candidate> entry : ballotHandler
                 .getCandidateSelections().entrySet()) {

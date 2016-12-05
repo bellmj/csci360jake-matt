@@ -22,7 +22,8 @@ public class Main extends Application {
         loginDialog.showAndWait().ifPresent(result -> {
             if (result.getKey()) {
                 try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("OpenScreen" +
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass()
+                            .getResource("fxml/OpenScreen" +
                             ".fxml"));
                     Pane root = fxmlLoader.load();
                     OpenScreenController openScreenController = fxmlLoader

@@ -8,7 +8,9 @@ import system.election.voting.Ballot;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -88,6 +90,15 @@ public class FileBallotHandler implements DataHandler<Ballot> {
             e.printStackTrace();
         }
     return returnList;
+    }
+
+    public void eraseBallots() {
+        try {
+            FileWriter eraser = new FileWriter(NAME_OF_FILE, false);
+            eraser.write("");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

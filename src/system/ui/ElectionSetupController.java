@@ -5,7 +5,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCombination;
@@ -203,12 +202,21 @@ public class ElectionSetupController implements Initializable {
                         "Once the program is set up as a voting machine, you " +
                                 "will be unable to return to the menu unless " +
                                 "you restart the software. Are you sure you " +
-                                "want to continue?", ButtonType.CANCEL, ButtonType.YES);
+                                "want to continue?\nAll stored ballots will " +
+                                "be deleted.\nIMPORTANT: It is recommended " +
+                                "that you save the election settings to an " +
+                                ".elec file before continuing, as you will be " +
+                                "required to load it before counting the " +
+                                "ballots.",
+                        ButtonType
+                        .CANCEL,
+                        ButtonType.YES);
                 confirmation.showAndWait().ifPresent(response -> {
                     if (response == ButtonType.YES) {
                         try {
+                            ballotHandler.eraseBallots();
                             saveElection();
-                            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("VotingHome.fxml"));
+                            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/VotingHome.fxml"));
                             Pane root = fxmlLoader.load();
                             VotingController votingController = fxmlLoader.getController();
 
