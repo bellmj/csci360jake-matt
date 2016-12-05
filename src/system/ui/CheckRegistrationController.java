@@ -10,6 +10,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 /**
@@ -115,7 +116,10 @@ public class CheckRegistrationController implements Initializable {
                 ((Stage) this.cancelButton.getScene().getWindow()).close());
         enterButton.setOnMouseClicked(event -> {
             setUpCheckingView();
-            setUpResultView(voterIsRegistered(this.legalIDTextField.getText()));
+            byte[] hashedID = voterIsRegistered(this.legalIDTextField.getText());
+            resultDescriptionLabel.setText("The hashed user id is : " + Arrays.toString(hashedID));
+            setUpResultView(hashedID!=null);
+
         });
         resetButton.setOnMouseClicked(event -> reset());
         doneButton.setOnMouseClicked(event ->
@@ -139,7 +143,7 @@ public class CheckRegistrationController implements Initializable {
      * @param legalID   the voter's state ID number
      * @return  true if registered, false if not
      */
-    private boolean voterIsRegistered(String legalID) {
+    private byte[] voterIsRegistered(String legalID) {
         return this.registrationHandler.voterIsRegistered(legalID);
     }
 
@@ -194,8 +198,8 @@ public class CheckRegistrationController implements Initializable {
             colorField.setStyle("-fx-background-color: green");
             resultImage.setImage(new Image("/system/resources/checkmark.png"));
             resultLabel.setText("Registered.");
-            resultDescriptionLabel.setText("The voter may proceed to a " +
-                    "polling machine.");
+            resultDescriptionLabel.setStyle("-fx-font-size: 14px;");
+
         } else {
             colorField.setStyle("-fx-background-color: red");
             resultImage.setImage(new Image("/system/resources/cross.png"));

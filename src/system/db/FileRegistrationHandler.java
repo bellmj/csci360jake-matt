@@ -18,6 +18,7 @@ public class FileRegistrationHandler implements DataHandler<RegistrationForm> {
     PrintWriter out;
     Random rand = new Random();
     private final String NAME_OF_FILE = ".registration";
+    private final byte[] SALT = {122, -86, -33, -14, -41, -59, 78, -80, 82, -51, 102, -69, 80, 123, -8, 55, -64, 94, 54, 78, -85, -31, 125, -96, -3, 61, -90, -47, 114, 101, 45, -90, 127, 110, -39, -121, 86, 116, -125, 14, 65, -91, -94, 25, 13, -40, -109, 43, 0, 23, -77, -95, -121, -41, 72, 77, -8, 124, -89, 28, 89, -39, 111, 107};
     private final String DELIMITER = "END_OF_USER_INFO";
 
     public FileRegistrationHandler() {
@@ -35,6 +36,7 @@ public class FileRegistrationHandler implements DataHandler<RegistrationForm> {
     public void add(RegistrationForm registrationForm) {
         out.println(DELIMITER);
         out.println(registrationForm.getLegalID());
+
         out.println(registrationForm.getFirstName());
         out.println(registrationForm.getMiddleName());
         out.println(registrationForm.getLastName());
