@@ -11,18 +11,13 @@
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="159.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="460.0" minHeight="10.0" prefHeight="391.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="160.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="460.0" minHeight="10.0" prefHeight="390.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <ImageView fitHeight="96.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true">
-         <GridPane.margin>
-            <Insets />
-         </GridPane.margin>
-      </ImageView>
-      <Pane prefHeight="118.0" prefWidth="400.0">
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="400.0">
          <children>
-            <ImageView fx:id="image" fitHeight="96.0" fitWidth="256.0" layoutX="72.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="image" fitHeight="96.0" fitWidth="256.0" layoutX="72.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../resources/360Voting_shrunk.png" />
                </image></ImageView>
@@ -52,8 +47,13 @@
                </padding></Button>
             <Label text="Register a new voter." textAlignment="CENTER" wrapText="true">
                <padding>
-                  <Insets bottom="25.0" left="25.0" right="25.0" top="15.0" />
+                  <Insets bottom="10.0" left="25.0" right="25.0" top="15.0" />
                </padding></Label>
+            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="350.0">
+               <children>
+                  <Button fx:id="toAdminOptionsButton" layoutX="291.0" layoutY="3.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" text="&gt;" />
+               </children>
+            </Pane>
          </children>
       </VBox>
    </children>

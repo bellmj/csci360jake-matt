@@ -96,6 +96,7 @@ public class ElectionHandler {
         return this.election.addCandidateToPosition(
                 new Candidate(candidateName, candidateParty), positionTitle);
     }
+
     final char[] adminPass = {'1','2','3','4'};
     public void assignVotesForBallots(char[] password,List<Ballot> ballots){
 //        System.out.println(ballots.get(0).getSelections());

@@ -1,5 +1,6 @@
 package system.ui;
 
+import javafx.scene.layout.Pane;
 import system.db.FileBallotHandler;
 import system.db.FileRegistrationHandler;
 import system.election.ElectionHandler;
@@ -35,10 +36,6 @@ import java.util.ResourceBundle;
  */
 public class OpenScreenController implements Initializable {
 
-    private ElectionHandler electionHandler;
-    private RegistrationHandler registrationHandler;
-    private BallotHandler ballotHandler;
-
     @FXML
     private ImageView image;
 
@@ -51,6 +48,13 @@ public class OpenScreenController implements Initializable {
     @FXML
     private Button registerButton;
 
+    @FXML
+    private Button toAdminOptionsButton;
+
+    private ElectionHandler electionHandler;
+    private RegistrationHandler registrationHandler;
+    private BallotHandler ballotHandler;
+    private boolean shouldShowAdminOptions;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -70,10 +74,7 @@ public class OpenScreenController implements Initializable {
         assert electionSetupButton != null : "fx:id=\"electionSetupButton\" was not injected: check your FXML file 'OpenScreen.fxml'.";
         assert verifyRegistrationButton != null : "fx:id=\"verifyRegistrationButton\" was not injected: check your FXML file 'OpenScreen.fxml'.";
         assert registerButton != null : "fx:id=\"registerButton\" was not injected: check your FXML file 'OpenScreen.fxml'.";
-
-        this.electionHandler = new ElectionHandler();
-        this.registrationHandler = new RegistrationHandler(new FileRegistrationHandler());
-        this.ballotHandler = new BallotHandler(new FileBallotHandler());
+        assert toAdminOptionsButton != null : "fx:id=\"toAdminOptionsButton\" was not injected: check your FXML file 'OpenScreen.fxml'.";
 
         registerButton.setOnMouseClicked(event -> {
             try {
@@ -133,6 +134,43 @@ public class OpenScreenController implements Initializable {
                 e.printStackTrace();
             }
         });
+
+        toAdminOptionsButton.setOnMouseClicked(event -> {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource
+                        ("AdminScreen.fxml"));
+                Pane root = fxmlLoader.load();
+                AdminScreenController adminScreenController = fxmlLoader
+                        .getController();
+
+                adminScreenController.setElectionHandler(electionHandler);
+                adminScreenController.setBallotHandler(ballotHandler);
+                adminScreenController.setRegistrationHandler(registrationHandler);
+                adminScreenController.setShouldShowAdminOptions(shouldShowAdminOptions);
+
+                Stage stage = (Stage) toAdminOptionsButton.getScene().getWindow();
+                stage.setScene(new Scene(root, 400, 550));
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
+    void setBallotHandler(BallotHandler ballotHandler) {
+        this.ballotHandler = ballotHandler;
+    }
+
+    void setElectionHandler(ElectionHandler electionHandler) {
+        this.electionHandler = electionHandler;
+    }
+
+    void setRegistrationHandler(RegistrationHandler registrationHandler) {
+        this.registrationHandler = registrationHandler;
+    }
+
+    void setShouldShowAdminOptions(boolean shouldShowAdminOptions) {
+        this.shouldShowAdminOptions = shouldShowAdminOptions;
+        toAdminOptionsButton.setVisible(shouldShowAdminOptions);
+    }
 }
