@@ -21,11 +21,13 @@ public class Election {
         }
         Map<String,Candidate> actualCandidates = position1.getActualCandidates();
         if(!actualCandidates.containsKey(candidate.getName())){
+            position1.addCandidate(candidate);
            candidate.setVotes(0l);
            actualCandidates.put(candidate.getName(),candidate);
         }else {
             actualCandidates.get(candidate.getName()).addVote();
         }
+        positions.put(position1.getTitle(),position1);
     }
     void addPropositionVote(String proposition,Boolean vote) throws IllegalArgumentException{
         if(!propositions.containsKey(proposition)) {

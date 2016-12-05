@@ -65,7 +65,6 @@ public class Proposition {
         }else if(votesAgainst == 0l && votesFor== 0l){
             return new BigDecimal(50l);
         }
-        System.out.println(votesFor + " " + votesAgainst);
         BigDecimal decimalVoteFor = new BigDecimal(votesFor);
         BigDecimal decimalVotesAgainst = new BigDecimal(votesAgainst);
         return new BigDecimal(100l).multiply(decimalVoteFor.divide(new BigDecimal(votesFor+votesAgainst),9, RoundingMode.HALF_UP));
