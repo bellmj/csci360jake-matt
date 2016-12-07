@@ -5,14 +5,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import system.election.ElectionHandler;
@@ -243,17 +246,27 @@ public class ElectionSetupController implements Initializable {
                             votingController.setPropositions(propositionArray);
 
                             Stage stage = new Stage();
+                            Scene scene = new Scene(root);
+                            Screen screen = Screen.getPrimary();
+                            Rectangle2D bounds = screen.getBounds();
+
+                            scene.setFill(Paint.valueOf("#343434"));
+                            stage.setScene(scene);
+
                             stage.setTitle("Polling Machine");
-                            stage.setScene(new Scene(root));
+
+                            stage.setX(bounds.getMinX());
+                            stage.setY(bounds.getMinY());
+                            stage.setWidth(bounds.getWidth());
+                            stage.setHeight(bounds.getHeight());
+
                             stage.setFullScreen(true);
                             stage.setResizable(false);
                             stage.setFullScreenExitHint("");
                             stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
                             stage.initModality(Modality.WINDOW_MODAL);
-                            Stage thisStage = ((Stage) this.doneButton.getScene()
-                                    .getWindow());
-                            ((Stage) thisStage.getOwner()).close();
-                            thisStage.close();
+
+                            ((Stage) this.doneButton.getScene().getWindow()).close();
                             stage.show();
 
                         } catch (Exception e) {

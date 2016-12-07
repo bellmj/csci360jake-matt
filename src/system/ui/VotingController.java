@@ -6,8 +6,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SceneBuilder;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Dialog;
@@ -18,7 +20,9 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import system.election.Candidate;
@@ -41,65 +45,29 @@ import java.util.*;
  */
 public class VotingController implements Initializable {
 
-    @FXML
-    private ImageView imageView;
+    @FXML private ImageView imageView;
+    @FXML private Button voteButton;
+    @FXML private Button exitButton;
 
-    @FXML
-    private Button voteButton;
+    @FXML private Label positionTitleLabel;
+    @FXML private ListView<String> positionListView;
+    @FXML private Button positionPreviousButton;
+    @FXML private Button positionCancelButton;
+    @FXML private Button positionNextButton;
 
-    @FXML
-    private Button exitButton;
+    @FXML private Label propositionTitleLabel;
+    @FXML private Label propositionDescriptionLabel;
+    @FXML private RadioButton forRadioButton;
+    @FXML private RadioButton againstRadioButton;
+    @FXML private RadioButton abstainRadioButton;
+    @FXML private Button propositionPreviousButton;
+    @FXML private Button propositionCancelButton;
+    @FXML private Button propositionNextButton;
 
-    @FXML
-    private Label positionTitleLabel;
-
-    @FXML
-    private Label propositionTitleLabel;
-
-    @FXML
-    private ListView<String> positionListView;
-
-    @FXML
-    private ListView<Label> summaryListView;
-
-    @FXML
-    private Label propositionDescriptionLabel;
-
-    @FXML
-    private Button positionPreviousButton;
-
-    @FXML
-    private Button propositionPreviousButton;
-
-    @FXML
-    private Button summaryPreviousButton;
-
-    @FXML
-    private Button positionNextButton;
-
-    @FXML
-    private Button propositionNextButton;
-
-    @FXML
-    private Button finishButton;
-
-    @FXML
-    private Button positionCancelButton;
-
-    @FXML
-    private Button propositionCancelButton;
-
-    @FXML
-    private Button summaryCancelButton;
-
-    @FXML
-    private RadioButton forRadioButton;
-
-    @FXML
-    private RadioButton againstRadioButton;
-
-    @FXML
-    private RadioButton abstainRadioButton;
+    @FXML private ListView<Label> summaryListView;
+    @FXML private Button summaryPreviousButton;
+    @FXML private Button summaryCancelButton;
+    @FXML private Button finishButton;
 
     private ToggleGroup radioButtonGroup;
     private ElectionHandler electionHandler;
@@ -224,9 +192,7 @@ public class VotingController implements Initializable {
             votingController.setPositions(positions);
             votingController.setPropositions(propositions);
 
-            stage.setScene(new Scene(root));
-            setStageOptions(stage);
-
+            stage.getScene().setRoot(root);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -247,9 +213,7 @@ public class VotingController implements Initializable {
             votingController.setPropositions(propositions);
             votingController.readInCurrentPosition();
 
-            stage.setScene(new Scene(root));
-            setStageOptions(stage);
-
+            stage.getScene().setRoot(root);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -381,7 +345,7 @@ public class VotingController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource
                     ("fxml/PropositionVotingScreen.fxml"));
-            Parent root = fxmlLoader.load();
+            Pane root = fxmlLoader.load();
             VotingController votingController = fxmlLoader.getController();
 
             votingController.setIndex(index);
@@ -392,9 +356,7 @@ public class VotingController implements Initializable {
             votingController.groupRadioButtons();
             votingController.readInCurrentProposition();
 
-            stage.setScene(new Scene(root));
-            setStageOptions(stage);
-
+            stage.getScene().setRoot(root);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -440,7 +402,7 @@ public class VotingController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource
                     ("fxml/VotingSummary.fxml"));
-            Parent root = fxmlLoader.load();
+            Pane root = fxmlLoader.load();
             VotingController votingController = fxmlLoader.getController();
 
             votingController.setBallotHandler(ballotHandler);
@@ -449,9 +411,7 @@ public class VotingController implements Initializable {
             votingController.setPropositions(propositions);
             votingController.readInBallotSummary();
 
-            stage.setScene(new Scene(root));
-            setStageOptions(stage);
-
+            stage.getScene().setRoot(root);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -484,14 +444,6 @@ public class VotingController implements Initializable {
             summaryListView.getItems().add(new Label(entry.getKey() + ": " +
                     supportValue));
         }
-    }
-
-    private void setStageOptions(Stage stage) {
-        stage.setTitle("Polling Machine");
-        stage.setFullScreen(true);
-        stage.setResizable(false);
-        stage.setFullScreenExitHint("");
-        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
     }
 
     @FXML

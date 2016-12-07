@@ -31,7 +31,7 @@
  */
 
 .theme {
-    -fx-background-color: derive(grey, 70%);
+    -fx-background-color: #343434;
     -fx-font-size: 14px;
 }
 
@@ -55,23 +55,23 @@
 }
 
 .darkList {
-    -fx-background-color: derive(grey, -60%);
+    -fx-background-color: #343434;
 }
 
 .darkList .list-cell {
     -fx-padding: 6 0 0 13;
-    -fx-background-color: derive(grey, -60%);
+    -fx-background-color: #343434;
     -fx-text-fill: lightgrey;
     -fx-font-size: 20px;
 }
 
 .darkList .list-cell:even {
-    -fx-background-color: derive(grey, -58%);
+    -fx-background-color: #404040;
 }
 
 .darkList .list-cell:focused {
     -fx-background-color: lightgrey;
-    -fx-text-fill: derive(grey, -60%);
+    -fx-text-fill: #343434;
 }
 
 .radio-button {
@@ -84,7 +84,7 @@
 }
 
 .tab-pane {
-    -fx-background-color: derive(grey, -60%);
+    -fx-background-color: #343434;
 }
 
 .tab-pane *.tab-header-background {
@@ -106,12 +106,12 @@
 
 .text-field {
     -fx-padding: 3 6 3 6;
-    -fx-background-color: derive(grey, 100%);
+    -fx-background-color: grey;
     -fx-text-fill: black;
 }
 
 .titled-pane {
-    -fx-background-color: derive(grey, -60%);
+    -fx-background-color: #343434;
 }
 
 .titled-pane > .title {
@@ -125,13 +125,13 @@
 }
 
 .scroll-pane {
-    -fx-background-color: derive(grey, -60%);
+    -fx-background-color: #343434;
     -fx-border-color: derive(grey, 20%);
     -fx-padding: 0px;
 }
 
 .scroll-bar{
-    -fx-background-color: derive(grey, -60%);
+    -fx-background-color: #343434;
     -fx-background-radius: 2em;
 }
 .scroll-bar:horizontal .track,
@@ -204,7 +204,7 @@
 }
 
 .list-view {
-    -fx-background-color: derive(grey, -60%);
+    -fx-background-color: #343434;
     -fx-alternative-row-fill-visible: derive(grey, -20%);
 }
 
