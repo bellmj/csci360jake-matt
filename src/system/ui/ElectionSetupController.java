@@ -284,7 +284,7 @@ public class ElectionSetupController implements Initializable {
      *
      * @param electionHandler   the ElectionHandler to use
      */
-    public void setElectionHandler(ElectionHandler electionHandler) {
+    void setElectionHandler(ElectionHandler electionHandler) {
         this.electionHandler = electionHandler;
     }
 
@@ -294,7 +294,7 @@ public class ElectionSetupController implements Initializable {
      *
      * @param ballotHandler   the BallotHandler to use
      */
-    public void setBallotHandler(BallotHandler ballotHandler) {
+    void setBallotHandler(BallotHandler ballotHandler) {
         this.ballotHandler = ballotHandler;
     }
 
@@ -721,32 +721,24 @@ public class ElectionSetupController implements Initializable {
      * @return  the resulting String
      */
     private String electionToString() {
-
         String electionString = "";
-
-        if (!positionListView.getItems().isEmpty()) {
-            for (int i = 0; i < positionListView.getItems().size() - 1; i++) {
-                electionString += positionListView.getItems().get(i) + "\n";
-            }
-            electionString += positionListView.getItems()
-                    .get(positionListView.getItems().size() - 1);
-        } else {
-            electionString += "-1";
-        }
-
+        electionString += listViewItemsToString(positionListView.getItems());
         electionString +="::";
-
-        if (!propositionListView.getItems().isEmpty()) {
-            for (int j = 0; j < propositionListView.getItems().size() - 1; j++) {
-                electionString += propositionListView.getItems().get(j) + "\n";
-            }
-            electionString += propositionListView.getItems()
-                    .get(propositionListView.getItems().size() - 1);
-        } else {
-            electionString += "-1";
-        }
-
+        electionString += listViewItemsToString(propositionListView.getItems());
         return electionString;
+    }
+
+    private String listViewItemsToString(List<String> items) {
+        String string = "";
+        if (!items.isEmpty()) {
+            for (int j = 0; j < items.size() - 1; j++) {
+                string += items.get(j) + "\n";
+            }
+            string += items.get(items.size() - 1);
+        } else {
+            string += "-1";
+        }
+        return string;
     }
 
     /**

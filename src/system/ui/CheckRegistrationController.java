@@ -132,7 +132,7 @@ public class CheckRegistrationController implements Initializable {
      *
      * @param registrationHandler   the RegistrationHandler to use
      */
-    public void setRegistrationHandler(RegistrationHandler registrationHandler) {
+    void setRegistrationHandler(RegistrationHandler registrationHandler) {
         this.registrationHandler = registrationHandler;
     }
 
@@ -150,7 +150,7 @@ public class CheckRegistrationController implements Initializable {
     /**
      * Resets the view to accept a state ID number.
      */
-    public void reset() {
+    void reset() {
         progressIndicator.setVisible(true);
         resultImage.setVisible(false);
         resultImage.setImage(null);

@@ -41,8 +41,6 @@ public class BallotHandler {
     /**
      * Stores a voter's Candidate selection to their Ballot.
      *
-     * @pre position <> null
-     *
      * @param position  the Position for which the Candidate was selected
      * @param candidate the Candidate that was selected
      */
@@ -52,8 +50,6 @@ public class BallotHandler {
 
     /**
      * Stores a voter's decision on a public opinion survey.
-     *
-     * @pre proposition <> null
      *
      * @param proposition   the Proposition up for survey
      * @param supports  boolean - true if supports, false if opposes, null if abstains
@@ -71,10 +67,7 @@ public class BallotHandler {
     }
 
     //TODO Decide whether the BallotHandler should send the ballot to DBHandler directly or not
-    /**
-     *  @pre self.ballot <> null
-     *  @post self.ballot = null
-     */
+
     public void saveBallot() {
         if (this.ballot != null) {
             dataHandler.add(this.ballot);
@@ -82,21 +75,16 @@ public class BallotHandler {
         }
     }
 
-    public void clearSelections() {
-        this.ballot = new Ballot(this.ballot.getVoterHashID());
-    }
-
     /**
      * The voter cancels all selections, and does not cast their Ballot, so the Ballot is
-     *
-     * @param ballot
      */
-    public void cancelBallot(Ballot ballot) {
+    public void cancelBallot() {
         this.ballot = null;
     }
 
     private final char[] adminPassword = {'1', '2', '3', '4'};
     public List<Ballot> getAllBallots(char[] adminPassword) {
+        //TODO Verify password.
         return dataHandler.getAll();
     }
 

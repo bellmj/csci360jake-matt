@@ -25,7 +25,7 @@ public class ElectionHandler {
      * <tt>ElectionSetupController</tt> in order to convert information
      * entered by the user on election setup into an Election.
      *
-     * @param electionString
+     * @param electionString    a String representation read from .elec file
      */
     public void createElectionFromString(String electionString) {
         election = new Election();
@@ -49,8 +49,7 @@ public class ElectionHandler {
                         break;
                     }
 
-                    addCandidateToPosition(posCanLines[j].substring(1),
-                            posCanLines[j + 1].substring(9), position);
+                    addCandidateToPosition(posCanLines[j].substring(1), posCanLines[j + 1].substring(9), position);
                     j++;
                 }
             }
@@ -102,9 +101,7 @@ public class ElectionHandler {
 //        System.out.println(ballots.get(0).getSelections());
 
             for(Ballot bal : ballots){
-                for(Map.Entry<String,Candidate> entry:bal.getSelections()
-                        .entrySet
-                        ()) {
+                for(Map.Entry<String,Candidate> entry:bal.getSelections().entrySet()) {
                     election.addVote(entry.getKey(), entry.getValue());
                 }
                 for(Map.Entry<String,Boolean> entry:bal.getPropositions().entrySet())

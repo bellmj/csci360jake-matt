@@ -15,6 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import system.election.Candidate;
 import system.election.ElectionHandler;
+import system.election.ReportController;
 import system.election.voting.Ballot;
 import system.election.voting.BallotHandler;
 import system.registration.RegistrationHandler;
@@ -25,9 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-/**
- * Created by Jake's PC on 12/5/2016.
- */
 public class AdminScreenController implements Initializable {
 
     @FXML
@@ -111,7 +109,7 @@ public class AdminScreenController implements Initializable {
                             new FileChooser.ExtensionFilter("Election File (*.elec)", "*.elec")
                     );
                     fileChooser.setTitle("Open Election File");
-                    File file = fileChooser.showOpenDialog((Stage) countButton
+                    File file = fileChooser.showOpenDialog(countButton
                             .getScene().getWindow());
 
                     if (file == null || !file.exists()) {

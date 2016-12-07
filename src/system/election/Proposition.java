@@ -52,6 +52,8 @@ public class Proposition {
                 this.votesAgainst++;
             }
         }
+        System.out.println("FOR: " + this.votesFor);
+        System.out.println("AGAINST: " + this.votesAgainst);
     }
 
     /**
@@ -60,14 +62,15 @@ public class Proposition {
      * @return  a long representing the support received by the Proposition
      */
     public BigDecimal getSupport() {
-        if(votesAgainst==0l && votesFor > 0l){
-            return new BigDecimal(100l);
-        }else if(votesAgainst == 0l && votesFor== 0l){
-            return new BigDecimal(50l);
+        if(votesAgainst==0L && votesFor > 0L){
+            return new BigDecimal(100L);
+        }else if(votesAgainst == 0L && votesFor== 0L){
+            return new BigDecimal(50L);
         }
         BigDecimal decimalVoteFor = new BigDecimal(votesFor);
         BigDecimal decimalVotesAgainst = new BigDecimal(votesAgainst);
-        return new BigDecimal(100l).multiply(decimalVoteFor.divide(new BigDecimal(votesFor+votesAgainst),9, RoundingMode.HALF_UP));
+        return new BigDecimal(100L).multiply(decimalVoteFor.divide(new
+                BigDecimal(votesFor+votesAgainst),9, RoundingMode.HALF_UP));
 }
 
     /**
@@ -80,9 +83,9 @@ public class Proposition {
     }
     void addVote(Boolean bool){
         if(bool)
-            votesFor+=1l;
+            votesFor+=1L;
         else
-            votesAgainst+=1l;
+            votesAgainst+=1L;
     }
 
     /**
@@ -94,10 +97,10 @@ public class Proposition {
         return this.description;
     }
 
-    @Override
     /**
      * @return a string with the name of this proposition a description all delimited by semicolons
      */
+    @Override
     public String toString() {
         return name + ";" + description +";";
     }

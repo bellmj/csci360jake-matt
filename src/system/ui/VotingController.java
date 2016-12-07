@@ -1,28 +1,22 @@
 package system.ui;
 
+import com.sun.istack.internal.Nullable;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.SceneBuilder;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import system.election.Candidate;
@@ -155,7 +149,7 @@ public class VotingController implements Initializable {
      *
      * @param ballotHandler   the BallotHandler to use
      */
-    public void setBallotHandler(BallotHandler ballotHandler) {
+    void setBallotHandler(BallotHandler ballotHandler) {
         this.ballotHandler = ballotHandler;
     }
 
@@ -165,18 +159,18 @@ public class VotingController implements Initializable {
      *
      * @param electionHandler   the ElectionHandler to use
      */
-    public void setElectionHandler(ElectionHandler electionHandler) {
+    void setElectionHandler(ElectionHandler electionHandler) {
         this.electionHandler = electionHandler;
     }
 
-    public void setPositions(Position[] positions) {
+    void setPositions(Position[] positions) {
         this.positions = positions;
     }
 
-    public void setPropositions(Proposition[] propositions) {
+    void setPropositions(Proposition[] propositions) {
         this.propositions = propositions;
     }
-    public void setIndex(int index) {
+    void setIndex(int index) {
         this.index = index;
     }
 
@@ -434,21 +428,15 @@ public class VotingController implements Initializable {
         String supportValue;
         for (Map.Entry<String, Boolean> entry : ballotHandler
                 .getPropositionSelections().entrySet()) {
-            if (entry.getValue()) {
-                supportValue = "FOR";
-            } else if (!entry.getValue()) {
-                supportValue = "AGAINST";
-            } else {
-                supportValue = "Abstain";
-            }
+            supportValue = supportBooleanToString(entry.getValue());
             summaryListView.getItems().add(new Label(entry.getKey() + ": " +
                     supportValue));
         }
     }
 
     @FXML
-    private void voteButtonAction(ActionEvent event) throws IOException {
-        Dialog<String> hashStringDialog = new Dialog<String>();
+    private void voteButtonAction() throws IOException {
+        Dialog<String> hashStringDialog = new Dialog<>();
         hashStringDialog.setTitle("Enter Voter ID");
         ButtonType doneButtonType = new ButtonType("Done", ButtonBar
                 .ButtonData.OK_DONE);
@@ -486,7 +474,7 @@ public class VotingController implements Initializable {
     }
 
     @FXML
-    private void exitButtonAction(ActionEvent event) throws IOException {
+    private void exitButtonAction() throws IOException {
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION, "Are you" +
                 " sure you want to exit the program?",
                 ButtonType.CANCEL, ButtonType.YES);
@@ -509,8 +497,8 @@ public class VotingController implements Initializable {
             if (selected == null || selected.equals("Abstain")) {
                 ballotHandler.selectCandidate(positions[index], null);
             } else {
-                ballotHandler.selectCandidate(positions[index], new Candidate(0l,
-                        selected.substring(0, selected.lastIndexOf('\n')),
+                ballotHandler.selectCandidate(positions[index], new Candidate
+                        (0L, selected.substring(0, selected.lastIndexOf('\n')),
                         selected.substring(selected.lastIndexOf('\t') + 1)));
             }
 
@@ -532,19 +520,8 @@ public class VotingController implements Initializable {
                 selected = null;
             }
 
-            Boolean supportValue;
-            if (selected != null) {
-                if (selected.equals("FOR")) {
-                    supportValue = true;
-                } else if (selected.equals("AGAINST")) {
-                    supportValue = false;
-                } else {
-                    supportValue = null;
-                }
-            } else {
-                supportValue = null;
-            }
 
+            Boolean supportValue = supportStringToBoolean(selected);
             ballotHandler.addProposition(propositions[index], supportValue);
 
             if (index < propositions.length - 1) {
@@ -567,8 +544,8 @@ public class VotingController implements Initializable {
             if (selected == null || selected.equals("Abstain")) {
                 ballotHandler.selectCandidate(positions[index], null);
             } else {
-                ballotHandler.selectCandidate(positions[index], new Candidate(0l,
-                        selected.substring(0, selected.lastIndexOf('\n')),
+                ballotHandler.selectCandidate(positions[index], new Candidate
+                        (0L, selected.substring(0, selected.lastIndexOf('\n')),
                         selected.substring(selected.lastIndexOf('\t') + 1)));
             }
 
@@ -586,19 +563,7 @@ public class VotingController implements Initializable {
                 selected = null;
             }
 
-            Boolean supportValue;
-            if (selected != null) {
-                if (selected.equals("FOR")) {
-                    supportValue = true;
-                } else if (selected.equals("AGAINST")) {
-                    supportValue = false;
-                } else {
-                    supportValue = null;
-                }
-            } else {
-                supportValue = null;
-            }
-
+            Boolean supportValue = supportStringToBoolean(selected);
             ballotHandler.addProposition(propositions[index], supportValue);
 
             if (index > 0) {
@@ -635,6 +600,7 @@ public class VotingController implements Initializable {
             if (response == ButtonType.YES) {
                 index = 0;
                 currentCandidateOptions.clear();
+                ballotHandler.cancelBallot();
                 if (source == positionCancelButton) {
                     loadHomeScreen((Stage) positionCancelButton.getScene()
                             .getWindow());
@@ -650,7 +616,7 @@ public class VotingController implements Initializable {
     }
 
     @FXML
-    private void finishButtonAction(ActionEvent event) throws IOException {
+    private void finishButtonAction() throws IOException {
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION, "Cast " +
                 "your ballot?", ButtonType.NO, ButtonType.YES);
         confirmation.initOwner(finishButton.getScene().getWindow());
@@ -668,5 +634,35 @@ public class VotingController implements Initializable {
                 loadHomeScreen((Stage) finishButton.getScene().getWindow());
             }
         });
+    }
+
+    private Boolean supportStringToBoolean(@Nullable String s) {
+        Boolean supportValue;
+        switch (s) {
+            case "FOR":
+                supportValue = true;
+                break;
+            case "AGAINST":
+                supportValue = false;
+                break;
+            default:
+                supportValue = null;
+                break;
+        }
+        return supportValue;
+    }
+
+    private String supportBooleanToString(Boolean b) {
+        String supportValue;
+        if (b != null) {
+            if (b) {
+                supportValue = "FOR";
+            } else  {
+                supportValue = "AGAINST";
+            }
+        } else {
+            supportValue = "Abstain";
+        }
+        return supportValue;
     }
 }

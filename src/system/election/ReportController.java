@@ -1,16 +1,12 @@
-package system.ui;
+package system.election;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import system.election.Candidate;
-import system.election.ElectionHandler;
-import system.election.Position;
-import system.election.Proposition;
 
 import java.net.URL;
-import java.util.List;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class ReportController implements Initializable {
@@ -28,17 +24,17 @@ public class ReportController implements Initializable {
         listView.setFocusTraversable(false);
     }
 
-    void setElectionHandler(ElectionHandler electionHandler) {
+    public void setElectionHandler(ElectionHandler electionHandler) {
         this.electionHandler = electionHandler;
         populateListView();
     }
 
     private void populateListView() {
-        List<Position> positions = electionHandler.getPositionsUnmodifiable();
-        List<Proposition> propositions = electionHandler
-                .getPropositionsUnmodifiable();
+        HashMap<String, Position> positions = electionHandler.getPositions();
+        HashMap<String, Proposition> propositions = electionHandler
+                .getPropositions();
 
-        for (Position position : positions) {
+        for (Position position : positions.values()) {
             listView.getItems().add(new Label("Position: " + position.getTitle()));
 
             for (Candidate candidate : position.getCandidates()) {
@@ -48,7 +44,7 @@ public class ReportController implements Initializable {
             }
         }
 
-        for (Proposition proposition : propositions) {
+        for (Proposition proposition : propositions.values()) {
             listView.getItems().add(new Label("Proposition: " + proposition
                     .getName() + "\n\t% Support: " + proposition.getSupport()));
         }

@@ -24,7 +24,7 @@ public class Position {
      */
     public Position(String title) {
         this.title = title;
-        this.candidates = new HashMap<String,Candidate>();
+        this.candidates = new HashMap<>();
     }
 
     public Position(String title, HashMap<String,Candidate> candidates) {
@@ -47,7 +47,7 @@ public class Position {
      * @return  a list of Candidates
      */
     public List<Candidate> getCandidates() {
-        List<Candidate> rtn = new ArrayList();
+        List<Candidate> rtn = new ArrayList<>();
         for (Map.Entry<String,Candidate> c : this.candidates.entrySet()) {
             rtn.add(new Candidate(c.getValue().getVotes(), c.getValue().getName(), c.getValue().getParty()));
         }

@@ -23,7 +23,7 @@ import javafx.util.Pair;
  *
  * @see OpenScreenController
  */
-public class LoginDialog extends Dialog<Pair<Boolean, Boolean>> {
+class LoginDialog extends Dialog<Pair<Boolean, Boolean>> {
 
     private TextField usernameTextField;
     private PasswordField passwordField;
@@ -38,7 +38,7 @@ public class LoginDialog extends Dialog<Pair<Boolean, Boolean>> {
     /**
      * Constructs an instance of LoginDialog.
      */
-    public LoginDialog() {
+    LoginDialog() {
         super();
 
         this.setTitle("Authentication");
@@ -92,7 +92,7 @@ public class LoginDialog extends Dialog<Pair<Boolean, Boolean>> {
      * Checks that the information entered by the user is valid login
      * information.
      *
-     * @return
+     * @return  true if login is valid
      */
     private boolean isValidLogin() {
         return isAdmin() || (usernameTextField.getText()

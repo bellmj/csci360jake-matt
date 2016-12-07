@@ -122,7 +122,7 @@ public class RegistrationController implements Initializable {
      *
      * @param registrationHandler   the RegistrationHandler to use
      */
-    public void setRegistrationHandler(RegistrationHandler registrationHandler) {
+    void setRegistrationHandler(RegistrationHandler registrationHandler) {
         this.registrationHandler = registrationHandler;
     }
 

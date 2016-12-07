@@ -2,7 +2,7 @@ package system.election;
 
 import java.util.*;
 
-public class Election {
+class Election {
 
     private HashMap<String, Position> positions;
     private HashMap<String, Proposition> propositions;
@@ -22,7 +22,7 @@ public class Election {
         Map<String,Candidate> actualCandidates = position1.getActualCandidates();
         if(!actualCandidates.containsKey(candidate.getName())){
             position1.addCandidate(candidate);
-           candidate.setVotes(1l);
+           candidate.setVotes(1L);
            actualCandidates.put(candidate.getName(),candidate);
         }else {
             actualCandidates.get(candidate.getName()).addVote();
@@ -33,19 +33,11 @@ public class Election {
         if(!propositions.containsKey(proposition)) {
             throw new IllegalArgumentException("proposition not contained in election");
         }
-        propositions.get(proposition).addVote(vote);
+        propositions.get(proposition).addSupport(vote);
     }
 
     void addPosition(Position position) {
         this.positions.put(position.getTitle(), position);
-    }
-
-    boolean addCandidateToPosition(Candidate candidate, Position position) {
-        boolean rtnval = this.positions.containsKey(position.getTitle());
-        if (rtnval) {
-            this.positions.get(position.getTitle()).addCandidate(candidate);
-        }
-        return rtnval;
     }
 
     boolean addCandidateToPosition(Candidate candidate, String positionTitle) {

@@ -50,7 +50,7 @@ public class Candidate {
         return this.party;
     }
     void setVotes(long x){
-
+        this.votes = x;
     }
 
     /**

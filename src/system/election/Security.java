@@ -6,9 +6,6 @@ import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
-/**
- * Created by matt on 12/4/16.
- */
 public class Security {
 
 
@@ -31,8 +28,7 @@ public class Security {
             SecretKeyFactory skf = SecretKeyFactory.getInstance( "PBKDF2WithHmacSHA512" );
             PBEKeySpec spec = new PBEKeySpec( password, salt, iterations, keyLength );
             SecretKey key = skf.generateSecret( spec );
-            byte[] res = key.getEncoded( );
-            return res;
+            return key.getEncoded();
 
         } catch( NoSuchAlgorithmException | InvalidKeySpecException e ) {
             throw new RuntimeException( e );
