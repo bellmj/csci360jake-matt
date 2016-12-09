@@ -14,6 +14,7 @@ import java.util.*;
 public class ElectionHandler {
 
     private Election election;
+    final char[] adminPass = {'1','2','3','4'};
 
     public ElectionHandler() {
         this.election = new Election();
@@ -96,7 +97,14 @@ public class ElectionHandler {
                 new Candidate(candidateName, candidateParty), positionTitle);
     }
 
-    final char[] adminPass = {'1','2','3','4'};
+    /**
+     * Reads the stored Ballots, and for each Ballot, goes through their
+     * selections and adds votes to the appropriate Candidate or Proposition.
+     *
+     * @param password  an admin password required to change candidates or
+     *                  propositions
+     * @param ballots   the stored Ballots
+     */
     public void assignVotesForBallots(char[] password,List<Ballot> ballots){
 //        System.out.println(ballots.get(0).getSelections());
 
@@ -135,6 +143,11 @@ public class ElectionHandler {
         return rtnval;
     }
 
+    /**
+     * Returns the HashMap containing the Positions in this Election
+     *
+     * @return  the HashMap containing the Positions in this Election
+     */
     HashMap<String, Position> getPositions() {
         return this.election.getPositions();
     }
@@ -155,6 +168,11 @@ public class ElectionHandler {
         return rtnval;
     }
 
+    /**
+     * Returns the HashMap containing the Propositions in this Election.
+     *
+     * @return  the HashMap containing the Propositions in this Election
+     */
     HashMap<String,Proposition> getPropositions() {
         return this.election.getPropositions();
     }

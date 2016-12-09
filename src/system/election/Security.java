@@ -8,14 +8,10 @@ import java.security.spec.InvalidKeySpecException;
 
 public class Security {
 
-
-    public Security() {
-
-    }
-
     /**
      * takes a password entry and hashes it according to a salt generating a byte[] as an output
      * adapted from code provided in this guide https://www.owasp.org/index.php/Hashing_Java
+     *
      * @param password password to be hashed
      * @param salt a salt to hash the password with should be random data at least 32 bytes and very by each user
      * @param iterations number of iterations of algorithm to be run a higher number is safer

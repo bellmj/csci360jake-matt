@@ -25,52 +25,23 @@ import java.util.ResourceBundle;
  */
 public class RegistrationController implements Initializable {
 
+    @FXML private TextField firstNameTextField;
+    @FXML private TextField middleNameTextField;
+    @FXML private TextField lastNameTextField;
+    @FXML private TextField addressLine1TextField;
+    @FXML private TextField addressLine2TextField;
+    @FXML private TextField ssnTextField;
+    @FXML private TextField phoneNumberTextField;
+    @FXML private DatePicker birthDatePicker;
+    @FXML private TextField legalIDTextField;
+    @FXML private ChoiceBox<String> stateChoiceBox;
+    @FXML private ChoiceBox<String> countyChoiceBox;
+    @FXML private ChoiceBox<String> cityChoiceBox;
+    @FXML private TextField zipTextField;
+    @FXML private Button cancelButton;
+    @FXML private Button doneButton;
+
     private RegistrationHandler registrationHandler;
-
-    @FXML
-    private TextField firstNameTextField;
-
-    @FXML
-    private TextField middleNameTextField;
-
-    @FXML
-    private TextField lastNameTextField;
-
-    @FXML
-    private TextField addressLine1TextField;
-
-    @FXML
-    private TextField addressLine2TextField;
-
-    @FXML
-    private TextField ssnTextField;
-
-    @FXML
-    private TextField phoneNumberTextField;
-
-    @FXML
-    private DatePicker birthDatePicker;
-
-    @FXML
-    private TextField legalIDTextField;
-
-    @FXML
-    private ChoiceBox<String> stateChoiceBox;
-
-    @FXML
-    private ChoiceBox<String> countyChoiceBox;
-
-    @FXML
-    private ChoiceBox<String> cityChoiceBox;
-
-    @FXML
-    private TextField zipTextField;
-
-    @FXML
-    private Button cancelButton;
-
-    @FXML
-    private Button doneButton;
 
     /**
      * Called to initialize a controller after its root element has been

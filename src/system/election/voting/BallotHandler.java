@@ -4,9 +4,9 @@ import system.db.FileBallotHandler;
 import system.election.Candidate;
 import system.election.Position;
 import system.election.Proposition;
-import system.db.DBHandler;
 import system.db.DataHandler;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,7 +24,13 @@ import java.util.List;
 public class BallotHandler {
     private DataHandler<Ballot> dataHandler;
     private Ballot ballot;
+    private final char[] adminPassword = {'1', '2', '3', '4'};
 
+    /**
+     * Constructs a BallotHandler with the specified DataHandler.
+     *
+     * @param dataHandler   a DataHandler which handles Ballots
+     */
     public BallotHandler(DataHandler<Ballot> dataHandler) {
         this.dataHandler = dataHandler;
     }
@@ -58,20 +64,31 @@ public class BallotHandler {
         this.ballot.changeProposition(proposition, supports);
     }
 
+    /**
+     * Returns the candidate selections for the active Ballot.
+     *
+     * @return  a HashMap detailing the ballot's candidate selections
+     */
     public HashMap<String, Candidate> getCandidateSelections() {
         return this.ballot.getSelections();
     }
 
+    /**
+     * Returns the proposition selections for the active Ballot.
+     *
+     * @return  a HashMap detailing the ballot's proposition selections
+     */
     public HashMap<String, Boolean> getPropositionSelections() {
         return this.ballot.getPropositions();
     }
 
-    //TODO Decide whether the BallotHandler should send the ballot to DBHandler directly or not
-
+    /**
+     * Saves the active Ballot, then clears it.
+     */
     public void saveBallot() {
         if (this.ballot != null) {
             dataHandler.add(this.ballot);
-            this.ballot = null;
+            cancelBallot();
         }
     }
 
@@ -82,12 +99,23 @@ public class BallotHandler {
         this.ballot = null;
     }
 
-    private final char[] adminPassword = {'1', '2', '3', '4'};
+    /**
+     * Retrieves all stored Ballots.
+     *
+     * @param adminPassword an admin password required to retrieve Ballots
+     * @return  a List of Ballots
+     */
     public List<Ballot> getAllBallots(char[] adminPassword) {
-        //TODO Verify password.
-        return dataHandler.getAll();
+        if (Arrays.equals(adminPassword, this.adminPassword)) {
+            return this.dataHandler.getAll();
+        } else {
+            return null;
+        }
     }
 
+    /**
+     * Erases all stored Ballots.
+     */
     public void eraseBallots() {
         ((FileBallotHandler) dataHandler).eraseBallots();
     }

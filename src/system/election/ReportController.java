@@ -9,6 +9,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+/**
+ * Handles the view which displays election results.
+ */
 public class ReportController implements Initializable {
 
     @FXML
@@ -16,6 +19,7 @@ public class ReportController implements Initializable {
 
     private ElectionHandler electionHandler;
 
+    /**(@inheritDoc)*/
     @Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
         assert listView != null : "fx:id=\"imageView\" was not injected: " +
@@ -24,11 +28,20 @@ public class ReportController implements Initializable {
         listView.setFocusTraversable(false);
     }
 
+    /**
+     * Sets the ElectionHandler for this controller.
+     *
+     * @param electionHandler   the ElectionHandler
+     */
     public void setElectionHandler(ElectionHandler electionHandler) {
         this.electionHandler = electionHandler;
         populateListView();
     }
 
+    /**
+     * Populates the controller's ListView with information from the current
+     * Election.
+     */
     private void populateListView() {
         HashMap<String, Position> positions = electionHandler.getPositions();
         HashMap<String, Proposition> propositions = electionHandler

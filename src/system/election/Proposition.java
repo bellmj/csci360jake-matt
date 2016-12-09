@@ -29,7 +29,18 @@ public class Proposition {
         this.votesFor = 0;
         this.votesAgainst = 0;
     }
-    public Proposition(String name, String description,long votesFor,long votesAgainst) {
+
+    /**
+     * Constructs a Proposition with the specified name, description,
+     * support, and opposition.
+     *
+     * @param name  the name of the proposition
+     * @param description   a description of the proposition
+     * @param votesFor  long number of votes supporting the proposition
+     * @param votesAgainst  long number of votes opposing the proposition
+     */
+    public Proposition(String name, String description, long votesFor, long
+            votesAgainst) {
         this.name = name;
         this.description = description;
         this.votesFor = votesFor;
@@ -98,7 +109,10 @@ public class Proposition {
     }
 
     /**
-     * @return a string with the name of this proposition a description all delimited by semicolons
+     * Returns a string with the name and description of this proposition
+     * delimited by semicolons.
+     *
+     * @return a string representation of this proposition
      */
     @Override
     public String toString() {

@@ -18,15 +18,22 @@ public class Position {
     private Map<String,Candidate> candidates;
 
     /**
-     * Creates a new Position with the specified title.
+     * Constructs a new Position with the specified title.
      *
-     * @param title the name of the position up for election
+     * @param title the title of the position up for election
      */
     public Position(String title) {
         this.title = title;
         this.candidates = new HashMap<>();
     }
 
+    /**
+     * Constructs a Position with the specified title and Candidates.
+     *
+     * @param title the title of the position up for election
+     * @param candidates    a HashMap containing the candidates up for this
+     *                      position
+     */
     public Position(String title, HashMap<String,Candidate> candidates) {
         this.title = title;
         this.candidates = candidates;
@@ -53,6 +60,12 @@ public class Position {
         }
         return rtn;
     }
+
+    /**
+     * Returns the actual HashMap of Candidates for this Position.
+     *
+     * @return  the position's HashMap of Candidates
+     */
     HashMap<String, Candidate> getActualCandidates(){
         return new HashMap<>(candidates);
     }
@@ -66,6 +79,11 @@ public class Position {
         this.candidates.put(candidate.getName(),candidate);
     }
 
+    /**
+     * Returns a String representation of the Position and its Candidates.
+     *
+     * @return  a String of the position
+     */
     @Override
     public String toString() {
         String candidateString = "";

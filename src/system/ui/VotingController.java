@@ -39,16 +39,19 @@ import java.util.*;
  */
 public class VotingController implements Initializable {
 
+    // VotingHome.fxml
     @FXML private ImageView imageView;
     @FXML private Button voteButton;
     @FXML private Button exitButton;
 
+    // PositionVotingScreen.fxml
     @FXML private Label positionTitleLabel;
     @FXML private ListView<String> positionListView;
     @FXML private Button positionPreviousButton;
     @FXML private Button positionCancelButton;
     @FXML private Button positionNextButton;
 
+    // PropositionVotingScreen.fxml
     @FXML private Label propositionTitleLabel;
     @FXML private Label propositionDescriptionLabel;
     @FXML private RadioButton forRadioButton;
@@ -58,6 +61,7 @@ public class VotingController implements Initializable {
     @FXML private Button propositionCancelButton;
     @FXML private Button propositionNextButton;
 
+    // VotingSummary.fxml
     @FXML private ListView<Label> summaryListView;
     @FXML private Button summaryPreviousButton;
     @FXML private Button summaryCancelButton;
@@ -163,17 +167,39 @@ public class VotingController implements Initializable {
         this.electionHandler = electionHandler;
     }
 
+    /**
+     * Sets the array of Positions used for cycling through voting choices.
+     *
+     * @param positions an array of Positions
+     */
     void setPositions(Position[] positions) {
         this.positions = positions;
     }
 
+    /**
+     * Sets the array of Propositions used for cycling through voting choices.
+     *
+     * @param propositions  an array of Propositions
+     */
     void setPropositions(Proposition[] propositions) {
         this.propositions = propositions;
     }
+
+    /**
+     * Sets the index of the controller, corresponding to an item in either
+     * this.positions or this.propositions.
+     *
+     * @param index int
+     */
     void setIndex(int index) {
         this.index = index;
     }
 
+    /**
+     * Loads VotingHome.fxml after voting completion or cancellation.
+     *
+     * @param stage the current Stage
+     */
     private void loadHomeScreen(Stage stage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource
@@ -193,6 +219,12 @@ public class VotingController implements Initializable {
         }
     }
 
+    /**
+     * Loads PositionVotingScreen.fxml for the next or previous Position up
+     * for election.
+     *
+     * @param stage the current Stage
+     */
     private void loadPositionScreen(Stage stage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource
@@ -214,6 +246,10 @@ public class VotingController implements Initializable {
         }
     }
 
+    /**
+     * Reads the information on the current Position from this.positions into
+     * the ListView.
+     */
     private void readInCurrentPosition() {
         positionListView.setEditable(false);
         positionListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -335,6 +371,11 @@ public class VotingController implements Initializable {
         }
     }
 
+    /**
+     * Loads PropositionVotingScreen.fxml for the next or previous Proposition.
+     *
+     * @param stage the current Stage
+     */
     private void loadPropositionScreen(Stage stage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource
@@ -357,6 +398,10 @@ public class VotingController implements Initializable {
         }
     }
 
+    /**
+     * Reads the information on the current Proposition from this.propositions
+     * into the ListView.
+     */
     private void readInCurrentProposition() {
         propositionTitleLabel.setText(propositions[index].getName());
         propositionDescriptionLabel.setText(propositions[index].getDescription());
@@ -377,8 +422,16 @@ public class VotingController implements Initializable {
                 abstainRadioButton.setSelected(true);
             }
         }
+
+        if (index == 0 && positions.length == 0) {
+            propositionPreviousButton.setDisable(true);
+        }
     }
 
+    /**
+     * Groups the radio buttons for a proposition voting screen into
+     * ToggleGroup this.radioButtonGroup.
+     */
     private void groupRadioButtons() {
         radioButtonGroup = new ToggleGroup();
         forRadioButton.setToggleGroup(radioButtonGroup);
@@ -392,6 +445,11 @@ public class VotingController implements Initializable {
         abstainRadioButton.setSelected(false);
     }
 
+    /**
+     * Loads VotingSummary.fxml for the Ballot's choices.
+     *
+     * @param stage the current Stage
+     */
     private void loadSummaryScreen(Stage stage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource
@@ -412,6 +470,9 @@ public class VotingController implements Initializable {
         }
     }
 
+    /**
+     * Reads the Ballot's choices into the summary ListView.
+     */
     private void readInBallotSummary() {
         summaryListView.setFocusTraversable(false);
 
@@ -434,8 +495,13 @@ public class VotingController implements Initializable {
         }
     }
 
-    @FXML
-    private void voteButtonAction() throws IOException {
+    /**
+     * When the "Vote" Button is pressed on the voting home screen, a Dialog
+     * is shown requesting the voter's hashed ID from the pollworker.
+     *
+     * @throws IOException  if fxml was improperly loaded
+     */
+    @FXML private void voteButtonAction() throws IOException {
         Dialog<String> hashStringDialog = new Dialog<>();
         hashStringDialog.setTitle("Enter Voter ID");
         ButtonType doneButtonType = new ButtonType("Done", ButtonBar
@@ -469,12 +535,21 @@ public class VotingController implements Initializable {
         hashStringDialog.initOwner(this.voteButton.getScene().getWindow());
         hashStringDialog.showAndWait().ifPresent(response -> {
             ballotHandler.createBallot(response);
-            loadPositionScreen((Stage) voteButton.getScene().getWindow());
+            if (positions.length == 0) {
+                loadPropositionScreen((Stage) voteButton.getScene().getWindow
+                        ());
+            } else {
+                loadPositionScreen((Stage) voteButton.getScene().getWindow());
+            }
         });
     }
 
-    @FXML
-    private void exitButtonAction() throws IOException {
+    /**
+     * Exits the program.
+     *
+     * @throws IOException  if fxml was improperly loaded
+     */
+    @FXML private void exitButtonAction() throws IOException {
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION, "Are you" +
                 " sure you want to exit the program?",
                 ButtonType.CANCEL, ButtonType.YES);
@@ -487,8 +562,13 @@ public class VotingController implements Initializable {
         });
     }
 
-    @FXML
-    private void nextButtonAction(ActionEvent event) throws IOException {
+    /**
+     * Switches to the appropriate next screen.
+     *
+     * @param event button press action
+     * @throws IOException  if fxml was loaded improperly
+     */
+    @FXML private void nextButtonAction(ActionEvent event) throws IOException {
 
         String selected;
         if (event.getSource() == positionNextButton) {
@@ -508,9 +588,14 @@ public class VotingController implements Initializable {
                         .getWindow());
 
             } else {
-                index = 0;
-                loadPropositionScreen((Stage) positionNextButton.getScene()
-                        .getWindow());
+                if (propositions.length == 0) {
+                    loadSummaryScreen((Stage) positionNextButton.getScene()
+                            .getWindow());
+                } else {
+                    index = 0;
+                    loadPropositionScreen((Stage) positionNextButton.getScene()
+                            .getWindow());
+                }
             }
         } else {
             if (radioButtonGroup.getSelectedToggle() != null) {
@@ -534,8 +619,13 @@ public class VotingController implements Initializable {
         }
     }
 
-    @FXML
-    private void previousButtonAction(ActionEvent event) throws IOException {
+    /**
+     * Switches to the appropriate previous screen.
+     *
+     * @param event button pressed action
+     * @throws IOException  if fxml was improperly loaded
+     */
+    @FXML private void previousButtonAction(ActionEvent event) throws IOException {
 
         String selected;
         if (event.getSource() == positionPreviousButton) {
@@ -571,19 +661,32 @@ public class VotingController implements Initializable {
                 loadPropositionScreen((Stage) propositionPreviousButton
                         .getScene().getWindow());
             } else {
-                index = positions.length - 1;
-                loadPositionScreen((Stage) propositionPreviousButton.getScene()
-                        .getWindow());
+                if (positions.length != 0) {
+                    index = positions.length - 1;
+                    loadPositionScreen((Stage) propositionPreviousButton.getScene()
+                            .getWindow());
+                }
             }
         } else {
-            index = propositions.length - 1;
-            loadPropositionScreen((Stage) summaryPreviousButton.getScene()
-                    .getWindow());
+            if (propositions.length == 0) {
+                index = positions.length - 1;
+                loadPositionScreen((Stage) summaryPreviousButton.getScene()
+                        .getWindow());
+            } else {
+                index = propositions.length - 1;
+                loadPropositionScreen((Stage) summaryPreviousButton.getScene()
+                        .getWindow());
+            }
         }
     }
 
-    @FXML
-    private void cancelButtonAction(ActionEvent event) throws IOException {
+    /**
+     * Cancels a Ballot and returns to the voting home screen.
+     *
+     * @param event button pressed event
+     * @throws IOException  if fxml was improperly loaded
+     */
+    @FXML private void cancelButtonAction(ActionEvent event) throws IOException {
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION, "Are you" +
                 " sure you want to cancel your ballot?", ButtonType.CANCEL,
                 ButtonType.YES);
@@ -615,8 +718,12 @@ public class VotingController implements Initializable {
         });
     }
 
-    @FXML
-    private void finishButtonAction() throws IOException {
+    /**
+     * Saves the current Ballot and returns to the voting Home screen.
+     *
+     * @throws IOException  if fxml was improperly loaded
+     */
+    @FXML private void finishButtonAction() throws IOException {
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION, "Cast " +
                 "your ballot?", ButtonType.NO, ButtonType.YES);
         confirmation.initOwner(finishButton.getScene().getWindow());
@@ -636,22 +743,40 @@ public class VotingController implements Initializable {
         });
     }
 
+    /**
+     * Converts a String representing a voter's stance on a Proposition into
+     * a Boolean.
+     *
+     * @param s the String opnion
+     * @return  a Boolean opinion; "Supports?"
+     */
     private Boolean supportStringToBoolean(@Nullable String s) {
         Boolean supportValue;
-        switch (s) {
-            case "FOR":
-                supportValue = true;
-                break;
-            case "AGAINST":
-                supportValue = false;
-                break;
-            default:
-                supportValue = null;
-                break;
+        if (s == null) {
+            supportValue = null;
+        } else {
+            switch (s) {
+                case "FOR":
+                    supportValue = true;
+                    break;
+                case "AGAINST":
+                    supportValue = false;
+                    break;
+                default:
+                    supportValue = null;
+                    break;
+            }
         }
         return supportValue;
     }
 
+    /**
+     * Converts a Boolean value to a String message representing the voter's
+     * stance on a Proposition.
+     *
+     * @param b the Boolean opinion
+     * @return  a String opinion
+     */
     private String supportBooleanToString(Boolean b) {
         String supportValue;
         if (b != null) {

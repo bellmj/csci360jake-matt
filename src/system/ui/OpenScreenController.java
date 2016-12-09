@@ -34,38 +34,18 @@ import java.util.ResourceBundle;
  */
 public class OpenScreenController implements Initializable {
 
-    @FXML
-    private ImageView image;
-
-    @FXML
-    private Button electionSetupButton;
-
-    @FXML
-    private Button verifyRegistrationButton;
-
-    @FXML
-    private Button registerButton;
-
-    @FXML
-    private Button toAdminOptionsButton;
+    @FXML private ImageView image;
+    @FXML private Button electionSetupButton;
+    @FXML private Button verifyRegistrationButton;
+    @FXML private Button registerButton;
+    @FXML private Button toAdminOptionsButton;
 
     private ElectionHandler electionHandler;
     private RegistrationHandler registrationHandler;
     private BallotHandler ballotHandler;
     private boolean shouldShowAdminOptions;
 
-    /**
-     * Called to initialize a controller after its root element has been
-     * completely processed.
-     *
-     * @param fxmlFileLocation
-     * The location used to resolve relative paths for the root object, or
-     * <tt>null</tt> if the location is not known.
-     *
-     * @param resources
-     * The resources used to localize the root object, or <tt>null</tt> if
-     * the root object was not localized.
-     */
+    /**(@inheritDoc)*/
     @Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
         assert image != null : "fx:id=\"image\" was not injected: check your FXML file 'OpenScreen.fxml'.";
@@ -144,10 +124,9 @@ public class OpenScreenController implements Initializable {
                 adminScreenController.setElectionHandler(electionHandler);
                 adminScreenController.setBallotHandler(ballotHandler);
                 adminScreenController.setRegistrationHandler(registrationHandler);
-                adminScreenController.setShouldShowAdminOptions(shouldShowAdminOptions);
 
                 Stage stage = (Stage) toAdminOptionsButton.getScene().getWindow();
-                stage.setScene(new Scene(root, 400, 550));
+                stage.getScene().setRoot(root);
                 stage.show();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -155,18 +134,43 @@ public class OpenScreenController implements Initializable {
         });
     }
 
+    /**
+     * Sets the <tt>BallotHandler</tt> for this controller. This should
+     * be done before the controller is shown.
+     *
+     * @param ballotHandler   the BallotHandler to use
+     */
     void setBallotHandler(BallotHandler ballotHandler) {
         this.ballotHandler = ballotHandler;
     }
 
+    /**
+     * Sets the <tt>ElectionHandler</tt> for this controller. This should
+     * be done before the controller is shown.
+     *
+     * @param electionHandler   the ElectionHandler to use
+     */
     void setElectionHandler(ElectionHandler electionHandler) {
         this.electionHandler = electionHandler;
     }
 
+    /**
+     * Sets the <tt>RegistrationHandler</tt> for this controller. This should
+     * be done before the controller is shown.
+     *
+     * @param registrationHandler   the RegistrationHandler to use
+     */
     void setRegistrationHandler(RegistrationHandler registrationHandler) {
         this.registrationHandler = registrationHandler;
     }
 
+    /**
+     * Allows the user to determine whether or not the controller should show
+     * a button leading to administrative actions. This should be set
+     * according to the corresponding login information entered in Main.
+     *
+     * @param shouldShowAdminOptions    true if yes
+     */
     void setShouldShowAdminOptions(boolean shouldShowAdminOptions) {
         this.shouldShowAdminOptions = shouldShowAdminOptions;
         toAdminOptionsButton.setVisible(shouldShowAdminOptions);

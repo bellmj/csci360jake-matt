@@ -100,6 +100,12 @@ class LoginDialog extends Dialog<Pair<Boolean, Boolean>> {
                         passwordField.getText().equals(new String(pollworkerPassword)));
     }
 
+    /**
+     * Checks that the information entered by the user is valid login
+     * information belonging to an administrator.
+     *
+     * @return  true if login is valid for an admin
+     */
     private boolean isAdmin() {
         return usernameTextField.getText().equals(new String(adminUsername))
                 && passwordField.getText().equals(new String(adminPassword));

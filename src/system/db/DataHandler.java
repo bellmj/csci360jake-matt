@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by matt on 11/15/16.
+ * Interface for a class that handles some sort of data.
+ *
+ * @param <T>   the type of data being handled
  */
 public interface DataHandler <T>{
     void add(T t);

@@ -42,47 +42,20 @@ import java.util.ResourceBundle;
  */
 public class ElectionSetupController implements Initializable {
 
-    @FXML
-    private TabPane tabPane;
-
-    @FXML
-    private ListView<String> positionListView;
-
-    @FXML
-    private ListView<String> propositionListView;
-
-    @FXML
-    private Button addPosButton;
-
-    @FXML
-    private Button addCanButton;
-
-    @FXML
-    private Button addPropButton;
-
-    @FXML
-    private Button editPosCanButton;
-
-    @FXML
-    private Button editPropButton;
-
-    @FXML
-    private Button deletePosCanButton;
-
-    @FXML
-    private Button deletePropButton;
-
-    @FXML
-    private Button loadButton;
-
-    @FXML
-    private Button saveButton;
-
-    @FXML
-    private Button cancelButton;
-
-    @FXML
-    private Button doneButton;
+    @FXML private TabPane tabPane;
+    @FXML private ListView<String> positionListView;
+    @FXML private ListView<String> propositionListView;
+    @FXML private Button addPosButton;
+    @FXML private Button addCanButton;
+    @FXML private Button addPropButton;
+    @FXML private Button editPosCanButton;
+    @FXML private Button editPropButton;
+    @FXML private Button deletePosCanButton;
+    @FXML private Button deletePropButton;
+    @FXML private Button loadButton;
+    @FXML private Button saveButton;
+    @FXML private Button cancelButton;
+    @FXML private Button doneButton;
 
     private ElectionHandler electionHandler;
     private BallotHandler ballotHandler;

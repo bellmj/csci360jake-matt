@@ -21,7 +21,9 @@ public class Ballot {
     private String voterHashID;
 
     /**
-     * Constructs a new Ballot for the specified voterHashID.
+     * Constructs a ballot for the specified hashed voter ID.
+     *
+     * @param voterHashID   the hashed voter ID
      */
     Ballot(String voterHashID) {
         this.selections = new HashMap<>();
@@ -29,6 +31,15 @@ public class Ballot {
         this.voterHashID = voterHashID;
     }
 
+    /**
+     * Re-constructs a ballot based on its attributes.
+     *
+     * @param selections    a HashMap detailing the ballot's candidate
+     *                      selections
+     * @param propositions  a HashMap detailing the ballot's proposition
+     *                      selections
+     * @param voterHashID   the ballot's hashed voter ID
+     */
     public Ballot(HashMap<String, Candidate> selections, HashMap<String,
             Boolean> propositions, String voterHashID) {
         this.selections = selections;

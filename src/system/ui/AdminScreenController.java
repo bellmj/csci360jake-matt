@@ -26,28 +26,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * Offers administrative actions to the user, such as counting, hard
+ * counting, and viewing election results.
+ */
 public class AdminScreenController implements Initializable {
 
-    @FXML
-    private ImageView imageView;
-
-    @FXML
-    private Button countButton;
-
-    @FXML
-    private Button recountButton;
-
-    @FXML
-    private Button viewResultsButton;
-
-    @FXML
-    private Button previousButton;
+    @FXML private ImageView imageView;
+    @FXML private Button countButton;
+    @FXML private Button recountButton;
+    @FXML private Button viewResultsButton;
+    @FXML private Button previousButton;
 
     private ElectionHandler electionHandler;
     private BallotHandler ballotHandler;
     private RegistrationHandler registrationHandler;
     private boolean shouldShowAdminOptions;
 
+    /**(@inheritDoc)*/
     @Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
         assert imageView != null : "fx:id=\"imageView\" was not injected: " +
@@ -61,6 +57,7 @@ public class AdminScreenController implements Initializable {
         assert previousButton != null : "fx:id=\"previousButton\" was not " +
                 "injected: check your FXML file 'AdminScreen.fxml'.";
 
+        shouldShowAdminOptions = true;
         viewResultsButton.setDisable(true);
 
         countButton.setOnAction(action -> {
@@ -262,20 +259,34 @@ public class AdminScreenController implements Initializable {
         });
     }
 
+    /**
+     * Sets the <tt>ElectionHandler</tt> for this controller. This should
+     * be done before the controller is shown.
+     *
+     * @param electionHandler   the ElectionHandler to use
+     */
     void setElectionHandler(ElectionHandler electionHandler) {
         this.electionHandler = electionHandler;
     }
 
+    /**
+     * Sets the <tt>BallotHandler</tt> for this controller. This should
+     * be done before the controller is shown.
+     *
+     * @param ballotHandler   the BallotHandler to use
+     */
     void setBallotHandler(BallotHandler ballotHandler) {
         this.ballotHandler = ballotHandler;
     }
 
+    /**
+     * Sets the <tt>RegistrationHandler</tt> for this controller. This should
+     * be done before the controller is shown.
+     *
+     * @param registrationHandler   the RegistrationHandler to use
+     */
     void setRegistrationHandler(RegistrationHandler registrationHandler) {
         this.registrationHandler = registrationHandler;
-    }
-
-    void setShouldShowAdminOptions(boolean shouldShowAdminOptions) {
-        this.shouldShowAdminOptions = shouldShowAdminOptions;
     }
 
 }

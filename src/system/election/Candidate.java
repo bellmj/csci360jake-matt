@@ -26,6 +26,14 @@ public class Candidate {
         this.votes = 0;
     }
 
+    /**
+     * Constructs a new Candidate with the specified amount of votes, name, and
+     * party affiliation.
+     *
+     * @param votes the amount of votes the candidate has received
+     * @param name  the name of the candidate
+     * @param party the name of the party that the candidate is affiliated with
+     */
     public Candidate(long votes, String name, String party) {
         this.votes = votes;
         this.name = name;
@@ -69,6 +77,11 @@ public class Candidate {
         this.votes++;
     }
 
+    /**
+     * Returns the name of the Candidate.
+     *
+     * @return  the name of the Candidate
+     */
     public String toString(){
         return name;
     }

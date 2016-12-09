@@ -7,9 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-
 /**
- * Created by matt on 11/18/16.
+ * Handles the writing and retrieval of RegistrationForms to .registration.
  */
 public class FileRegistrationHandler implements DataHandler<RegistrationForm> {
 
@@ -17,10 +16,13 @@ public class FileRegistrationHandler implements DataHandler<RegistrationForm> {
     BufferedWriter bw;
     PrintWriter out;
     Random rand = new Random();
-    private final String NAME_OF_FILE = ".registration";
+    private final String NAME_OF_FILE = "csci360jake-matt/src/system/db/.registration";
     private final byte[] SALT = {122, -86, -33, -14, -41, -59, 78, -80, 82, -51, 102, -69, 80, 123, -8, 55, -64, 94, 54, 78, -85, -31, 125, -96, -3, 61, -90, -47, 114, 101, 45, -90, 127, 110, -39, -121, 86, 116, -125, 14, 65, -91, -94, 25, 13, -40, -109, 43, 0, 23, -77, -95, -121, -41, 72, 77, -8, 124, -89, 28, 89, -39, 111, 107};
     private final String DELIMITER = "END_OF_USER_INFO";
 
+    /**
+     * Constructs a new FileRegistrationHandler.
+     */
     public FileRegistrationHandler() {
         try {
             fw = new FileWriter(NAME_OF_FILE, true);
@@ -32,25 +34,38 @@ public class FileRegistrationHandler implements DataHandler<RegistrationForm> {
         out = new PrintWriter(bw);
     }
 
+    /**
+     * Adds the information from a RegistrationForm to .registration.
+     *
+     * @param registrationForm  the RegistrationForm to be added
+     */
     @Override
     public void add(RegistrationForm registrationForm) {
-        out.println(DELIMITER);
-        out.println(registrationForm.getLegalID());
+        if (get(registrationForm.getLegalID()) != null) {
+            System.out.println("Voter already registered.");
+        } else {
+            out.println(DELIMITER);
+            out.println(registrationForm.getLegalID());
 
-        out.println(registrationForm.getFirstName());
-        out.println(registrationForm.getMiddleName());
-        out.println(registrationForm.getLastName());
-        out.println(registrationForm.getBirthDate().getTimeInMillis());
-        out.println(registrationForm.getPhoneNumber());
-        out.println(registrationForm.getStreetAddress());
-        out.println(registrationForm.getCity());
-        out.println(registrationForm.getCounty());
-        out.println(registrationForm.getState());
-        out.println(registrationForm.getZip());
-        out.flush();
-
+            out.println(registrationForm.getFirstName());
+            out.println(registrationForm.getMiddleName());
+            out.println(registrationForm.getLastName());
+            out.println(registrationForm.getBirthDate().getTimeInMillis());
+            out.println(registrationForm.getPhoneNumber());
+            out.println(registrationForm.getStreetAddress());
+            out.println(registrationForm.getCity());
+            out.println(registrationForm.getCounty());
+            out.println(registrationForm.getState());
+            out.println(registrationForm.getZip());
+            out.flush();
+        }
     }
 
+    /**
+     * Returns a List of all stored RegistrationForms.
+     *
+     * @return  a List of RegistrationForms
+     */
     @Override
     public List<RegistrationForm> getAll() {
         List<RegistrationForm> returnList = new ArrayList<>();
@@ -72,10 +87,10 @@ public class FileRegistrationHandler implements DataHandler<RegistrationForm> {
         return returnList;
     }
 
-    @Override
     /**
      * gets a registration from from the users social security number
      */
+    @Override
     public RegistrationForm get(String social) {
 
         List<String> strList = null;
@@ -110,17 +125,57 @@ public class FileRegistrationHandler implements DataHandler<RegistrationForm> {
     }
 
     public static void main(String[] args){
-        RegistrationForm rf = new RegistrationForm("matt", "J", "Bell", "8434690500", 8, 2, 1996, "1234", "2056 comingtee ln", "Mount Pleasant", "Charelston", "SC", "29464");
-        RegistrationForm rf1 = new RegistrationForm("matt", "J", "Bell", "8434690500", 8, 2, 1996, "5678", "2056 comingtee ln", "Mount Pleasant", "Charelston", "SC", "29464");
-        RegistrationForm rf2 = new RegistrationForm("matt", "J", "Bell", "8434690500", 8, 2, 1996, "4321", "2056 comingtee ln", "Mount Pleasant", "Charelston", "SC", "29464");
-        RegistrationForm rf3 = new RegistrationForm("matt", "J", "Bell", "8434690500", 8, 2, 1996, "8765", "2056 comingtee ln", "Mount Pleasant", "Charelston", "SC", "29464");
         FileRegistrationHandler rHandler = new FileRegistrationHandler();
-        rHandler.add(rf);
-        rHandler.add(rf1);
-        rHandler.add(rf2);
-        rHandler.add(rf3);
-        RegistrationForm outrf = rHandler.get("4321");
-        System.out.println(rHandler.getAll());
-    }
 
+        try {
+            Random random = new Random();
+
+            ArrayList<String> list = new ArrayList<>();
+            List<String> names = Files.readAllLines(Paths.get
+                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/db/names.txt"));
+            List<String> phoneNums = Files.readAllLines(Paths.get
+                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/db/phoneNums" +
+                    ".txt"));
+            List<String> birthdays = Files.readAllLines(Paths.get
+                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/db/birthdays.txt"));
+            List<String> birthmonths = Files.readAllLines(Paths.get
+                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/db/birthmonths.txt"));
+            List<String> birthyears = Files.readAllLines(Paths.get
+                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/db/birthyears.txt"));
+            List<String> dlNums = Files.readAllLines(Paths.get("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/db/dlNums.txt"));
+            List<String> streets = Files.readAllLines(Paths.get
+                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/db/streets.txt"));
+            List<String> cities = Files.readAllLines(Paths.get("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/db/cities.txt"));
+            List<String> counties = Files.readAllLines(Paths.get("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/db/counties" +
+                    ".txt"));
+            List<String> zips = Files.readAllLines(Paths.get("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/db/zips.txt"));
+
+            for (int i = 0; i < 100; i++) {
+                String[] name = names.get(i).split(" ");
+                list.add(i, name[0] + "\n\n" + name[1] + "\n" + phoneNums.get
+                        (i) + "\n" +
+                                birthdays.get(i) + "\n" + birthmonths.get(i) +
+                                "\n" + birthyears.get(i) + "\n" + dlNums.get
+                        (i) +
+                        "\n" +
+                                random.nextInt(999) + " " + streets.get(i) +
+                        "\nCharleston\n" + counties.get(i) + "\nSC\n" + zips.get(i));
+            }
+
+            String[] info;
+            for (String s : list) {
+                info = s.split("\n");
+                rHandler.add(new RegistrationForm(info[0], info[1], info[2],
+                        info[3], Integer.parseInt(info[4]), Integer.parseInt
+                        (info[5]),
+                        Integer.parseInt(info[6]), info[7],
+                        info[8],
+                        info[9], info[10], info[11], info[12]));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 }

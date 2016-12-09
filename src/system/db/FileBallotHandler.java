@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by matt on 11/15/16.
+ * Handles the writing and retrieval of Ballots to .datastore.
  */
 public class FileBallotHandler implements DataHandler<Ballot> {
     private final String SELECTION_DELIMITEER = "END_OF_SELECTIONS";
@@ -25,8 +25,12 @@ public class FileBallotHandler implements DataHandler<Ballot> {
     FileWriter fw;
     BufferedWriter bw;
     PrintWriter out;
-    private final String NAME_OF_FILE = ".datastore";
+    private final String NAME_OF_FILE = "csci360jake-matt/src/system/db/" +
+            ".datastore";
 
+    /**
+     * Constructs a new FileBallotHandler.
+     */
     public FileBallotHandler() {
         try {
             fw = new FileWriter(NAME_OF_FILE,true);
@@ -39,6 +43,11 @@ public class FileBallotHandler implements DataHandler<Ballot> {
 
     }
 
+    /**
+     * Writes a Ballot to .datastore.
+     *
+     * @param ballot    the Ballot to write
+     */
     @Override
     public void add(Ballot ballot) {
         out.println( START_OF_ENTRY);
@@ -50,6 +59,11 @@ public class FileBallotHandler implements DataHandler<Ballot> {
         out.flush();
     }
 
+    /**
+     * Retrieves all stored Ballots from .datastore.
+     *
+     * @return  a List of all stored Ballots
+     */
     @Override
     public List<Ballot> getAll() {
         List<Ballot> returnList = new ArrayList<>();
@@ -92,6 +106,9 @@ public class FileBallotHandler implements DataHandler<Ballot> {
     return returnList;
     }
 
+    /**
+     * Erases all stored Ballots.
+     */
     public void eraseBallots() {
         try {
             FileWriter eraser = new FileWriter(NAME_OF_FILE, false);
@@ -105,6 +122,7 @@ public class FileBallotHandler implements DataHandler<Ballot> {
     public Ballot get(String id) {
         return null;
     }
+
     public static void main(String[] args){
         ElectionHandler electionHandler = new ElectionHandler();
         electionHandler.addCandidateToPosition("Gary Johnson","Libertarian","King of the World");

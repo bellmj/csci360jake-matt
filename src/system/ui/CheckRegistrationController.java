@@ -25,49 +25,22 @@ import java.util.ResourceBundle;
  */
 public class CheckRegistrationController implements Initializable {
 
+    @FXML private TextField legalIDTextField;
+    @FXML private Label legalIDLabel;
+    @FXML private Pane colorField;
+    @FXML private ProgressIndicator progressIndicator;
+    @FXML private ImageView resultImage;
+    @FXML private Label resultLabel;
+    @FXML private Label resultDescriptionLabel;
+    @FXML private Label checkingLabel;
+    @FXML private Pane IDNumberLayer;
+    @FXML private Pane checkRegistrationLayer;
+    @FXML private Button enterButton;
+    @FXML private Button cancelButton;
+    @FXML private Button resetButton;
+    @FXML private Button doneButton;
+
     private RegistrationHandler registrationHandler;
-
-    @FXML
-    private TextField legalIDTextField;
-
-    @FXML
-    private Label legalIDLabel;
-
-    @FXML
-    private Pane colorField;
-
-    @FXML
-    private ProgressIndicator progressIndicator;
-
-    @FXML
-    private ImageView resultImage;
-
-    @FXML
-    private Label resultLabel;
-
-    @FXML
-    private Label resultDescriptionLabel;
-
-    @FXML
-    private Label checkingLabel;
-
-    @FXML
-    private Pane IDNumberLayer;
-
-    @FXML
-    private Pane checkRegistrationLayer;
-
-    @FXML
-    private Button enterButton;
-
-    @FXML
-    private Button cancelButton;
-
-    @FXML
-    private Button resetButton;
-
-    @FXML
-    private Button doneButton;
 
     /**
      * Called to initialize a controller after its root element has been
