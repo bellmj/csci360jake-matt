@@ -1,5 +1,7 @@
 package system.db;
 
+import system.election.CryptoException;
+
 import java.io.IOException;
 import java.util.List;
 

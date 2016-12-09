@@ -1,9 +1,6 @@
 package system.db;
 
-import system.election.Candidate;
-import system.election.ElectionHandler;
-import system.election.Position;
-import system.election.Proposition;
+import system.election.*;
 import system.election.voting.Ballot;
 
 import java.io.*;
@@ -22,13 +19,19 @@ public class FileBallotHandler implements DataHandler<Ballot> {
     private final String SELECTION_DELIMITEER = "END_OF_SELECTIONS";
     private final String PROPOSITION_DELIMITER = "END_OF_PROPOSITIONS";
     private final String START_OF_ENTRY = "START_OF_ENTRY";
+    private final static byte[] privateKey = {50, 96, 67, -32, 39, -40, 91, -64, 54, 55, 121, 90, -116, -6, -44, -74};
     FileWriter fw;
+    File dataFile;
     BufferedWriter bw;
     PrintWriter out;
     private final String NAME_OF_FILE = ".datastore";
 
     public FileBallotHandler() {
         try {
+            dataFile = new File(NAME_OF_FILE);
+            if(!dataFile.exists()){
+                dataFile.createNewFile();
+            }
             fw = new FileWriter(NAME_OF_FILE,true);
         } catch (IOException e) {
             e.printStackTrace();
@@ -38,9 +41,36 @@ public class FileBallotHandler implements DataHandler<Ballot> {
 
 
     }
+    private void openFile(){
+
+        try {
+            Security.decrypt(privateKey,dataFile,dataFile);
+        } catch (CryptoException e) {
+            e.printStackTrace();
+        }
+        bw = new BufferedWriter(fw);
+        out = new PrintWriter(bw);
+    }
+    private void closeFile(){
+
+        out.flush();
+        out.close();
+        try {
+            bw.close();
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            Security.encrypt(privateKey,dataFile,dataFile);
+        } catch (CryptoException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void add(Ballot ballot) {
+        openFile();
         out.println( START_OF_ENTRY);
         out.println(ballot.getVoterHashID());
         ballot.getSelections().forEach((k,v) -> out.println("" + k + "~" + v));
@@ -48,10 +78,12 @@ public class FileBallotHandler implements DataHandler<Ballot> {
         ballot.getPropositions().forEach((k,v) -> out.println("" + k + "~" + v));
         out.println(PROPOSITION_DELIMITER);
         out.flush();
+        closeFile();
     }
 
     @Override
     public List<Ballot> getAll() {
+        openFile();
         List<Ballot> returnList = new ArrayList<>();
         try {
             List<String> lines = Files.readAllLines(Paths.get(NAME_OF_FILE));
@@ -89,6 +121,7 @@ public class FileBallotHandler implements DataHandler<Ballot> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        closeFile();
     return returnList;
     }
 
@@ -124,6 +157,8 @@ public class FileBallotHandler implements DataHandler<Ballot> {
         propositions.put("Legalize good Herb",true);
         Ballot ballot = new Ballot(selections,propositions,voterHashID);
         FileBallotHandler handler = new FileBallotHandler();
+        handler.add(ballot);
+        handler.add(ballot);
         handler.add(ballot);
         char[] pass = {'1','2','3','4'};
         electionHandler.assignVotesForBallots(pass,handler.getAll());

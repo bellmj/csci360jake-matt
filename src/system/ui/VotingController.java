@@ -638,6 +638,9 @@ public class VotingController implements Initializable {
 
     private Boolean supportStringToBoolean(@Nullable String s) {
         Boolean supportValue;
+        if(s==null){
+            s="";
+        }
         switch (s) {
             case "FOR":
                 supportValue = true;
