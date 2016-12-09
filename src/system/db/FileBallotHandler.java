@@ -83,7 +83,7 @@ public class FileBallotHandler implements DataHandler<Ballot> {
 
     @Override
     public List<Ballot> getAll() {
-        openFile();
+      openFile();
         List<Ballot> returnList = new ArrayList<>();
         try {
             List<String> lines = Files.readAllLines(Paths.get(NAME_OF_FILE));
