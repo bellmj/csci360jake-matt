@@ -82,6 +82,7 @@ public class FileRegistrationHandler implements DataHandler<RegistrationForm> {
      */
     @Override
     public void add(RegistrationForm registrationForm) {
+        openFile();
         if (get(registrationForm.getLegalID()) != null) {
             System.out.println("Voter already registered.");
         } else {
@@ -100,6 +101,7 @@ public class FileRegistrationHandler implements DataHandler<RegistrationForm> {
             out.println(registrationForm.getZip());
             out.flush();
         }
+        closeFile();
     }
 
     /**
@@ -183,23 +185,23 @@ public class FileRegistrationHandler implements DataHandler<RegistrationForm> {
 
             ArrayList<String> list = new ArrayList<>();
             List<String> names = Files.readAllLines(Paths.get
-                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/db/names.txt"));
+                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/resources/names.txt"));
             List<String> phoneNums = Files.readAllLines(Paths.get
-                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/db/phoneNums" +
+                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/resources/phoneNums" +
                     ".txt"));
             List<String> birthdays = Files.readAllLines(Paths.get
-                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/db/birthdays.txt"));
+                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/resources/birthdays.txt"));
             List<String> birthmonths = Files.readAllLines(Paths.get
-                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/db/birthmonths.txt"));
+                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/resources/birthmonths.txt"));
             List<String> birthyears = Files.readAllLines(Paths.get
-                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/db/birthyears.txt"));
-            List<String> dlNums = Files.readAllLines(Paths.get("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/db/dlNums.txt"));
+                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/resources/birthyears.txt"));
+            List<String> dlNums = Files.readAllLines(Paths.get("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/resources/dlNums.txt"));
             List<String> streets = Files.readAllLines(Paths.get
-                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/db/streets.txt"));
-            List<String> cities = Files.readAllLines(Paths.get("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/db/cities.txt"));
-            List<String> counties = Files.readAllLines(Paths.get("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/db/counties" +
+                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/resources/streets.txt"));
+            List<String> cities = Files.readAllLines(Paths.get("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/resources/cities.txt"));
+            List<String> counties = Files.readAllLines(Paths.get("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/resources/counties" +
                     ".txt"));
-            List<String> zips = Files.readAllLines(Paths.get("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/db/zips.txt"));
+            List<String> zips = Files.readAllLines(Paths.get("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/resources/zips.txt"));
 
             for (int i = 0; i < 100; i++) {
                 String[] name = names.get(i).split(" ");
