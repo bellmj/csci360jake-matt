@@ -1,9 +1,5 @@
 package system.ui;
 
-import javafx.scene.layout.Pane;
-import system.election.ElectionHandler;
-import system.election.voting.BallotHandler;
-import system.registration.RegistrationHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,8 +7,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import system.election.ElectionHandler;
+import system.election.voting.BallotHandler;
+import system.registration.RegistrationHandler;
 
 import java.net.URL;
 import java.util.ResourceBundle;
