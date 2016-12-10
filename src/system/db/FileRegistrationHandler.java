@@ -51,7 +51,10 @@ public class FileRegistrationHandler implements DataHandler<RegistrationForm> {
 
         try {
             Security.decrypt(privateKey, dataFile, dataFile);
+            fw = new FileWriter(NAME_OF_FILE, true);
         } catch (CryptoException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         bw = new BufferedWriter(fw);
@@ -180,23 +183,23 @@ public class FileRegistrationHandler implements DataHandler<RegistrationForm> {
 
             ArrayList<String> list = new ArrayList<>();
             List<String> names = Files.readAllLines(Paths.get
-                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/resources/names.txt"));
+                    ("csci360jake-matt/src/system/resources/names.txt"));
             List<String> phoneNums = Files.readAllLines(Paths.get
-                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/resources/phoneNums" +
+                    ("csci360jake-matt/src/system/resources/phoneNums" +
                             ".txt"));
             List<String> birthdays = Files.readAllLines(Paths.get
-                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/resources/birthdays.txt"));
+                    ("csci360jake-matt/src/system/resources/birthdays.txt"));
             List<String> birthmonths = Files.readAllLines(Paths.get
-                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/resources/birthmonths.txt"));
+                    ("csci360jake-matt/src/system/resources/birthmonths.txt"));
             List<String> birthyears = Files.readAllLines(Paths.get
-                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/resources/birthyears.txt"));
-            List<String> dlNums = Files.readAllLines(Paths.get("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/resources/dlNums.txt"));
+                    ("csci360jake-matt/src/system/resources/birthyears.txt"));
+            List<String> dlNums = Files.readAllLines(Paths.get("csci360jake-matt/src/system/resources/dlNums.txt"));
             List<String> streets = Files.readAllLines(Paths.get
-                    ("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/resources/streets.txt"));
-            List<String> cities = Files.readAllLines(Paths.get("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/resources/cities.txt"));
-            List<String> counties = Files.readAllLines(Paths.get("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/resources/counties" +
+                    ("csci360jake-matt/src/system/resources/streets.txt"));
+            List<String> cities = Files.readAllLines(Paths.get("csci360jake-matt/src/system/resources/cities.txt"));
+            List<String> counties = Files.readAllLines(Paths.get("csci360jake-matt/src/system/resources/counties" +
                     ".txt"));
-            List<String> zips = Files.readAllLines(Paths.get("D:/Documents/School/Computer Science/360 Project/csci360jake-matt/src/system/resources/zips.txt"));
+            List<String> zips = Files.readAllLines(Paths.get("csci360jake-matt/src/system/resources/zips.txt"));
 
             for (int i = 0; i < 100; i++) {
                 String[] name = names.get(i).split(" ");
@@ -224,7 +227,5 @@ public class FileRegistrationHandler implements DataHandler<RegistrationForm> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
 }
