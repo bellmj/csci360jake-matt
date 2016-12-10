@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Handles the writing and retrieval of Ballots to .datastore.
+ * Created by matt on 11/15/16.
  */
 public class FileBallotHandler implements DataHandler<Ballot> {
     private final String SELECTION_DELIMITEER = "END_OF_SELECTIONS";
@@ -26,9 +26,6 @@ public class FileBallotHandler implements DataHandler<Ballot> {
     PrintWriter out;
     private final String NAME_OF_FILE = "csci360jake-matt/src/system/db/.datastore";
 
-    /**
-     * Constructs a new FileBallotHandler.
-     */
     public FileBallotHandler() {
         try {
             dataFile = new File(NAME_OF_FILE);
@@ -39,8 +36,8 @@ public class FileBallotHandler implements DataHandler<Ballot> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-            bw = new BufferedWriter(fw);
-            out = new PrintWriter(bw);
+        bw = new BufferedWriter(fw);
+        out = new PrintWriter(bw);
 
 
     }
@@ -71,11 +68,6 @@ public class FileBallotHandler implements DataHandler<Ballot> {
         }
     }
 
-    /**
-     * Writes a Ballot to .datastore.
-     *
-     * @param ballot    the Ballot to write
-     */
     @Override
     public void add(Ballot ballot) {
         openFile();
@@ -89,14 +81,9 @@ public class FileBallotHandler implements DataHandler<Ballot> {
         closeFile();
     }
 
-    /**
-     * Retrieves all stored Ballots from .datastore.
-     *
-     * @return  a List of all stored Ballots
-     */
     @Override
     public List<Ballot> getAll() {
-      openFile();
+        openFile();
         List<Ballot> returnList = new ArrayList<>();
         try {
             List<String> lines = Files.readAllLines(Paths.get(NAME_OF_FILE));
@@ -135,12 +122,9 @@ public class FileBallotHandler implements DataHandler<Ballot> {
             e.printStackTrace();
         }
         closeFile();
-    return returnList;
+        return returnList;
     }
 
-    /**
-     * Erases all stored Ballots.
-     */
     public void eraseBallots() {
         try {
             FileWriter eraser = new FileWriter(NAME_OF_FILE, false);
@@ -154,7 +138,6 @@ public class FileBallotHandler implements DataHandler<Ballot> {
     public Ballot get(String id) {
         return null;
     }
-
     public static void main(String[] args){
         ElectionHandler electionHandler = new ElectionHandler();
         electionHandler.addCandidateToPosition("Gary Johnson","Libertarian","King of the World");
