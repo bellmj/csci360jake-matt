@@ -24,7 +24,7 @@ public class FileBallotHandler implements DataHandler<Ballot> {
     File dataFile;
     BufferedWriter bw;
     PrintWriter out;
-    private final String NAME_OF_FILE = ".datastore";
+    private final String NAME_OF_FILE = "csci360jake-matt/src/system/db/.datastore";
 
     public FileBallotHandler() {
         try {
