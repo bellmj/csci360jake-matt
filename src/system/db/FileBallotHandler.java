@@ -45,7 +45,10 @@ public class FileBallotHandler implements DataHandler<Ballot> {
 
         try {
             Security.decrypt(privateKey,dataFile,dataFile);
+            fw = new FileWriter(NAME_OF_FILE,true);
         } catch (CryptoException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         bw = new BufferedWriter(fw);
