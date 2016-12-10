@@ -48,7 +48,10 @@ public class FileRegistrationHandler implements DataHandler<RegistrationForm> {
 
         try {
             Security.decrypt(privateKey, dataFile, dataFile);
+            fw = new FileWriter(NAME_OF_FILE, true);
         } catch (CryptoException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         bw = new BufferedWriter(fw);
@@ -165,10 +168,12 @@ public class FileRegistrationHandler implements DataHandler<RegistrationForm> {
         RegistrationForm rf2 = new RegistrationForm("matt", "J", "Bell", "8434690500", 8, 2, 1996, "4321", "2056 comingtee ln", "Mount Pleasant", "Charelston", "SC", "29464");
         RegistrationForm rf3 = new RegistrationForm("matt", "J", "Bell", "8434690500", 8, 2, 1996, "8765", "2056 comingtee ln", "Mount Pleasant", "Charelston", "SC", "29464");
         FileRegistrationHandler rHandler = new FileRegistrationHandler();
-        rHandler.add(rf);
-        rHandler.add(rf2);
-        System.out.println(rHandler.get("1234"));
-       System.out.println(rHandler.getAll().size());
+//        rHandler.add(rf);
+//        rHandler.add(rf2);
+//        System.out.println(rHandler.get("1234"));
+//       System.out.println(rHandler.getAll().size());
+        rHandler.closeFile();
+
 //
 
     }
